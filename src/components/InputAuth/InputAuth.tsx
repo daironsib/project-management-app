@@ -6,10 +6,6 @@ import { InputForm } from './styles';
 interface InputAuthProps {
   control: Control<ISignUpForm, object>;
   name: 'name' | 'login' | 'password';
-  // rules: {
-  //   required: string;
-  //   validate: (value: string) => true | string;
-  // };
   label: string;
   type: string;
   error: boolean;
@@ -22,7 +18,6 @@ export const InputAuth: React.FC<InputAuthProps> = React.memo(
       <Controller
         control={control}
         name={name}
-        // rules={rules}
         render={({ field: { value, onChange } }) => (
           <InputForm
             label={label}
