@@ -1,39 +1,18 @@
-const REQUIRED_FIELD = 'Обязательно для заполнения';
+import * as yup from 'yup';
 
-export const nameValidation = {
-  required: REQUIRED_FIELD,
-  validate: (value: string) => {
-    if (value.match(/[1-9]/)) {
-      return 'Имя не может содержать цифры';
-    }
-    if (value.length <= 1) {
-      return 'Имя должно содержать не менее 2 символов';
-    }
-    return true;
-  },
-};
-export const loginValidation = {
-  required: REQUIRED_FIELD,
-  validate: (value: string) => {
-    if (value.match(/[а-яА-Я]/)) {
-      return 'Логин не может содержать русские буквы';
-    }
-    if (value.length <= 1) {
-      return 'Логин должен содержать не менее 2 символов';
-    }
-    return true;
-  },
-};
-
-export const passwordValidation = {
-  required: REQUIRED_FIELD,
-  validate: (value: string) => {
-    if (value.length < 6) {
-      return 'Пароль должен coдержать не менее 6-ти символов';
-    }
-    if (!value.match(/[1-9]/)) {
-      return 'Пароль должен содержать хотя-бы одну цифру';
-    }
-    return true;
-  },
-};
+export const registrationSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required('Обязательно для заполнения')
+    .matches(/^[a-zA-Z]+$/, 'Имя должно содержать только латинские буквы')
+    .min(2, 'Имя должно содержать не менее 2 символов'),
+  login: yup
+    .string()
+    .required('Обязательно для заполнения')
+    .matches(/^[a-zA-Z]+$/, 'Имя должно содержать только латинские буквы')
+    .min(2, 'Логин должен содержать не менее 2 символов'),
+  password: yup
+    .string()
+    .min(6, 'Пароль должен coдержать не менее 6-ти символов')
+    .required('Обязательно для заполнения'),
+});
