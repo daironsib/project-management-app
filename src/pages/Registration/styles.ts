@@ -1,13 +1,5 @@
 import styled from "styled-components";
-import { Box, Button, TextField, Typography } from "@mui/material";
-
-export const TitleRegistration = styled(Typography).attrs({
-  variant: "h3",
-  component: "div",
-  sx: {
-    margin: "2rem 0",
-  },
-});
+import { Box, Button, TextField } from "@mui/material";
 
 export const FormRegistration = styled(Box).attrs({ component: "form" })`
   background-color: #fff;

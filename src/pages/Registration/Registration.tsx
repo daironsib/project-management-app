@@ -77,10 +77,7 @@ export const Registration: React.FC = () => {
             />
           )}
         />
-        <ButtonSubmit 
-        >
-          Войти
-        </ButtonSubmit>
+        <ButtonSubmit>Регистрация</ButtonSubmit>
       </FormRegistration>
     </div>
   );
