@@ -1,11 +1,11 @@
-import React from "react";
-import { Control, Controller } from "react-hook-form";
-import { ISignUpForm } from "../../types/interfaces";
-import { InputForm } from "./styles";
+import React from 'react';
+import { Control, Controller } from 'react-hook-form';
+import { ISignUpForm } from '../../types/interfaces';
+import { InputForm } from './styles';
 
 interface InputAuthProps {
   control: Control<ISignUpForm, object>;
-  name: "name" | "login" | "password";
+  name: 'name' | 'login' | 'password';
   rules: {
     required: string;
     validate: (value: string) => true | string;
@@ -27,7 +27,7 @@ export const InputAuth: React.FC<InputAuthProps> = React.memo(
           <InputForm
             label={label}
             onChange={onChange}
-            value={value || ""}
+            value={value || ''}
             type={type}
             error={error}
             helperText={helperText}

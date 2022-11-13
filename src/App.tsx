@@ -1,8 +1,7 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
-import "./App.css";
-import { ROUTES } from "./constants/constants";
-import { Registration } from "./pages/Registration/Registration";
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import { ROUTES } from './constants/constants';
+import { Registration } from './pages/Registration/Registration';
 
 function App() {
   return (

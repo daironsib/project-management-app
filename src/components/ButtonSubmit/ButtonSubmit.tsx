@@ -1,7 +1,7 @@
-import { Button } from "./styles";
+import { Button } from './styles';
 
 interface ButtonProps {
-    children: React.ReactNode 
+  children: React.ReactNode;
 }
 
 export const ButtonSubmit: React.FC<ButtonProps> = ({ children }) => {

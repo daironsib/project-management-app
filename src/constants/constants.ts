@@ -1,3 +1,3 @@
 export const ROUTES = {
-  registration: "/registration",
+  registration: '/registration',
 };

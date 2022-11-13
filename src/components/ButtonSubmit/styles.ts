@@ -1,9 +1,9 @@
-import ButtonMUI from "@mui/material/Button";
-import styled from "styled-components";
+import ButtonMUI from '@mui/material/Button';
+import styled from 'styled-components';
 
 export const Button = styled(ButtonMUI).attrs({
-  type: "submit",
-  variant: "contained",
+  type: 'submit',
+  variant: 'contained',
   fullWidth: true,
   disableElevation: true,
 })`
