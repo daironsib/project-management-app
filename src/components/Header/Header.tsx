@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
-const HeaderBlock = styled.div`
+const HeaderBlock = styled.div<{sticky: boolean}>`
 width: 100%;
 height: 70px;
-background-color: green;
+background-color: ${({sticky}) => (sticky?'green':'yellow')};
+transition: all 0.3s ease-out;
 display: flex;
 padding-left: 20px;
+position: sticky;
+top: 0;
 `
 const SwitcherLabel = styled.label`
 display: block;
@@ -55,8 +58,22 @@ const Header = () => {
   const changeHandler = () => {
     setLangs(langs === 'EN'?'RU':'EN');
   }
+  const [ isSticky, setIsSticky ] = useState(false);
+  const handleScroll = () => {
+    if (window.pageYOffset > 0) {
+      setIsSticky(true);
+    } 
+    if (window.pageYOffset === 0) {
+      setIsSticky(false);
+    }
+  }
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll)
+    return () => { window.removeEventListener("scroll", handleScroll)
+  }
+  });
   return (
-    <HeaderBlock>
+    <HeaderBlock sticky={isSticky}>
       <NavLink to='/'>Logo</NavLink>
       <NavBlock>{auth?(<><NavLink to='/sign-in'>Sign in</NavLink>
       <NavLink to='/sign-up'>Sign-up</NavLink></>):(<>

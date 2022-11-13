@@ -7,6 +7,7 @@ function App() {
   return (
     <BrowserRouter>
     <Header />
+    <div className='body'></div>
     </BrowserRouter>
   );
 }

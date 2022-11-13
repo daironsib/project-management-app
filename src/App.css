@@ -6,3 +6,8 @@
   box-sizing: border-box;
 
 }
+
+.body {
+  height: 200vh;
+  width: 10px;
+}
