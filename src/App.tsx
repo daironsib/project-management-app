@@ -5,7 +5,7 @@ import { Registration } from './pages/Registration/Registration';
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <Routes>
         <Route path={ROUTES.registration} element={<Registration />} />
       </Routes>

@@ -27,25 +27,25 @@ export const Registration: React.FC = () => {
       <FormRegistration onSubmit={handleSubmit(onSubmit)}>
         <InputAuth
           control={control}
-          name="name"
-          label="Имя"
-          type="text"
+          name='name'
+          label='Имя'
+          type='text'
           error={!!errors.name?.message}
           helperText={errors?.name?.message}
         />
         <InputAuth
           control={control}
-          name="login"
-          label="Логин"
-          type="text"
+          name='login'
+          label='Логин'
+          type='text'
           error={!!errors.login?.message}
           helperText={errors?.login?.message}
         />
         <InputAuth
           control={control}
-          name="password"
-          label="Пароль"
-          type="password"
+          name='password'
+          label='Пароль'
+          type='password'
           error={!!errors.password?.message}
           helperText={errors?.password?.message}
         />
