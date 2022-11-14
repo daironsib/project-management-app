@@ -1,7 +1,7 @@
-import styled from 'styled-components';
 import { Box, Typography } from '@mui/material';
+import styled from 'styled-components';
 
-export const Title = styled(Typography).attrs({
+export const TitleForm = styled(Typography).attrs({
   variant: 'h3',
   component: 'div',
 })`
@@ -10,7 +10,7 @@ export const Title = styled(Typography).attrs({
   }
 `;
 
-export const FormRegistration = styled(Box).attrs({ component: 'form' })`
+export const FormWrapper = styled(Box).attrs({ component: 'form' })`
   background-color: #fff;
   border-radius: 10px;
   border: 1px solid #000;

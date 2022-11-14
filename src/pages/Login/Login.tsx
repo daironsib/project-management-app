@@ -1,20 +1,20 @@
-import React from 'react';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { registrationSchema } from '../../validation/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ISignUpForm } from '../../types/interfaces';
+import React from 'react';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Form } from '../../components/Form/Form';
 import { InputAuth } from '../../components/InputAuth/InputAuth';
 import { ROUTES } from '../../constants/constants';
-import { Form } from '../../components/Form/Form';
+import { ISignUpForm } from '../../types/interfaces';
+import { loginSchema } from '../../validation/validation';
 
-export const Registration: React.FC = () => {
+export const Login: React.FC = () => {
   const {
     handleSubmit,
     control,
     reset,
     formState: { errors },
   } = useForm<ISignUpForm>({
-    resolver: yupResolver(registrationSchema),
+    resolver: yupResolver(loginSchema),
   });
 
   const onSubmit: SubmitHandler<ISignUpForm> = (data) => {
@@ -24,27 +24,13 @@ export const Registration: React.FC = () => {
 
   return (
     <Form
-      title='Регистрация'
+      title='Войти'
       onSubmit={handleSubmit(onSubmit)}
-      buttonTitle='Регистрация'
-      linkDescription='Уже есть аккаунт?'
-      path={ROUTES.login}
-      linkTitle='Войти'
+      buttonTitle='Войти'
+      linkDescription='Еще нет аккаунта?'
+      path={ROUTES.registration}
+      linkTitle='Регистрация'
     >
-      <Controller
-        control={control}
-        name='name'
-        render={({ field: { value, onChange } }) => (
-          <InputAuth
-            onChange={onChange}
-            value={value || ''}
-            label='Имя'
-            type='text'
-            error={!!errors.name?.message}
-            helperText={errors?.name?.message}
-          />
-        )}
-      />
       <Controller
         control={control}
         name='login'
