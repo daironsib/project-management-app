@@ -1,4 +1,10 @@
-import { ButtonSubmit, FormWrapper, LinkFormWrapper, NavLinkForm, TitleForm } from './styled';
+import {
+  ButtonSubmit,
+  FormWrapper,
+  LinkFormWrapper,
+  NavLinkForm,
+  TitleForm,
+} from './styled';
 
 interface FormProps {
   title: string;
@@ -25,9 +31,9 @@ export const Form: React.FC<FormProps> = ({
       <FormWrapper onSubmit={onSubmit}>
         {children}
         <LinkFormWrapper>
-      <span>{linkDescription}</span>
-      <NavLinkForm to={path}>{linkTitle}</NavLinkForm>
-    </LinkFormWrapper>
+          <span>{linkDescription}</span>
+          <NavLinkForm to={path}>{linkTitle}</NavLinkForm>
+        </LinkFormWrapper>
         <ButtonSubmit>{buttonTitle}</ButtonSubmit>
       </FormWrapper>
     </>

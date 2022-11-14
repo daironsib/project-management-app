@@ -15,7 +15,7 @@ export const registrationSchema = yup.object().shape({
     .string()
     .min(6, 'Пароль должен coдержать не менее 6-ти символов')
     .required('Обязательно для заполнения'),
-}) 
+});
 
 export const loginSchema = yup.object().shape({
   login: yup
