@@ -1,6 +1,4 @@
-import { Button } from './ButtonSubmit/styles';
-import { LinkForm } from './LinkForm/LinkForm';
-import { FormWrapper, TitleForm } from './styled';
+import { ButtonSubmit, FormWrapper, LinkFormWrapper, NavLinkForm, TitleForm } from './styled';
 
 interface FormProps {
   title: string;
@@ -26,12 +24,11 @@ export const Form: React.FC<FormProps> = ({
       <TitleForm>{title}</TitleForm>
       <FormWrapper onSubmit={onSubmit}>
         {children}
-        <LinkForm
-          linkDescription={linkDescription}
-          path={path}
-          linkTitle={linkTitle}
-        />
-        <Button>{buttonTitle}</Button>
+        <LinkFormWrapper>
+      <span>{linkDescription}</span>
+      <NavLinkForm to={path}>{linkTitle}</NavLinkForm>
+    </LinkFormWrapper>
+        <ButtonSubmit>{buttonTitle}</ButtonSubmit>
       </FormWrapper>
     </>
   );

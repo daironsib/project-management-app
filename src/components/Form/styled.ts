@@ -1,4 +1,5 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const TitleForm = styled(Typography).attrs({
@@ -18,4 +19,33 @@ export const FormWrapper = styled(Box).attrs({ component: 'form' })`
   max-width: 450px;
   padding: 20px 10px;
   width: 100%;
+`;
+
+export const ButtonSubmit = styled(Button).attrs({
+  type: 'submit',
+  variant: 'contained',
+  fullWidth: true,
+  disableElevation: true,
+})`
+  && {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 2rem;
+  }
+`;
+
+export const LinkFormWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  && {
+    font-size: 1.4rem;
+  }
+`;
+
+export const NavLinkForm = styled(NavLink)`
+  font-weight: bold;
+  color: #1976d2;
+  text-decoration: none;
 `;
