@@ -8,12 +8,14 @@ import {
   NavBlock,
   SwitcherBlock,
 } from './style';
+import i18next from 'i18next';
 
 const Header = () => {
-  const [langs, setLangs] = useState('EN');
+  const [langs, setLangs] = useState('ru');
   const [auth, setAuth] = useState(true);
   const changeHandler = () => {
-    setLangs(langs === 'EN' ? 'RU' : 'EN');
+    setLangs(langs === 'en' ? 'ru' : 'en');
+    i18next.changeLanguage(langs === 'en' ? 'ru' : 'en');
   };
   const [isSticky, setIsSticky] = useState(false);
   const handleScroll = () => {
