@@ -27,7 +27,7 @@ export const Registration: React.FC = () => {
       onSubmit={handleSubmit(onSubmit)}
       buttonTitle='Регистрация'
       linkDescription='Уже есть аккаунт?'
-      path={ROUTES.login}
+      path={ROUTES.signIn}
       linkTitle='Войти'
     >
       <Controller
