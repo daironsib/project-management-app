@@ -2,7 +2,7 @@ import React from 'react';
 import { InputForm } from './styles';
 
 interface InputProps {
-  onChange: (...event: any[]) => void;
+  onChange: () => void;
   value: string;
   label: string;
   type: string;
@@ -21,6 +21,7 @@ export const InputAuth: React.FC<InputProps> = React.memo(
         error={error}
         helperText={helperText}
       />
+
     );
   }
 );

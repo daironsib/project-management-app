@@ -4,7 +4,7 @@ import {
   LinkFormWrapper,
   NavLinkForm,
   TitleForm,
-} from './styled';
+} from './styles';
 
 interface FormProps {
   title: string;

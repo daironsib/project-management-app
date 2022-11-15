@@ -18,7 +18,6 @@ export const Registration: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<ISignUpForm> = (data) => {
-    console.log(data);
     reset();
   };
 
