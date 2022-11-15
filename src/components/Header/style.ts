@@ -6,6 +6,7 @@ const HeaderBlock = styled.div<{ sticky: boolean }>`
   background-color: ${({ sticky }) => (sticky ? 'green' : 'yellow')};
   transition: all 0.3s ease-out;
   display: flex;
+  flex: 0 0 auto;
   padding-left: 20px;
   position: sticky;
   top: 0;
