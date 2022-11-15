@@ -17,11 +17,11 @@ const RssLogo = styled.img`
 
 `
 const GithubLinks = styled.div`
-display: flex;
-gap: 10px;
+  display: flex;
+  gap: 10px;
 `
 const GithubLink = styled.a`
-color: black;
-text-decoration: none;
+  color: black;
+  text-decoration: none;
 `
 export { FooterBlock, RssLogo, GithubLinks, GithubLink };

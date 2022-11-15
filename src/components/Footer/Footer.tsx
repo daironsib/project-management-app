@@ -1,5 +1,6 @@
 import React from 'react';
 import { FooterBlock, RssLogo, GithubLinks, GithubLink } from './style';
+import RsLogo from '../../assets/images/rs_school_logo.svg';
 
 const Footer = () => {
   return (
@@ -13,10 +14,7 @@ const Footer = () => {
       </GithubLinks>
       <p>2022</p>
       <a href='https://rs.school/react/'>
-        <RssLogo
-          src='https://rs.school/images/rs_school_js.svg'
-          alt='rss-school-react'
-        />
+        <RssLogo src={RsLogo} alt='rss-school-react' />
       </a>
     </FooterBlock>
   );

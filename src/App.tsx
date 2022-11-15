@@ -4,17 +4,19 @@ import { ROUTES } from './constants/constants';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { Registration } from './pages/Registration/Registration';
+import { AppBlock, GlobalStyle } from './style';
 
 function App() {
   return (
     <>
       <Header />
-      <div className='app'>
+      <AppBlock>
         <Routes>
           <Route path={ROUTES.registration} element={<Registration />} />
         </Routes>
-      </div>
+      </AppBlock>
       <Footer />
+      <GlobalStyle />
     </>
   );
 }
