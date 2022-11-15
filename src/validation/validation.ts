@@ -16,3 +16,15 @@ export const registrationSchema = yup.object().shape({
     .min(6, 'Пароль должен coдержать не менее 6-ти символов')
     .required('Обязательно для заполнения'),
 });
+
+export const loginSchema = yup.object().shape({
+  login: yup
+    .string()
+    .required('Обязательно для заполнения')
+    .matches(/^[a-zA-Z]+$/, 'Имя должно содержать только латинские буквы')
+    .min(2, 'Логин должен содержать не менее 2 символов'),
+  password: yup
+    .string()
+    .min(6, 'Пароль должен coдержать не менее 6-ти символов')
+    .required('Обязательно для заполнения'),
+});

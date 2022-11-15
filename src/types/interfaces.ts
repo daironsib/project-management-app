@@ -3,3 +3,8 @@ export interface ISignUpForm {
   login: string;
   password: string;
 }
+
+export interface ISignInForm {
+  login: string;
+  password: string;
+}
