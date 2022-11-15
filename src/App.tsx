@@ -1,14 +1,17 @@
-import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import { ROUTES } from './constants/constants';
 import Header from './components/Header/Header';
-import { BrowserRouter } from 'react-router-dom';
+import { Registration } from './pages/Registration/Registration';
 
 function App() {
   return (
-    <BrowserRouter>
-    <Header />
-    <div className='body'></div>
-    </BrowserRouter>
+    <div className='App'>
+      <Header />
+      <Routes>
+        <Route path={ROUTES.registration} element={<Registration />} />
+      </Routes>
+    </div>
   );
 }
 
