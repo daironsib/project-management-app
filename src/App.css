@@ -11,3 +11,13 @@
   height: 200vh;
   width: 10px;
 }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app {
+  flex: 1 0 auto;
+}
