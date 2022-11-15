@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import ROUTES from '../constants/routes/routes';
+import { ROUTES } from '../../constants/constants';
 import {
   HeaderBlock,
   SwitcherLabel,
@@ -54,7 +54,7 @@ const Header = () => {
           id='language-switcher'
           onChange={changeHandler}
         />
-        <SwitcherLabel htmlFor='anguage-switcher'></SwitcherLabel>
+        <SwitcherLabel htmlFor='language-switcher'></SwitcherLabel>
         <span>EN</span>
       </SwitcherBlock>
     </HeaderBlock>
