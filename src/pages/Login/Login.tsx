@@ -4,6 +4,8 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Form } from '../../components/Form/Form';
 import { InputAuth } from '../../components/InputAuth/InputAuth';
 import { ROUTES } from '../../constants/constants';
+import { useAppDispatch } from '../../hooks';
+import { userLogin } from '../../store/userSlice/userSlice';
 import { ISignUpForm } from '../../types/interfaces';
 import { loginSchema } from '../../validation/validation';
 
@@ -16,8 +18,10 @@ export const Login: React.FC = () => {
   } = useForm<ISignUpForm>({
     resolver: yupResolver(loginSchema),
   });
+  const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<ISignUpForm> = (data) => {
+    dispatch(userLogin(data));
     reset();
   };
 

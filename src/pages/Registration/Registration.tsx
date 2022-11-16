@@ -6,6 +6,8 @@ import { ISignUpForm } from '../../types/interfaces';
 import { InputAuth } from '../../components/InputAuth/InputAuth';
 import { ROUTES } from '../../constants/constants';
 import { Form } from '../../components/Form/Form';
+import { useAppDispatch } from '../../hooks';
+import { userRegistration } from '../../store/userSlice/userSlice';
 
 export const Registration: React.FC = () => {
   const {
@@ -16,8 +18,10 @@ export const Registration: React.FC = () => {
   } = useForm<ISignUpForm>({
     resolver: yupResolver(registrationSchema),
   });
+  const dispatch = useAppDispatch();
 
   const onSubmit: SubmitHandler<ISignUpForm> = (data) => {
+    dispatch(userRegistration(data));
     reset();
   };
 
