@@ -6,3 +6,8 @@ export const ROUTES = {
   signOut: '/sign-out',
   welcomePage: '/',
 };
+
+export const langs = {
+  ru: 'ru',
+  en: 'en',
+}

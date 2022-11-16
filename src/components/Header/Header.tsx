@@ -9,13 +9,14 @@ import {
   SwitcherBlock,
 } from './style';
 import i18next from '../../translations/translations';
+import { langs } from '../../constants/constants';
 
 const Header = () => {
-  const [langs, setLangs] = useState('ru');
+  const [lang, setLang] = useState('ru');
   const [auth, setAuth] = useState(true);
   const changeHandler = () => {
-    setLangs(langs === 'en' ? 'ru' : 'en');
-    i18next.changeLanguage(langs === 'en' ? 'ru' : 'en');
+    setLang(lang === langs.en ? langs.ru : langs.en);
+    i18next.changeLanguage(lang === langs.en ? langs.ru : langs.en);
   };
   const [isSticky, setIsSticky] = useState(false);
   const handleScroll = () => {
