@@ -5,6 +5,7 @@ export const ROUTES = {
   createBoard: '/create-board',
   signOut: '/sign-out',
   welcomePage: '/',
+  boards: '/boards',
 };
 
 export const langs = {
