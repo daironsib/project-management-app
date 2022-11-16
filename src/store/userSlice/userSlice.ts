@@ -55,6 +55,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(userRegistration.fulfilled, (state) => {
       state.isLoading = false;
+      state.errorMessage = '';
     });
     builder.addCase(userRegistration.rejected, (state, action) => {
       state.isLoading = false;
