@@ -12,7 +12,7 @@ import i18next from '../../translations/translations';
 import { langs } from '../../constants/constants';
 
 const Header = () => {
-  const [lang, setLang] = useState('ru');
+  const [lang, setLang] = useState(langs.ru);
   const [auth, setAuth] = useState(true);
   const changeHandler = () => {
     setLang(lang === langs.en ? langs.ru : langs.en);
