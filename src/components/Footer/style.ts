@@ -6,7 +6,7 @@ const FooterBlock = styled.div`
   display: flex;
   justify-content: center;
   gap: 40px;
-  background-color: blue;
+  background-color: grey;
   flex: 0 0 auto;
   align-items: center;
 `;
