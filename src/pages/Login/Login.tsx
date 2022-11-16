@@ -25,8 +25,8 @@ export const Login: React.FC = () => {
   const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const onSubmit: SubmitHandler<ISignUpForm> = (data) => {
-    setIsAlertOpen(true);
     dispatch(userLogin(data));
+    setIsAlertOpen(true);
     reset();
   };
 
@@ -77,7 +77,7 @@ export const Login: React.FC = () => {
         <Loading isLoading={isLoading} />
       ) : (
         <Alert
-          message={errorMessage}
+          message={errorMessage || `Добро пожаловать`}
           onClose={handleCloseAlert}
           isOpen={isAlertOpen}
           isError={!!errorMessage}
