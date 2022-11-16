@@ -8,7 +8,7 @@ import {
   NavBlock,
   SwitcherBlock,
 } from './style';
-import i18next from 'i18next';
+import i18next from '../../translations/translations';
 
 const Header = () => {
   const [langs, setLangs] = useState('ru');
