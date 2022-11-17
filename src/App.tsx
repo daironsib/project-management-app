@@ -5,7 +5,7 @@ import Footer from './components/Footer/Footer';
 import { Login } from './pages/Login/Login';
 import { Registration } from './pages/Registration/Registration';
 import { AppBlock, GlobalStyle } from './style';
-import './App.css';
+import WelcomePage from './pages/WelcomePage/WelcomePage';
 
 function App() {
   return (
@@ -13,8 +13,9 @@ function App() {
       <Header />
       <AppBlock>
         <Routes>
-        <Route path={ROUTES.registration} element={<Registration />} />
-        <Route path={ROUTES.signIn} element={<Login />} />
+          <Route path={ROUTES.registration} element={<Registration />} />
+          <Route path={ROUTES.welcomePage} element={<WelcomePage />} />
+          <Route path={ROUTES.signIn} element={<Login />} />
         </Routes>
       </AppBlock>
       <Footer />

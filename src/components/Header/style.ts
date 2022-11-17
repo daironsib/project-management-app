@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const HeaderBlock = styled.div<{ sticky: boolean }>`
   width: 100%;
   height: 70px;
-  background-color: ${({ sticky }) => (sticky ? 'green' : 'yellow')};
+  background-color: ${({ sticky }) => (sticky ? 'lightgrey' : 'grey')};
   transition: all 0.3s ease-out;
   display: flex;
   flex: 0 0 auto;
