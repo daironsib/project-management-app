@@ -10,6 +10,11 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { userRegistration } from '../../store/userSlice/userSlice';
 import { Loading } from '../../components/Loading/Loading';
 import { Alert } from '../../components/Alert/Alert';
+import {
+  ButtonSubmit,
+  LinkFormWrapper,
+  NavLinkForm,
+} from '../../components/Form/styles';
 
 export const Registration: React.FC = () => {
   const {
@@ -36,14 +41,7 @@ export const Registration: React.FC = () => {
 
   return (
     <>
-      <Form
-        title='Регистрация'
-        onSubmit={handleSubmit(onSubmit)}
-        buttonTitle='Регистрация'
-        linkDescription='Уже есть аккаунт?'
-        path={ROUTES.signIn}
-        linkTitle='Войти'
-      >
+      <Form title='Регистрация' onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name='name'
@@ -86,6 +84,11 @@ export const Registration: React.FC = () => {
             />
           )}
         />
+        <LinkFormWrapper>
+          <span>Уже есть аккаунт?</span>
+          <NavLinkForm to={ROUTES.signIn}>Войти</NavLinkForm>
+        </LinkFormWrapper>
+        <ButtonSubmit>Регистрация</ButtonSubmit>
       </Form>
       {isLoading ? (
         <Loading isLoading={isLoading} />

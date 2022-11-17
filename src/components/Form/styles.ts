@@ -25,10 +25,10 @@ export const FormWrapper = styled(Box).attrs({ component: 'form' })`
 export const ButtonSubmit = styled(Button).attrs({
   type: 'submit',
   variant: 'contained',
-  fullWidth: true,
   disableElevation: true,
 })`
   && {
+    width: 100%;
     font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
