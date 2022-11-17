@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ROUTES } from '../../constants/constants';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logOut } from '../../store/userSlice/userSlice';
 import {
   HeaderBlock,
   SwitcherLabel,
@@ -13,12 +15,15 @@ import { langs } from '../../constants/constants';
 
 const Header = () => {
   const [lang, setLang] = useState(langs.ru);
-  const [auth, setAuth] = useState(true);
+  const [isSticky, setIsSticky] = useState(false);
+  const { isAuth } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
   const changeHandler = () => {
     setLang(lang === langs.en ? langs.ru : langs.en);
     i18next.changeLanguage(lang === langs.en ? langs.ru : langs.en);
   };
-  const [isSticky, setIsSticky] = useState(false);
+
   const handleScroll = () => {
     if (window.pageYOffset > 0) {
       setIsSticky(true);
@@ -27,17 +32,23 @@ const Header = () => {
       setIsSticky(false);
     }
   };
+
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   });
+
+  const handlerSignOut = () => {
+    dispatch(logOut());
+  };
+
   return (
     <HeaderBlock sticky={isSticky}>
       <NavLink to='/'>Logo</NavLink>
       <NavBlock>
-        {auth ? (
+        {!isAuth ? (
           <>
             <NavLink to={ROUTES.signIn}>Sign in</NavLink>
             <NavLink to={ROUTES.registration}>Sign-up</NavLink>
@@ -46,7 +57,7 @@ const Header = () => {
           <>
             <NavLink to={ROUTES.editProfile}>edit profile</NavLink>
             <NavLink to={ROUTES.createBoard}>create board</NavLink>
-            <NavLink to={ROUTES.signOut}>sign out</NavLink>
+            <div onClick={handlerSignOut}>sign out</div>
           </>
         )}
       </NavBlock>

@@ -8,6 +8,7 @@ export const TitleForm = styled(Typography).attrs({
 })`
   &&.MuiTypography-root {
     margin: 2rem 0;
+    text-align: center;
   }
 `;
 
