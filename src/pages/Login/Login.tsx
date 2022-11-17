@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Alert } from '../../components/Alert/Alert';
 import { Form } from '../../components/Form/Form';
 import {
@@ -26,8 +27,11 @@ export const Login: React.FC = () => {
     resolver: yupResolver(loginSchema),
   });
   const dispatch = useAppDispatch();
-  const { isLoading, errorMessage } = useAppSelector((state) => state.user);
+  const { isLoading, errorMessage, isAuth } = useAppSelector(
+    (state) => state.user
+  );
   const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<ISignInForm> = (data) => {
     dispatch(userLogin(data));
@@ -39,15 +43,17 @@ export const Login: React.FC = () => {
     setIsAlertOpen(false);
   };
 
+  useEffect(() => {
+    if (isAuth) {
+      navigate(ROUTES.welcomePage);
+    }
+  }, [isAuth, navigate]);
+
   return (
     <>
       <Form
         title='Войти'
         onSubmit={handleSubmit(onSubmit)}
-        // buttonTitle='Войти'
-        // linkDescription='Еще нет аккаунта?'
-        // path={ROUTES.registration}
-        // linkTitle='Регистрация'
       >
         <Controller
           control={control}
