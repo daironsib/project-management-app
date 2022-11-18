@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logOut } from '../../store/userSlice/userSlice';
@@ -18,6 +18,7 @@ const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
   const { isAuth } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const changeHandler = () => {
     setLang(lang === langs.en ? langs.ru : langs.en);
@@ -42,6 +43,7 @@ const Header = () => {
 
   const handlerSignOut = () => {
     dispatch(logOut());
+    navigate(ROUTES.welcomePage);
   };
 
   return (
