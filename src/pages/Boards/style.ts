@@ -11,23 +11,29 @@ const BoardList = styled.ul`
   display: flex;
   list-style: none;
   gap: 15px;
+  margin-top: 30px;
 
 `
 const CardName = styled.h5`
-
 `
 const BoardCard = styled.li`
-  width: 350px;
+  width: 410px;
   height: 120px;
-  border: 1px solid grey;
   display: flex;
+  box-shadow: 0 0 10px rgb(0 0 0 / 10%)
   align-items: center;
-  padding: 6px 6px;
-  gap: 15px;
-
+  padding: 10px;
+  gap: 20px;
+  background-color: #B7EAF7;
+  border-radius: 8px;
+  transition: 0.2s linear;
 `
 const BoardDescription = styled.p`
 height: 70%;
+font-size: 14px;
+background-color: white;
+border-radius: 8px;
+padding: 5px;
 `
 const EditImg = styled.img`
   width: 20px;
@@ -37,7 +43,8 @@ const BinImg = styled.img`
   width: 20px;
 `
 const KanbanImg = styled.img`
-height: 80%;
+height: 70px;
+margin-top: 10px;
 `
 const Images = styled.div`
 display: flex;
@@ -48,6 +55,7 @@ width: 100%;
 display: flex;
 justify-content: space-between;
 align-items: center;
+font-size: 20px;
 `
 const CardBlock = styled.div`
 width: 100%;
