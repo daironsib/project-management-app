@@ -1,7 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { Form } from '../../components/Form/Form';
 import { InputAuth } from '../../components/InputAuth/InputAuth';
+import { Modal } from '../../components/Modal/Modal';
+import { ROUTES } from '../../constants/constants';
 import { ISignUpForm } from '../../types/interfaces';
 import { registrationSchema } from '../../validation/validation';
 import { ButtonDelete, ButtonUpdate, UpdateButtonsWrapper } from './styles';
@@ -15,9 +19,23 @@ export const EditProfile: React.FC = () => {
   } = useForm<ISignUpForm>({
     resolver: yupResolver(registrationSchema),
   });
+  const [isOpenModal, setOpenModal] = useState(false);
+  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<ISignUpForm> = (data) => {
     reset();
+  };
+
+  const handleDelete = () => {
+    setModal(true);
+  };
+
+  const deleteProfile = () => {
+    navigate(ROUTES.welcomePage);
+  };
+
+  const setModal = (isOpen: boolean) => {
+    setOpenModal(isOpen);
   };
 
   return (
@@ -66,10 +84,18 @@ export const EditProfile: React.FC = () => {
           )}
         />
         <UpdateButtonsWrapper>
-          <ButtonDelete>Удалить профиль</ButtonDelete>
+          <ButtonDelete onClick={handleDelete}>Удалить профиль</ButtonDelete>
           <ButtonUpdate>Изменить профиль</ButtonUpdate>
         </UpdateButtonsWrapper>
       </Form>
+      {isOpenModal && (
+        <Modal
+          modalTitle='Вы действительно хотите удалить свой аккаунт?'
+          isOpen={isOpenModal}
+          setModal={setModal}
+          dispatch={deleteProfile}
+        />
+      )}
     </>
   );
 };
