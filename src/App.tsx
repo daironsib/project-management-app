@@ -9,6 +9,7 @@ import WelcomePage from './pages/WelcomePage/WelcomePage';
 import './App.css';
 import Boards from './pages/Boards/Boards';
 import { EditProfile } from './pages/EditProfile/EditProfile';
+
 function App() {
   return (
     <>
