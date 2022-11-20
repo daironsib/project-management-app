@@ -27,6 +27,7 @@ const BoardCard = styled.li`
   background-color: #B7EAF7;
   border-radius: 8px;
   transition: 0.2s linear;
+  cursor: pointer;
 `
 const BoardDescription = styled.p`
 height: 70%;
@@ -64,4 +65,13 @@ display: flex;
 justify-content: space-between;
 flex-direction: column;
 `
-export { BoardsBlock, BoardList, BoardCard, EditImg, BinImg, KanbanImg, CardName, BoardDescription, Images, NameBlock, CardBlock };
+
+const AddBoardButton = styled(BoardCard)`
+border: 1px dashed black;
+cursor: pointer;
+`
+const AddBoardImg = styled.img`
+width: 50px;
+margin: 0 auto;
+`
+export { BoardsBlock, AddBoardImg, BoardList, AddBoardButton, BoardCard, EditImg, BinImg, KanbanImg, CardName, BoardDescription, Images, NameBlock, CardBlock };

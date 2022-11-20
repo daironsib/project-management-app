@@ -11,10 +11,13 @@ import {
   NameBlock,
   CardBlock,
   BoardDescription,
+  AddBoardButton,
+  AddBoardImg,
 } from './style';
 import EditImage from '../../assets/images/edit.svg';
 import BinImage from '../../assets/images/bin.svg';
 import KanbanImage from '../../assets/images/kanban.png';
+import AddButton from '../../assets/images/add-board.svg';
 
 const Boards = () => {
   return (
@@ -38,6 +41,9 @@ const Boards = () => {
           </CardBlock>
         </BoardCard>
         <BoardCard></BoardCard>
+        <AddBoardButton>
+          <AddBoardImg src={AddButton} alt='add' />
+        </AddBoardButton>
       </BoardList>
     </BoardsBlock>
   );
