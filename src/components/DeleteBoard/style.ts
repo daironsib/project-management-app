@@ -32,6 +32,7 @@ const BoardWindow = styled.div`
 const DeleteImg = styled.img`
   width: 120px;
 `;
+
 const Button = styled.button`
   width: 130px;
   height: 40px;
@@ -46,16 +47,20 @@ const ButtonBlock = styled.div`
   display: flex;
   gap: 20px;
 `;
+
 const ButtonContinue = styled(Button)`
   background-color: #ffe4c9;
 `;
+
 const ButtonCancel = styled(Button)`
   background-color: #8a9ba7;
 `;
+
 const DelBoard = styled.h2`
   color: grey;
   font-family: Roboto;
 `;
+
 export {
   BoardOverlay,
   BoardWindow,

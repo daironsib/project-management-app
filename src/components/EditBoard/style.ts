@@ -10,6 +10,7 @@ const BoardOverlay = styled.div`
   visibility: hidden;
   opacity: 0;
 `;
+
 const BoardWindow = styled.div`
   position: absolute;
   top: 50%;
@@ -32,6 +33,7 @@ const CreateBoard = styled.h2`
   color: grey;
   font-family: Roboto;
 `;
+
 const InputName = styled.input`
   width: 275px;
   height: 55px;
@@ -41,6 +43,7 @@ const InputName = styled.input`
   border-radius: 7px;
   outline-color: #b7eaf7;
 `;
+
 const InputDescription = styled.textarea`
   width: 275px;
   height: 180px;
@@ -51,6 +54,7 @@ const InputDescription = styled.textarea`
   outline-color: #b7eaf7;
   resize: none;
 `;
+
 const Button = styled.button`
   width: 130px;
   height: 40px;
@@ -60,13 +64,16 @@ const Button = styled.button`
   outline: none;
   border: none;
 `;
+
 const ButtonBlock = styled.div`
   display: flex;
   gap: 20px;
 `;
+
 const ButtonContinue = styled(Button)`
   background-color: #ffe4c9;
 `;
+
 const ButtonCancel = styled(Button)`
   background-color: #8a9ba7;
 `;
