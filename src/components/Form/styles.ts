@@ -7,7 +7,8 @@ export const TitleForm = styled(Typography).attrs({
   component: 'div',
 })`
   &&.MuiTypography-root {
-    margin: 2rem 0;
+    margin: 20px 0;
+    text-align: center;
   }
 `;
 
@@ -24,23 +25,23 @@ export const FormWrapper = styled(Box).attrs({ component: 'form' })`
 export const ButtonSubmit = styled(Button).attrs({
   type: 'submit',
   variant: 'contained',
-  fullWidth: true,
   disableElevation: true,
 })`
   && {
-    font-size: 2rem;
+    width: 100%;
+    font-size: 20px;
     font-weight: bold;
-    margin-top: 2rem;
+    margin-top: 20px;
   }
 `;
 
 export const LinkFormWrapper = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 10px;
   justify-content: center;
-  margin-top: 1.5rem;
+  margin-top: 15px;
   && {
-    font-size: 1.4rem;
+    font-size: 14px;
   }
 `;
 

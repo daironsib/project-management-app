@@ -7,9 +7,9 @@ export const InputForm = styled(TextField).attrs({
   InputLabelProps: { style: { fontSize: '20px' }, variant: 'outlined' },
 })`
   &&.MuiTextField-root div {
-    font-size: 2rem;
+    font-size: 20px;
   }
   &&.MuiTextField-root p {
-    font-size: 1.5rem;
+    font-size: 15px;
   }
 `;
