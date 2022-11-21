@@ -4,6 +4,7 @@ export const ROUTES = {
   editProfile: '/edit-profile',
   createBoard: '/create-board',
   welcomePage: '/',
+  boards: '/boards',
 };
 
 export const langs = {

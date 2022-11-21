@@ -11,10 +11,16 @@ import {
   NameBlock,
   CardBlock,
   BoardDescription,
+  AddBoardButton,
+  AddBoardImg,
 } from './style';
 import EditImage from '../../assets/images/edit.svg';
 import BinImage from '../../assets/images/bin.svg';
 import KanbanImage from '../../assets/images/kanban.png';
+import AddButton from '../../assets/images/add-board.svg';
+import AddBoard from '../../components/AddBoard/AddBoard';
+import EditBoard from '../../components/EditBoard/EditBoard';
+import DeleteBoard from '../../components/DeleteBoard/DeleteBoard';
 
 const Boards = () => {
   return (
@@ -37,7 +43,12 @@ const Boards = () => {
             <BoardDescription>Description</BoardDescription>
           </CardBlock>
         </BoardCard>
-        <BoardCard></BoardCard>
+        <AddBoardButton>
+          <AddBoardImg src={AddButton} alt='add' />
+        </AddBoardButton>
+        <AddBoard></AddBoard>
+        <EditBoard></EditBoard>
+        <DeleteBoard></DeleteBoard>
       </BoardList>
     </BoardsBlock>
   );
