@@ -9,6 +9,7 @@ import WelcomePage from './pages/WelcomePage/WelcomePage';
 import './App.css';
 import Boards from './pages/Boards/Boards';
 import { EditProfile } from './pages/EditProfile/EditProfile';
+import { AuthRoute, PrivateRoute } from './Routes/Routes';
 
 function App() {
   return (
@@ -16,11 +17,39 @@ function App() {
       <Header />
       <AppBlock>
         <Routes>
-          <Route path={ROUTES.registration} element={<Registration />} />
           <Route path={ROUTES.welcomePage} element={<WelcomePage />} />
-          <Route path={ROUTES.signIn} element={<Login />} />
-          <Route path={ROUTES.boards} element={<Boards />}></Route>
-          <Route path={ROUTES.editProfile} element={<EditProfile />} />
+          <Route
+            path={ROUTES.registration}
+            element={
+              <AuthRoute>
+                <Registration />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path={ROUTES.signIn}
+            element={
+              <AuthRoute>
+                <Login />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path={ROUTES.editProfile}
+            element={
+              <PrivateRoute>
+                <EditProfile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={ROUTES.boards}
+            element={
+              <PrivateRoute>
+                <Boards />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </AppBlock>
       <Footer />

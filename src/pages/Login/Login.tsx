@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Alert } from '../../components/Alert/Alert';
 import { Form } from '../../components/Form/Form';
 import {
@@ -27,11 +26,8 @@ export const Login: React.FC = () => {
     resolver: yupResolver(loginSchema),
   });
   const dispatch = useAppDispatch();
-  const { isLoading, errorMessage, isAuth } = useAppSelector(
-    (state) => state.user
-  );
+  const { isLoading, errorMessage } = useAppSelector((state) => state.user);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<ISignInForm> = (data) => {
     dispatch(userLogin(data));
@@ -42,12 +38,6 @@ export const Login: React.FC = () => {
   const handleCloseAlert = () => {
     setIsAlertOpen(false);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      navigate(ROUTES.boards);
-    }
-  }, [isAuth, navigate]);
 
   return (
     <>
