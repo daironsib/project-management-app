@@ -1,24 +1,17 @@
-import { ReactElement } from 'react';
 import { Navigate } from 'react-router-dom';
 import { ROUTES } from '../constants/constants';
 import { useAppSelector } from '../hooks';
 
 interface RoutesInterface {
-  children: ReactElement;
+  outlet: JSX.Element;
 }
 
-export const PrivateRoute: React.FC<RoutesInterface> = ({ children }) => {
+export const PrivateRoute: React.FC<RoutesInterface> = ({ outlet }) => {
   const { isAuth } = useAppSelector((state) => state.user);
-  if (!isAuth) {
-    return <Navigate to={ROUTES.welcomePage} />;
-  }
-  return children;
+  return isAuth ? outlet : <Navigate to={ROUTES.welcomePage} />;
 };
 
-export const AuthRoute: React.FC<RoutesInterface> = ({ children }) => {
+export const PublicRoute: React.FC<RoutesInterface> = ({ outlet }) => {
   const { isAuth } = useAppSelector((state) => state.user);
-  if (isAuth) {
-    return <Navigate to={ROUTES.boards} />;
-  }
-  return children;
+  return isAuth ? <Navigate to={ROUTES.boards} /> : outlet;
 };

@@ -9,7 +9,7 @@ import WelcomePage from './pages/WelcomePage/WelcomePage';
 import './App.css';
 import Boards from './pages/Boards/Boards';
 import { EditProfile } from './pages/EditProfile/EditProfile';
-import { AuthRoute, PrivateRoute } from './Routes/Routes';
+import { PublicRoute, PrivateRoute } from './Routes/Routes';
 
 function App() {
   return (
@@ -20,35 +20,19 @@ function App() {
           <Route path={ROUTES.welcomePage} element={<WelcomePage />} />
           <Route
             path={ROUTES.registration}
-            element={
-              <AuthRoute>
-                <Registration />
-              </AuthRoute>
-            }
+            element={<PublicRoute outlet={<Registration />} />}
           />
           <Route
             path={ROUTES.signIn}
-            element={
-              <AuthRoute>
-                <Login />
-              </AuthRoute>
-            }
+            element={<PublicRoute outlet={<Login />} />}
           />
           <Route
             path={ROUTES.editProfile}
-            element={
-              <PrivateRoute>
-                <EditProfile />
-              </PrivateRoute>
-            }
+            element={<PrivateRoute outlet={<EditProfile />} />}
           />
           <Route
             path={ROUTES.boards}
-            element={
-              <PrivateRoute>
-                <Boards />
-              </PrivateRoute>
-            }
+            element={<PrivateRoute outlet={<Boards />} />}
           />
         </Routes>
       </AppBlock>
