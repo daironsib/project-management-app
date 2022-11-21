@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import authService from '../../services/authService';
+import userService from '../../services/userService';
 import { ISignInForm, ISignUpForm } from '../../types/interfaces';
 
 export const userRegistration = createAsyncThunk(
@@ -21,6 +22,18 @@ export const userLogin = createAsyncThunk(
     try {
       const response = await authService.login(data);
       localStorage.setItem('token', response.data.token);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue((error as AxiosError).response?.data);
+    }
+  }
+);
+
+export const getUser = createAsyncThunk(
+  'auth/getUser',
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await userService.getUser(id);
       return response.data;
     } catch (error) {
       return rejectWithValue((error as AxiosError).response?.data);

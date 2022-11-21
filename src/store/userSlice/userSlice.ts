@@ -1,15 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { userLogin, userRegistration } from './userActions';
+import { userLogin, userRegistration, getUser } from './userActions';
 
 interface IUserState {
   isLoading: boolean;
   isAuth: boolean;
   errorMessage: string;
+  user: {
+    id: string;
+  };
 }
 export const initialState: IUserState = {
   isLoading: false,
-  isAuth: false,
+  isAuth: !!localStorage.getItem('token'),
   errorMessage: '',
+  user: {
+    id: '',
+  },
 };
 
 export const userSlice = createSlice({
@@ -19,6 +25,9 @@ export const userSlice = createSlice({
     logOut: (state) => {
       state.isAuth = false;
       localStorage.removeItem('token');
+    },
+    setId: (state, action) => {
+      state.user.id = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -45,8 +54,23 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.errorMessage = (action.payload as Error).message || '';
     });
+    builder.addCase(getUser.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = '';
+      console.log(action.payload);
+    });
+    builder.addCase(getUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = (action.payload as Error).message || '';
+      if (state.errorMessage === 'Invalid token') {
+        state.isAuth = false;
+      }
+    });
   },
 });
 
-export const { logOut } = userSlice.actions;
+export const { logOut, setId } = userSlice.actions;
 export const userReducer = userSlice.reducer;

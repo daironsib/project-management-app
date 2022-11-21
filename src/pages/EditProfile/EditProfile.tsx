@@ -1,12 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Form } from '../../components/Form/Form';
 import { InputAuth } from '../../components/InputAuth/InputAuth';
 import { Modal } from '../../components/Modal/Modal';
-import { ROUTES } from '../../constants/constants';
+import { useAppDispatch,} from '../../hooks';
+import { getUser } from '../../store/userSlice/userActions';
+import { logOut,} from '../../store/userSlice/userSlice';
 import { ISignUpForm } from '../../types/interfaces';
+import { parseJWT } from '../../utils/utils';
 import { registrationSchema } from '../../validation/validation';
 import { ButtonDelete, ButtonUpdate, UpdateButtonsWrapper } from './styles';
 
@@ -20,7 +22,15 @@ export const EditProfile: React.FC = () => {
     resolver: yupResolver(registrationSchema),
   });
   const [isOpenModal, setOpenModal] = useState(false);
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const { id } = parseJWT(token);
+      dispatch(getUser(id));
+    }
+  }, [dispatch]);
 
   const onSubmit: SubmitHandler<ISignUpForm> = (data) => {
     reset();
@@ -31,7 +41,7 @@ export const EditProfile: React.FC = () => {
   };
 
   const deleteProfile = () => {
-    navigate(ROUTES.welcomePage);
+    dispatch(logOut());
   };
 
   const setModal = (isOpen: boolean) => {
