@@ -5,5 +5,12 @@ const token = localStorage.getItem('token');
 
 export const axiosPrivate = axios.create({
   baseURL,
-  headers: { 'X-Custom-Header': 'foobar', authorization: `Bearer ${token}` },
+  headers: { authorization: `Bearer ${token}` },
+});
+
+export const axiosPublic = axios.create({
+  baseURL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });

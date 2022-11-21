@@ -8,3 +8,8 @@ export interface ISignInForm {
   login: string;
   password: string;
 }
+
+export interface UserUpdateInterface {
+  id: string;
+  data: ISignUpForm;
+}

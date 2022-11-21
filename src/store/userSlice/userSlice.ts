@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { userLogin, userRegistration, getUser } from './userActions';
+import {
+  userLogin,
+  userRegistration,
+  updateUser,
+  deleteUser,
+} from './userActions';
 
 interface IUserState {
   isLoading: boolean;
@@ -26,9 +31,6 @@ export const userSlice = createSlice({
       state.isAuth = false;
       localStorage.removeItem('token');
     },
-    setId: (state, action) => {
-      state.user.id = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder.addCase(userRegistration.pending, (state) => {
@@ -54,15 +56,30 @@ export const userSlice = createSlice({
       state.isLoading = false;
       state.errorMessage = (action.payload as Error).message || '';
     });
-    builder.addCase(getUser.pending, (state) => {
+    builder.addCase(updateUser.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getUser.fulfilled, (state, action) => {
+    builder.addCase(updateUser.fulfilled, (state) => {
       state.isLoading = false;
       state.errorMessage = '';
-      console.log(action.payload);
     });
-    builder.addCase(getUser.rejected, (state, action) => {
+    builder.addCase(updateUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = (action.payload as Error).message || '';
+      if (state.errorMessage === 'Invalid token') {
+        state.isAuth = false;
+      }
+    });
+    builder.addCase(deleteUser.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleteUser.fulfilled, (state) => {
+      state.isLoading = false;
+      state.errorMessage = '';
+      state.isAuth = false;
+      localStorage.removeItem('token');
+    });
+    builder.addCase(deleteUser.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = (action.payload as Error).message || '';
       if (state.errorMessage === 'Invalid token') {
@@ -72,5 +89,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { logOut, setId } = userSlice.actions;
+export const { logOut } = userSlice.actions;
 export const userReducer = userSlice.reducer;

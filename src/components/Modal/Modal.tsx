@@ -25,6 +25,7 @@ export const Modal: React.FC<ModalProps> = ({
 
   const handleConfirm = () => {
     dispatch();
+    setModal(false);
   };
 
   return (

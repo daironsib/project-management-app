@@ -1,12 +1,13 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { Alert } from '../../components/Alert/Alert';
 import { Form } from '../../components/Form/Form';
 import { InputAuth } from '../../components/InputAuth/InputAuth';
+import { Loading } from '../../components/Loading/Loading';
 import { Modal } from '../../components/Modal/Modal';
-import { useAppDispatch,} from '../../hooks';
-import { getUser } from '../../store/userSlice/userActions';
-import { logOut,} from '../../store/userSlice/userSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { deleteUser, updateUser } from '../../store/userSlice/userActions';
 import { ISignUpForm } from '../../types/interfaces';
 import { parseJWT } from '../../utils/utils';
 import { registrationSchema } from '../../validation/validation';
@@ -23,17 +24,19 @@ export const EditProfile: React.FC = () => {
   });
   const [isOpenModal, setOpenModal] = useState(false);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const { id } = parseJWT(token);
-      dispatch(getUser(id));
-    }
-  }, [dispatch]);
+  const { isLoading, errorMessage } = useAppSelector((state) => state.user);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const onSubmit: SubmitHandler<ISignUpForm> = (data) => {
+    const token = localStorage.getItem('token') as string;
+    const { id } = parseJWT(token);
+    dispatch(updateUser({ id, data }));
+    setIsAlertOpen(true);
     reset();
+  };
+
+  const handleCloseAlert = () => {
+    setIsAlertOpen(false);
   };
 
   const handleDelete = () => {
@@ -41,7 +44,9 @@ export const EditProfile: React.FC = () => {
   };
 
   const deleteProfile = () => {
-    dispatch(logOut());
+    const token = localStorage.getItem('token') as string;
+    const { id } = parseJWT(token);
+    dispatch(deleteUser(id));
   };
 
   const setModal = (isOpen: boolean) => {
@@ -104,6 +109,16 @@ export const EditProfile: React.FC = () => {
           isOpen={isOpenModal}
           setModal={setModal}
           dispatch={deleteProfile}
+        />
+      )}
+      {isLoading ? (
+        <Loading isLoading={isLoading} />
+      ) : (
+        <Alert
+          message={errorMessage || `Пользователь успешно изменён`}
+          onClose={handleCloseAlert}
+          isOpen={isAlertOpen}
+          isError={!!errorMessage}
         />
       )}
     </>
