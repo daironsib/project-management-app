@@ -1,8 +1,5 @@
-import { ISignInForm } from './../../types/interfaces';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
-import { ISignUpForm } from '../../types/interfaces';
-import { login, registration } from './userRequests';
+import { createSlice } from '@reduxjs/toolkit';
+import { userLogin, userRegistration } from './userActions';
 
 interface IUserState {
   isLoading: boolean;
@@ -14,31 +11,6 @@ export const initialState: IUserState = {
   isAuth: false,
   errorMessage: '',
 };
-
-export const userRegistration = createAsyncThunk(
-  'auth/registration',
-  async (data: ISignUpForm, { rejectWithValue }) => {
-    try {
-      const response = await registration(data);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue((error as AxiosError).response?.data);
-    }
-  }
-);
-
-export const userLogin = createAsyncThunk(
-  'auth/login',
-  async (data: ISignInForm, { rejectWithValue }) => {
-    try {
-      const response = await login(data);
-      localStorage.setItem('token', response.data.token);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue((error as AxiosError).response?.data);
-    }
-  }
-);
 
 export const userSlice = createSlice({
   name: 'auth',

@@ -13,7 +13,7 @@ import { InputAuth } from '../../components/InputAuth/InputAuth';
 import { Loading } from '../../components/Loading/Loading';
 import { ROUTES } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { userLogin } from '../../store/userSlice/userSlice';
+import { userLogin } from '../../store/userSlice/userActions';
 import { ISignInForm } from '../../types/interfaces';
 import { loginSchema } from '../../validation/validation';
 
@@ -45,16 +45,13 @@ export const Login: React.FC = () => {
 
   useEffect(() => {
     if (isAuth) {
-      navigate(ROUTES.welcomePage);
+      navigate(ROUTES.boards);
     }
   }, [isAuth, navigate]);
 
   return (
     <>
-      <Form
-        title='Войти'
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <Form title='Войти' onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name='login'

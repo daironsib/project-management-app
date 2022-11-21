@@ -7,7 +7,6 @@ import { InputAuth } from '../../components/InputAuth/InputAuth';
 import { ROUTES } from '../../constants/constants';
 import { Form } from '../../components/Form/Form';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { userRegistration } from '../../store/userSlice/userSlice';
 import { Loading } from '../../components/Loading/Loading';
 import { Alert } from '../../components/Alert/Alert';
 import {
@@ -15,6 +14,7 @@ import {
   LinkFormWrapper,
   NavLinkForm,
 } from '../../components/Form/styles';
+import { userRegistration } from '../../store/userSlice/userActions';
 
 export const Registration: React.FC = () => {
   const {
