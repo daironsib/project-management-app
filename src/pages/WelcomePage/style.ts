@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { styleVars, fonts } from '../../constants/constants';
+import { styleVars, fonts, widthEntryPoints } from '../../constants/constants';
 
 const WelcomePageBlock = styled.div`
   display: flex;
@@ -12,6 +12,9 @@ const WelcomePageBlock = styled.div`
 const GeneralInfo = styled.div`
   display: flex;
   gap: 30px;
+  @media (${widthEntryPoints.laptop}) {
+    flex-direction: column;
+  }
 `;
 const AboutProject = styled.ul`
   display: flex;
@@ -19,6 +22,9 @@ const AboutProject = styled.ul`
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
+  @media (${widthEntryPoints.laptop}) {
+    justify-content: center;
+  }
 `;
 const AboutProjectCard = styled.li`
   min-width: 120px;
@@ -38,6 +44,9 @@ const AboutProjectCard = styled.li`
   justify-content: center;
   padding: 20px 10px;
   border-radius: 7px;
+  @media (${widthEntryPoints.tablet}) {
+    width: 100%;
+  }
 `;
 const AboutCourse = styled.div`
   display: flex;
@@ -61,10 +70,21 @@ const AboutTeamList = styled.ul`
   gap: 50px;
   width: 100%;
   list-style: none;
+  @media (${widthEntryPoints.tablet}) {
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    width: 180px;
+  }
 `;
 const ComputerImage = styled.img`
   width: 300px;
   height: auto;
+  @media (${widthEntryPoints.laptop}) {
+    width: 100%;
+  }
 `;
 const GeneralInfoTexts = styled.div`
   display: flex;

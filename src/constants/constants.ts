@@ -24,3 +24,8 @@ export const fonts = {
   montserrat: 'Montserrat',
   raleway: 'Raleway',
 };
+
+export const widthEntryPoints = {
+  laptop: 'max-width: 991px',
+  tablet: 'max-width: 530px',
+};

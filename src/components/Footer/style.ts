@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { styleVars } from '../../constants/constants';
+import { widthEntryPoints } from '../../constants/constants';
 
 const FooterBlock = styled.div`
   width: 100%;
@@ -19,6 +20,10 @@ const RssLogo = styled.img`
 const GithubLinks = styled.div`
   display: flex;
   gap: 10px;
+  @media (${widthEntryPoints.tablet}) {
+    flex-direction: column;
+    gap: 0;
+  }
 `;
 const GithubLink = styled.a`
   color: black;
