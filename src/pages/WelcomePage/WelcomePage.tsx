@@ -1,5 +1,5 @@
 import React from 'react';
-import ComputerImg from '../../assets/images/computer.png';
+import ComputerImg from '../../assets/images/video-calling.png';
 import {
   WelcomePageBlock,
   GeneralInfo,
@@ -10,6 +10,7 @@ import {
   GeneralInfoTexts,
   AboutProjectCard,
   AboutTeamList,
+  GeneralInfoSubtext,
 } from './style';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +21,7 @@ const WelcomePage = () => {
       <GeneralInfo>
         <GeneralInfoTexts>
           <h3>{t('generalInfoTextHeading')}</h3>
-          <p>{t('generalInfoText')}</p>
+          <GeneralInfoSubtext>{t('generalInfoText')}</GeneralInfoSubtext>
         </GeneralInfoTexts>
         <ComputerImage src={ComputerImg} alt='computer' />
       </GeneralInfo>
@@ -29,7 +30,6 @@ const WelcomePage = () => {
         <AboutProjectCard>{t('secondCard')}</AboutProjectCard>
         <AboutProjectCard>{t('thirdCard')}</AboutProjectCard>
         <AboutProjectCard>{t('fourthCard')}</AboutProjectCard>
-        <AboutProjectCard>{t('fifthCard')}</AboutProjectCard>
       </AboutProject>
       <AboutCourse>
         <h3></h3>
