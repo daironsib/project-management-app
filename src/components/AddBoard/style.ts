@@ -7,8 +7,8 @@ const BoardOverlay = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  visibility: hidden;
-  opacity: 0;
+  /* visibility: hidden;
+  opacity: 0; */
 `;
 
 const BoardWindow = styled.div`
