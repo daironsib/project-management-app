@@ -9,6 +9,11 @@ export interface ISignInForm {
   password: string;
 }
 
+export interface UserUpdateInterface {
+  id: string;
+  data: ISignUpForm;
+}
+
 export interface ITask {
   column: string;
   id: number;
@@ -26,3 +31,4 @@ export interface IdropResult {
   dropEffect: string;
   name: string;
 }
+
