@@ -5,6 +5,7 @@ export const ROUTES = {
   createBoard: '/create-board',
   welcomePage: '/',
   boards: '/boards',
+  board: '/board',
 };
 
 export const langs = {
@@ -28,4 +29,11 @@ export const fonts = {
 export const widthEntryPoints = {
   laptop: 'max-width: 991px',
   tablet: 'max-width: 530px',
+};
+
+export const COLUMN_NAMES = {
+  DO_IT: 'Do it',
+  IN_PROGRESS: 'In Progress',
+  AWAITING_REVIEW: 'Awaiting review',
+  DONE: 'Done',
 };

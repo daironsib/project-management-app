@@ -9,6 +9,7 @@ import WelcomePage from './pages/WelcomePage/WelcomePage';
 import './App.css';
 import Boards from './pages/Boards/Boards';
 import { EditProfile } from './pages/EditProfile/EditProfile';
+import { BoardPage } from './pages/Board/Board';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path={ROUTES.signIn} element={<Login />} />
           <Route path={ROUTES.boards} element={<Boards />}></Route>
           <Route path={ROUTES.editProfile} element={<EditProfile />} />
+          <Route path={`${ROUTES.board}/:id`} element={<BoardPage />} />
         </Routes>
       </AppBlock>
       <Footer />
