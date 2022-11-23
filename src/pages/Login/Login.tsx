@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Alert } from '../../components/Alert/Alert';
 import { Form } from '../../components/Form/Form';
@@ -16,7 +16,7 @@ import { userLogin } from '../../store/userSlice/userActions';
 import { ISignInForm } from '../../types/interfaces';
 import { loginSchema } from '../../validation/validation';
 
-export const Login: React.FC = () => {
+const Login: React.FC = () => {
   const {
     handleSubmit,
     control,
@@ -35,9 +35,9 @@ export const Login: React.FC = () => {
     reset();
   };
 
-  const handleCloseAlert = () => {
+  const handleCloseAlert = useCallback(() => {
     setIsAlertOpen(false);
-  };
+  }, []);
 
   return (
     <>
@@ -89,3 +89,5 @@ export const Login: React.FC = () => {
     </>
   );
 };
+
+export default Login;

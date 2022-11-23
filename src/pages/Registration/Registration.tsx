@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { registrationSchema } from '../../validation/validation';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -16,7 +16,7 @@ import {
 } from '../../components/Form/styles';
 import { userRegistration } from '../../store/userSlice/userActions';
 
-export const Registration: React.FC = () => {
+const Registration: React.FC = () => {
   const {
     handleSubmit,
     control,
@@ -35,9 +35,9 @@ export const Registration: React.FC = () => {
     reset();
   };
 
-  const handleCloseAlert = () => {
+  const handleCloseAlert = useCallback(() => {
     setIsAlertOpen(false);
-  };
+  }, []);
 
   return (
     <>
@@ -103,3 +103,5 @@ export const Registration: React.FC = () => {
     </>
   );
 };
+
+export default Registration;

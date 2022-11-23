@@ -1,5 +1,5 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Alert } from '../../components/Alert/Alert';
 import { Form } from '../../components/Form/Form';
@@ -13,7 +13,7 @@ import { parseJWT } from '../../utils/utils';
 import { registrationSchema } from '../../validation/validation';
 import { ButtonDelete, ButtonUpdate, UpdateButtonsWrapper } from './styles';
 
-export const EditProfile: React.FC = () => {
+const EditProfile: React.FC = () => {
   const {
     handleSubmit,
     control,
@@ -35,23 +35,23 @@ export const EditProfile: React.FC = () => {
     reset();
   };
 
-  const handleCloseAlert = () => {
+  const handleCloseAlert = useCallback(() => {
     setIsAlertOpen(false);
-  };
+  }, []);
 
   const handleDelete = () => {
     setModal(true);
   };
 
-  const deleteProfile = () => {
+  const deleteProfile = useCallback(() => {
     const token = localStorage.getItem('token') as string;
     const { id } = parseJWT(token);
     dispatch(deleteUser(id));
-  };
+  }, [dispatch]);
 
-  const setModal = (isOpen: boolean) => {
+  const setModal = useCallback((isOpen: boolean) => {
     setOpenModal(isOpen);
-  };
+  }, []);
 
   return (
     <>
@@ -124,3 +124,5 @@ export const EditProfile: React.FC = () => {
     </>
   );
 };
+
+export default EditProfile

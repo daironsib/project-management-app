@@ -2,14 +2,16 @@ import { Route, Routes } from 'react-router-dom';
 import { ROUTES } from './constants/constants';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import { Login } from './pages/Login/Login';
-import { Registration } from './pages/Registration/Registration';
 import { AppBlock, GlobalStyle } from './style';
-import WelcomePage from './pages/WelcomePage/WelcomePage';
+import { PrivateRoute } from './PrivateRoute/PrivateRoute';
+import { lazy } from 'react';
 import './App.css';
-import Boards from './pages/Boards/Boards';
-import { EditProfile } from './pages/EditProfile/EditProfile';
-import { PublicRoute, PrivateRoute } from './Routes/Routes';
+
+const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
+const Boards = lazy(() => import('./pages/Boards/Boards'));
+const Registration = lazy(() => import('./pages/Registration/Registration'));
+const Login = lazy(() => import('./pages/Login/Login'));
+const EditProfile = lazy(() => import('./pages/EditProfile/EditProfile'));
 
 function App() {
   return (
@@ -17,23 +19,13 @@ function App() {
       <Header />
       <AppBlock>
         <Routes>
-          <Route path={ROUTES.welcomePage} element={<WelcomePage />} />
-          <Route
-            path={ROUTES.registration}
-            element={<PublicRoute outlet={<Registration />} />}
-          />
-          <Route
-            path={ROUTES.signIn}
-            element={<PublicRoute outlet={<Login />} />}
-          />
-          <Route
-            path={ROUTES.editProfile}
-            element={<PrivateRoute outlet={<EditProfile />} />}
-          />
-          <Route
-            path={ROUTES.boards}
-            element={<PrivateRoute outlet={<Boards />} />}
-          />
+          <Route path={'/'} element={<PrivateRoute />}>
+            <Route path={ROUTES.welcomePage} element={<WelcomePage />} />
+            <Route path={ROUTES.registration} element={<Registration />} />
+            <Route path={ROUTES.signIn} element={<Login />} />
+            <Route path={ROUTES.editProfile} element={<EditProfile />} />
+            <Route path={ROUTES.boards} element={<Boards />} />
+          </Route>
         </Routes>
       </AppBlock>
       <Footer />
