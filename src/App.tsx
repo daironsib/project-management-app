@@ -5,6 +5,7 @@ import Footer from './components/Footer/Footer';
 import { AppBlock, GlobalStyle } from './style';
 import { PrivateRoute } from './PrivateRoute/PrivateRoute';
 import { lazy } from 'react';
+import { BoardPage } from './pages/Board/Board';
 import './App.css';
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
@@ -26,6 +27,7 @@ function App() {
             <Route path={ROUTES.editProfile} element={<EditProfile />} />
             <Route path={ROUTES.boards} element={<Boards />} />
           </Route>
+          <Route path={`${ROUTES.board}/:id`} element={<BoardPage />} />
         </Routes>
       </AppBlock>
       <Footer />

@@ -3,12 +3,17 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logOut } from '../../store/userSlice/userSlice';
+import SignInImg from '../../assets/images/login.png';
+import SignUpImg from '../../assets/images/add-user.png';
+import LogoImage from '../../assets/images/trello.png';
 import {
   HeaderBlock,
   SwitcherLabel,
   SwitcherInput,
   NavBlock,
   SwitcherBlock,
+  UserImage,
+  LogoImg,
 } from './style';
 import i18next from '../../translations/translations';
 import { langs } from '../../constants/constants';
@@ -48,12 +53,18 @@ const Header = () => {
 
   return (
     <HeaderBlock sticky={isSticky}>
-      <NavLink to='/'>Logo</NavLink>
+      <NavLink to='/'>
+        <LogoImg src={LogoImage} alt='logo'></LogoImg>
+      </NavLink>
       <NavBlock>
         {!isAuth ? (
           <>
-            <NavLink to={ROUTES.signIn}>Sign in</NavLink>
-            <NavLink to={ROUTES.registration}>Sign-up</NavLink>
+            <NavLink to={ROUTES.signIn}>
+              <UserImage src={SignInImg} alt='SignIn'></UserImage>
+            </NavLink>
+            <NavLink to={ROUTES.registration}>
+              <UserImage src={SignUpImg} alt='SignUp'></UserImage>
+            </NavLink>
           </>
         ) : (
           <>

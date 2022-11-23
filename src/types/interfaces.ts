@@ -13,3 +13,22 @@ export interface UserUpdateInterface {
   id: string;
   data: ISignUpForm;
 }
+
+export interface ITask {
+  column: string;
+  id: number;
+  name: string;
+}
+
+export interface IDnDItem {
+  index?: number;
+  name?: string;
+  currentColumnName?: string;
+  type?: string;
+}
+
+export interface IdropResult {
+  dropEffect: string;
+  name: string;
+}
+
