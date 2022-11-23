@@ -1,7 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { Alert } from '../../components/Alert/Alert';
 import { Form } from '../../components/Form/Form';
 import {
@@ -13,11 +12,11 @@ import { InputAuth } from '../../components/InputAuth/InputAuth';
 import { Loading } from '../../components/Loading/Loading';
 import { ROUTES } from '../../constants/constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { userLogin } from '../../store/userSlice/userSlice';
+import { userLogin } from '../../store/userSlice/userActions';
 import { ISignInForm } from '../../types/interfaces';
 import { loginSchema } from '../../validation/validation';
 
-export const Login: React.FC = () => {
+const Login: React.FC = () => {
   const {
     handleSubmit,
     control,
@@ -27,11 +26,8 @@ export const Login: React.FC = () => {
     resolver: yupResolver(loginSchema),
   });
   const dispatch = useAppDispatch();
-  const { isLoading, errorMessage, isAuth } = useAppSelector(
-    (state) => state.user
-  );
+  const { isLoading, errorMessage } = useAppSelector((state) => state.user);
   const [isAlertOpen, setIsAlertOpen] = useState(false);
-  const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<ISignInForm> = (data) => {
     dispatch(userLogin(data));
@@ -39,22 +35,13 @@ export const Login: React.FC = () => {
     reset();
   };
 
-  const handleCloseAlert = () => {
+  const handleCloseAlert = useCallback(() => {
     setIsAlertOpen(false);
-  };
-
-  useEffect(() => {
-    if (isAuth) {
-      navigate(ROUTES.welcomePage);
-    }
-  }, [isAuth, navigate]);
+  }, []);
 
   return (
     <>
-      <Form
-        title='Войти'
-        onSubmit={handleSubmit(onSubmit)}
-      >
+      <Form title='Войти' onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name='login'
@@ -102,3 +89,5 @@ export const Login: React.FC = () => {
     </>
   );
 };
+
+export default Login;

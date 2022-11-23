@@ -1,44 +1,27 @@
-import { ISignInForm } from './../../types/interfaces';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
-import { ISignUpForm } from '../../types/interfaces';
-import { login, registration } from './userRequests';
+import { createSlice } from '@reduxjs/toolkit';
+import {
+  userLogin,
+  userRegistration,
+  updateUser,
+  deleteUser,
+} from './userActions';
 
 interface IUserState {
   isLoading: boolean;
   isAuth: boolean;
   errorMessage: string;
+  user: {
+    id: string;
+  };
 }
 export const initialState: IUserState = {
   isLoading: false,
-  isAuth: false,
+  isAuth: !!localStorage.getItem('token'),
   errorMessage: '',
+  user: {
+    id: '',
+  },
 };
-
-export const userRegistration = createAsyncThunk(
-  'auth/registration',
-  async (data: ISignUpForm, { rejectWithValue }) => {
-    try {
-      const response = await registration(data);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue((error as AxiosError).response?.data);
-    }
-  }
-);
-
-export const userLogin = createAsyncThunk(
-  'auth/login',
-  async (data: ISignInForm, { rejectWithValue }) => {
-    try {
-      const response = await login(data);
-      localStorage.setItem('token', response.data.token);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue((error as AxiosError).response?.data);
-    }
-  }
-);
 
 export const userSlice = createSlice({
   name: 'auth',
@@ -72,6 +55,36 @@ export const userSlice = createSlice({
     builder.addCase(userLogin.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = (action.payload as Error).message || '';
+    });
+    builder.addCase(updateUser.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateUser.fulfilled, (state) => {
+      state.isLoading = false;
+      state.errorMessage = '';
+    });
+    builder.addCase(updateUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = (action.payload as Error).message || '';
+      if (state.errorMessage === 'Invalid token') {
+        state.isAuth = false;
+      }
+    });
+    builder.addCase(deleteUser.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(deleteUser.fulfilled, (state) => {
+      state.isLoading = false;
+      state.errorMessage = '';
+      state.isAuth = false;
+      localStorage.removeItem('token');
+    });
+    builder.addCase(deleteUser.rejected, (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = (action.payload as Error).message || '';
+      if (state.errorMessage === 'Invalid token') {
+        state.isAuth = false;
+      }
     });
   },
 });

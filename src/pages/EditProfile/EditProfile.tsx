@@ -1,16 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Alert } from '../../components/Alert/Alert';
 import { Form } from '../../components/Form/Form';
 import { InputAuth } from '../../components/InputAuth/InputAuth';
+import { Loading } from '../../components/Loading/Loading';
 import { Modal } from '../../components/Modal/Modal';
-import { ROUTES } from '../../constants/constants';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { deleteUser, updateUser } from '../../store/userSlice/userActions';
 import { ISignUpForm } from '../../types/interfaces';
+import { parseJWT } from '../../utils/utils';
 import { registrationSchema } from '../../validation/validation';
 import { ButtonDelete, ButtonUpdate, UpdateButtonsWrapper } from './styles';
 
-export const EditProfile: React.FC = () => {
+const EditProfile: React.FC = () => {
   const {
     handleSubmit,
     control,
@@ -20,23 +23,35 @@ export const EditProfile: React.FC = () => {
     resolver: yupResolver(registrationSchema),
   });
   const [isOpenModal, setOpenModal] = useState(false);
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { isLoading, errorMessage } = useAppSelector((state) => state.user);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
 
   const onSubmit: SubmitHandler<ISignUpForm> = (data) => {
+    const token = localStorage.getItem('token') as string;
+    const { id } = parseJWT(token);
+    dispatch(updateUser({ id, data }));
+    setIsAlertOpen(true);
     reset();
   };
+
+  const handleCloseAlert = useCallback(() => {
+    setIsAlertOpen(false);
+  }, []);
 
   const handleDelete = () => {
     setModal(true);
   };
 
-  const deleteProfile = () => {
-    navigate(ROUTES.welcomePage);
-  };
+  const deleteProfile = useCallback(() => {
+    const token = localStorage.getItem('token') as string;
+    const { id } = parseJWT(token);
+    dispatch(deleteUser(id));
+  }, [dispatch]);
 
-  const setModal = (isOpen: boolean) => {
+  const setModal = useCallback((isOpen: boolean) => {
     setOpenModal(isOpen);
-  };
+  }, []);
 
   return (
     <>
@@ -96,6 +111,18 @@ export const EditProfile: React.FC = () => {
           dispatch={deleteProfile}
         />
       )}
+      {isLoading ? (
+        <Loading isLoading={isLoading} />
+      ) : (
+        <Alert
+          message={errorMessage || `Пользователь успешно изменён`}
+          onClose={handleCloseAlert}
+          isOpen={isAlertOpen}
+          isError={!!errorMessage}
+        />
+      )}
     </>
   );
 };
+
+export default EditProfile
