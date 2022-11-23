@@ -21,8 +21,15 @@ import AddButton from '../../assets/images/add-board.svg';
 import AddBoard from '../../components/AddBoard/AddBoard';
 import EditBoard from '../../components/EditBoard/EditBoard';
 import DeleteBoard from '../../components/DeleteBoard/DeleteBoard';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { changeIsCreateModalOpened } from '../../../src/store/boardSlice/boardSlice';
 
 const Boards = () => {
+  const { isCreateModalOpened } = useAppSelector((state) => state.board);
+  const dispatch = useAppDispatch();
+  const createModalOpen = () => {
+    dispatch(changeIsCreateModalOpened(true));
+  };
   return (
     <BoardsBlock>
       <BoardList>
@@ -43,10 +50,10 @@ const Boards = () => {
             <BoardDescription>Description</BoardDescription>
           </CardBlock>
         </BoardCard>
-        <AddBoardButton>
+        <AddBoardButton onClick={createModalOpen}>
           <AddBoardImg src={AddButton} alt='add' />
         </AddBoardButton>
-        <AddBoard></AddBoard>
+        <AddBoard isOpened={isCreateModalOpened}></AddBoard>
         <EditBoard></EditBoard>
         <DeleteBoard></DeleteBoard>
       </BoardList>

@@ -9,32 +9,54 @@ import {
   ButtonCancel,
   ButtonBlock,
   CreateBoard,
+  ErrorMessage,
 } from './style';
 import { IBoard } from '../../types/interfaces';
-import { creationOfBoard } from '../../store/boardSlice/boardSlice';
+import {
+  creationOfBoard,
+  changeIsCreateModalOpened,
+} from '../../store/boardSlice/boardSlice';
+import { Loading } from '../Loading/Loading';
+import { parseJWT } from '../../utils/utils';
 
-const AddBoard = () => {
+interface IAddBoard {
+  isOpened: boolean;
+}
+const AddBoard = ({ isOpened }: IAddBoard) => {
   const { register, handleSubmit, reset } = useForm<IBoard>();
   const dispatch = useAppDispatch();
-  // const { error, errorMessage } = useAppSelector((state) => state.board);
+  const createModalClose = () => {
+    dispatch(changeIsCreateModalOpened(false));
+  };
+  const { error, errorMessage, loading } = useAppSelector(
+    (state) => state.board
+  );
   const clickHandler: SubmitHandler<IBoard> = (data: IBoard) => {
     dispatch(creationOfBoard(data));
     reset();
   };
   return (
-    <BoardOverlay>
-      <BoardWindow>
-        <CreateBoard>CREATE BOARD</CreateBoard>
-        <form onSubmit={handleSubmit(clickHandler)}>
+    <BoardOverlay isOpened={isOpened}>
+      <form onSubmit={handleSubmit(clickHandler)}>
+        <BoardWindow>
+          <CreateBoard>CREATE BOARD</CreateBoard>
           <InputName {...register('title')} type='text' placeholder='NAME' />
-          <input {...register('owner')} type='hidden' value={'hello'} />
-          {/* {error ? errorMessage : "it's ok!"} */}
+          <input
+            {...register('owner')}
+            type='hidden'
+            value={parseJWT(localStorage.getItem('token')!)}
+          />
+          {error ? (
+            <ErrorMessage>{errorMessage}</ErrorMessage>
+          ) : loading ? (
+            <Loading isLoading={true} />
+          ) : null}
           <ButtonBlock>
             <ButtonContinue type='submit'>CONTINUE</ButtonContinue>
-            <ButtonCancel>CANCEL</ButtonCancel>
+            <ButtonCancel onClick={createModalClose}>CANCEL</ButtonCancel>
           </ButtonBlock>
-        </form>
-      </BoardWindow>
+        </BoardWindow>
+      </form>
     </BoardOverlay>
   );
 };

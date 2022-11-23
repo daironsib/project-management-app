@@ -6,6 +6,8 @@ import { createBoard } from './boardRequests';
 export const initialState = {
   errorMessage: '',
   error: false,
+  loading: false,
+  isCreateModalOpened: false,
 };
 
 export const creationOfBoard = createAsyncThunk(
@@ -23,18 +25,27 @@ export const creationOfBoard = createAsyncThunk(
 export const boardSlice = createSlice({
   name: 'board',
   initialState,
-  reducers: {},
+  reducers: {
+    changeIsCreateModalOpened: (state, action) => {
+      state.isCreateModalOpened = action.payload;
+    },
+  },
   extraReducers: (builder) => {
-    builder.addCase(creationOfBoard.pending, (state) => {});
+    builder.addCase(creationOfBoard.pending, (state) => {
+      state.loading = true;
+    });
     builder.addCase(creationOfBoard.fulfilled, (state) => {
-      state.errorMessage = '';
       state.error = false;
+      state.loading = false;
+      state.isCreateModalOpened = false;
     });
     builder.addCase(creationOfBoard.rejected, (state, action) => {
       state.errorMessage = (action.payload as Error).message || '';
       state.error = true;
+      state.loading = false;
     });
   },
 });
 
 export const boardReducer = boardSlice.reducer;
+export const { changeIsCreateModalOpened } = boardSlice.actions;
