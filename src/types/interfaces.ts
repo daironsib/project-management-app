@@ -36,3 +36,9 @@ export interface IdropResult {
   dropEffect: string;
   name: string;
 }
+export interface IBoardGot {
+  title: string;
+  owner: string;
+  id: string;
+  users: [];
+}

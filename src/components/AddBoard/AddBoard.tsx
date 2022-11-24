@@ -44,7 +44,7 @@ const AddBoard = ({ isOpened }: IAddBoard) => {
           <input
             {...register('owner')}
             type='hidden'
-            value={parseJWT(localStorage.getItem('token')!)}
+            value={parseJWT(localStorage.getItem('token')!).id}
           />
           {error ? (
             <ErrorMessage>{errorMessage}</ErrorMessage>

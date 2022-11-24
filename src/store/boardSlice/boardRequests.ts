@@ -16,3 +16,13 @@ export const createBoard = async (data: IBoard) => {
     },
   });
 };
+
+export const getBoardsByUserId = async (userId: string) => {
+  return await axios({
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    url: `${baseUrl}/boardsSet/${userId}`,
+  });
+};
