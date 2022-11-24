@@ -33,7 +33,13 @@ const Boards = () => {
     dispatch(changeIsCreateModalOpened(true));
   };
   const view = boards.map((board) => {
-    return <BoardPreview key={board.id} title={board.title}></BoardPreview>;
+    return (
+      <BoardPreview
+        key={board._id}
+        boardId={board._id}
+        title={board.title}
+      ></BoardPreview>
+    );
   });
   return (
     <BoardsBlock>

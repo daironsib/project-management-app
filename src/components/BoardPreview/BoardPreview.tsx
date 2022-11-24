@@ -12,24 +12,38 @@ import {
 import EditImage from '../../assets/images/edit.svg';
 import BinImage from '../../assets/images/bin.svg';
 import KanbanImage from '../../assets/images/kanban.png';
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
   title: string;
+  boardId: string;
 }
-const BoardPreview = ({ title }: IProps) => {
+const BoardPreview = ({ title, boardId }: IProps) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/board/${boardId}`);
+  };
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('edit');
+  };
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('delete');
+  };
   return (
-    <BoardCard>
+    <BoardCard onClick={handleClick}>
       <KanbanImg src={KanbanImage} alt='kanban' />
       <CardBlock>
         <NameBlock>
           <CardName>{title}</CardName>
           <Images>
-            <a href='/edit'>
+            <div onClick={handleEditClick}>
               <EditImg src={EditImage} alt='edit' />
-            </a>
-            <a href='/delete'>
+            </div>
+            <div onClick={handleDeleteClick}>
               <BinImg src={BinImage} alt='bin' />
-            </a>
+            </div>
           </Images>
         </NameBlock>
       </CardBlock>

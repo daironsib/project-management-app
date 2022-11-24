@@ -39,6 +39,6 @@ export interface IdropResult {
 export interface IBoardGot {
   title: string;
   owner: string;
-  id: string;
+  _id: string;
   users: [];
 }
