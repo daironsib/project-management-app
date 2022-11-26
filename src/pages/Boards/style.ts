@@ -81,8 +81,11 @@ const AddBoardImg = styled.img`
   margin: 0 auto;
 `;
 
+const ErrorMessage = styled.p``;
+
 export {
   BoardsBlock,
+  ErrorMessage,
   AddBoardImg,
   BoardList,
   AddBoardButton,

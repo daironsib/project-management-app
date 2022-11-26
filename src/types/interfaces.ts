@@ -9,6 +9,11 @@ export interface ISignInForm {
   password: string;
 }
 
+export interface IBoard {
+  title: string;
+  owner: string;
+}
+
 export interface UserUpdateInterface {
   id: string;
   data: ISignUpForm;
@@ -31,4 +36,9 @@ export interface IdropResult {
   dropEffect: string;
   name: string;
 }
-
+export interface IBoardGot {
+  title: string;
+  owner: string;
+  _id: string;
+  users: [];
+}
