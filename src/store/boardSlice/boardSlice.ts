@@ -1,7 +1,7 @@
-import { IBoard, IBoardGot } from '../../types/interfaces';
+import { IBoard, IBoardGot, IEditBoard } from '../../types/interfaces';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import { createBoard, getBoardsByUserId } from './boardRequests';
+import { createBoard, editBoard, getBoardsByUserId } from './boardRequests';
 
 export const initialState = {
   errorMessage: '',
@@ -13,6 +13,8 @@ export const initialState = {
   errorBoardsMessage: '',
   boards: [] as IBoardGot[],
   shouldLoadBoards: true,
+  isEditLoading: false,
+  isEditLoadingError: false,
 };
 
 export const creationOfBoard = createAsyncThunk(
@@ -32,6 +34,18 @@ export const getBoards = createAsyncThunk(
   async (userId: string, { rejectWithValue }) => {
     try {
       const response = await getBoardsByUserId(userId);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue((error as AxiosError).response?.data);
+    }
+  }
+);
+
+export const editBoards = createAsyncThunk(
+  'boards/edit',
+  async (data: IEditBoard, { rejectWithValue }) => {
+    try {
+      const response = await editBoard(data);
       return response.data;
     } catch (error) {
       return rejectWithValue((error as AxiosError).response?.data);
@@ -76,6 +90,19 @@ export const boardSlice = createSlice({
       state.errorBoards = true;
       state.loadingBoards = false;
       state.shouldLoadBoards = false;
+    });
+    builder.addCase(editBoards.pending, (state) => {
+      state.isEditLoading = true;
+      state.isEditLoadingError = false;
+    });
+    builder.addCase(editBoards.fulfilled, (state) => {
+      state.shouldLoadBoards = true;
+      state.isEditLoading = false;
+      state.isEditLoadingError = false;
+    });
+    builder.addCase(editBoards.rejected, (state) => {
+      state.isEditLoading = false;
+      state.isEditLoadingError = true;
     });
   },
 });

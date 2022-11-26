@@ -3,7 +3,6 @@ import { BoardsBlock, BoardList, AddBoardButton, AddBoardImg } from './style';
 import AddButton from '../../assets/images/add-board.svg';
 import AddBoard from '../../components/AddBoard/AddBoard';
 import { parseJWT } from '../../utils/utils';
-import EditBoard from '../../components/EditBoard/EditBoard';
 import DeleteBoard from '../../components/DeleteBoard/DeleteBoard';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
@@ -55,7 +54,6 @@ const Boards = () => {
           <AddBoardImg src={AddButton} alt='add' />
         </AddBoardButton>
         <AddBoard isOpened={isCreateModalOpened}></AddBoard>
-        <EditBoard></EditBoard>
         <DeleteBoard></DeleteBoard>
       </BoardList>
     </BoardsBlock>
