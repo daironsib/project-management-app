@@ -1,11 +1,13 @@
 import { userReducer } from './userSlice/userSlice';
 import { Action, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { boardReducer } from './boardSlice/boardSlice';
+import { columnsReducer } from './columnsSlice/columnsSlice';
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     board: boardReducer,
+    columns: columnsReducer
   },
   devTools: process.env.NODE_ENV !== 'production',
 });
