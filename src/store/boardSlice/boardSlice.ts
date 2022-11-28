@@ -1,7 +1,12 @@
 import { IBoard, IBoardGot, IEditBoard } from '../../types/interfaces';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import { createBoard, editBoard, getBoardsByUserId } from './boardRequests';
+import {
+  createBoard,
+  editBoard,
+  getBoardsByUserId,
+  deleteBoard,
+} from './boardRequests';
 
 export const initialState = {
   errorMessage: '',
@@ -15,6 +20,7 @@ export const initialState = {
   shouldLoadBoards: true,
   isEditLoading: false,
   isEditLoadingError: false,
+  isDeleteLoading: false,
 };
 
 export const creationOfBoard = createAsyncThunk(
@@ -46,6 +52,18 @@ export const editBoards = createAsyncThunk(
   async (data: IEditBoard, { rejectWithValue }) => {
     try {
       const response = await editBoard(data);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue((error as AxiosError).response?.data);
+    }
+  }
+);
+
+export const removeBoard = createAsyncThunk(
+  'boards/delete',
+  async (boardId: string, { rejectWithValue }) => {
+    try {
+      const response = await deleteBoard(boardId);
       return response.data;
     } catch (error) {
       return rejectWithValue((error as AxiosError).response?.data);
@@ -103,6 +121,16 @@ export const boardSlice = createSlice({
     builder.addCase(editBoards.rejected, (state) => {
       state.isEditLoading = false;
       state.isEditLoadingError = true;
+    });
+    builder.addCase(removeBoard.pending, (state) => {
+      state.isDeleteLoading = true;
+    });
+    builder.addCase(removeBoard.fulfilled, (state) => {
+      state.isDeleteLoading = false;
+      state.shouldLoadBoards = true;
+    });
+    builder.addCase(removeBoard.rejected, (state) => {
+      state.isDeleteLoading = false;
     });
   },
 });

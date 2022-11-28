@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import EditBoard from '../EditBoard/EditBoard';
 import { useAppSelector } from '../../hooks';
 import { Loading } from '../Loading/Loading';
+import DeleteBoard from '../DeleteBoard/DeleteBoard';
 
 interface IProps {
   title: string;
@@ -23,7 +24,10 @@ interface IProps {
 }
 const BoardPreview = ({ title, boardId }: IProps) => {
   const [isEditModalOpened, setIsEditModalOpened] = useState(false);
-  const { isEditLoading } = useAppSelector((state) => state.board);
+  const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
+  const { isEditLoading, isDeleteLoading } = useAppSelector(
+    (state) => state.board
+  );
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/board/${boardId}`);
@@ -31,6 +35,7 @@ const BoardPreview = ({ title, boardId }: IProps) => {
 
   const closeModal = () => {
     setIsEditModalOpened(false);
+    setIsDeleteModalOpened(false);
   };
 
   const handleEditClick = (e: React.MouseEvent) => {
@@ -40,7 +45,7 @@ const BoardPreview = ({ title, boardId }: IProps) => {
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log('delete');
+    setIsDeleteModalOpened(true);
   };
   return (
     <>
@@ -52,6 +57,15 @@ const BoardPreview = ({ title, boardId }: IProps) => {
           boardId={boardId}
           closeModal={closeModal}
         ></EditBoard>
+      )}
+      {isDeleteLoading ? (
+        <Loading />
+      ) : (
+        <DeleteBoard
+          isOpened={isDeleteModalOpened}
+          boardId={boardId}
+          closeModal={closeModal}
+        ></DeleteBoard>
       )}
       <BoardCard onClick={handleClick}>
         <KanbanImg src={KanbanImage} alt='kanban' />

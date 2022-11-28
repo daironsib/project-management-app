@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { IBoard, IEditBoard } from '../../types/interfaces';
-import { parseJWT } from '../../utils/utils';
 
 const baseUrl = 'https://final-task-backend-production-c179.up.railway.app';
 
@@ -40,5 +39,15 @@ export const editBoard = async (data: IEditBoard) => {
       owner: data.owner,
       users: [],
     },
+  });
+};
+
+export const deleteBoard = async (boardId: string) => {
+  return await axios({
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },
+    url: `${baseUrl}/boards/${boardId}`,
   });
 };

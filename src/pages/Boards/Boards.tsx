@@ -54,7 +54,6 @@ const Boards = () => {
           <AddBoardImg src={AddButton} alt='add' />
         </AddBoardButton>
         <AddBoard isOpened={isCreateModalOpened}></AddBoard>
-        <DeleteBoard></DeleteBoard>
       </BoardList>
     </BoardsBlock>
   );
