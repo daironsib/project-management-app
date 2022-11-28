@@ -91,7 +91,7 @@ const Registration: React.FC = () => {
         <ButtonSubmit>Регистрация</ButtonSubmit>
       </Form>
       {isLoading ? (
-        <Loading isLoading={isLoading} />
+        <Loading />
       ) : (
         <Alert
           message={errorMessage || 'Пользователь успешно зарегестрирован'}

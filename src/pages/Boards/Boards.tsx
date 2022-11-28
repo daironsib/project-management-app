@@ -44,7 +44,7 @@ const Boards = () => {
     <BoardsBlock>
       <BoardList>
         {loadingBoards ? (
-          <Loading isLoading />
+          <Loading />
         ) : errorBoards ? (
           <ErrorMessage>{errorBoardsMessage} </ErrorMessage>
         ) : (

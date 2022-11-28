@@ -49,7 +49,7 @@ const AddBoard = ({ isOpened }: IAddBoard) => {
           {error ? (
             <ErrorMessage>{errorMessage}</ErrorMessage>
           ) : loading ? (
-            <Loading isLoading={true} />
+            <Loading />
           ) : null}
           <ButtonBlock>
             <ButtonContinue type='submit'>CONTINUE</ButtonContinue>

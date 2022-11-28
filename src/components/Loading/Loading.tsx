@@ -1,13 +1,18 @@
-import { Backdrop, CircularProgress } from '@mui/material';
+import { LoadingCircles, LoadingBackdrop } from './style';
 
-interface LoadingProps {
-  isLoading: boolean;
-}
-
-export const Loading: React.FC<LoadingProps> = ({ isLoading }) => {
+export const Loading = () => {
   return (
-    <Backdrop open={isLoading}>
-      <CircularProgress thickness={7} size={100} />
-    </Backdrop>
+    <LoadingBackdrop>
+      <LoadingCircles>
+        <div id='circular3d_1G' className='circular3dG'></div>
+        <div id='circular3d_2G' className='circular3dG'></div>
+        <div id='circular3d_3G' className='circular3dG'></div>
+        <div id='circular3d_4G' className='circular3dG'></div>
+        <div id='circular3d_5G' className='circular3dG'></div>
+        <div id='circular3d_6G' className='circular3dG'></div>
+        <div id='circular3d_7G' className='circular3dG'></div>
+        <div id='circular3d_8G' className='circular3dG'></div>
+      </LoadingCircles>
+    </LoadingBackdrop>
   );
 };

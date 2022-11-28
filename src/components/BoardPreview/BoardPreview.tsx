@@ -45,7 +45,7 @@ const BoardPreview = ({ title, boardId }: IProps) => {
   return (
     <>
       {isEditLoading ? (
-        <Loading isLoading />
+        <Loading />
       ) : (
         <EditBoard
           isOpened={isEditModalOpened}
