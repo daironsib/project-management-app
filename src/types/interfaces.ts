@@ -48,4 +48,27 @@ export interface IEditBoard {
   boardId: string;
   title: string;
   owner: string;
+}  
+
+export interface IColumn {
+  _id?: string;
+  title: string;
+  order: number;
+  boardId?: string;
+}
+
+export interface IColumnCreate {
+  id: string;
+  data: IColumn;
+}
+
+export interface IColumnUpdate {
+  boardId: string;
+  columnId: string;
+  data: IColumn;
+}
+
+export interface IColumnDelete {
+  boardId: string;
+  columnId: string;
 }
