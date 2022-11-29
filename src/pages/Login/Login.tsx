@@ -77,7 +77,7 @@ const Login: React.FC = () => {
         <ButtonSubmit>Войти</ButtonSubmit>
       </Form>
       {isLoading ? (
-        <Loading isLoading={isLoading} />
+        <Loading />
       ) : (
         <Alert
           message={errorMessage || `Добро пожаловать`}

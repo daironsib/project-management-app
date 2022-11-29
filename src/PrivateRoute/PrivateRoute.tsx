@@ -20,7 +20,7 @@ export const PrivateRoute: React.FC = () => {
     return <Navigate to={ROUTES.welcomePage} />;
   }
   return (
-    <Suspense fallback={<Loading isLoading={true} />}>
+    <Suspense fallback={<Loading />}>
       <Outlet />
     </Suspense>
   );

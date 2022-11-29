@@ -9,16 +9,33 @@ import {
   DelBoard,
 } from './style';
 import Image from '../../assets/images/warning.png';
+import { removeBoard } from '../../store/boardSlice/boardSlice';
+import { useAppDispatch } from '../../hooks';
 
-const DeleteBoard = () => {
+interface IProps {
+  isOpened: boolean;
+  boardId?: string;
+  closeModal: () => void;
+}
+
+const DeleteBoard = ({ isOpened, boardId, closeModal }: IProps) => {
+  const dispatch = useAppDispatch();
+  const handleCancelClick = () => {
+    closeModal();
+  };
+  const handleContinueClick = () => {
+    if (boardId) {
+      dispatch(removeBoard(boardId));
+    }
+  };
   return (
-    <BoardOverlay>
+    <BoardOverlay isOpened={isOpened}>
       <BoardWindow>
         <DeleteImg src={Image} alt='warning' />
         <DelBoard>Are you sure?</DelBoard>
         <ButtonBlock>
-          <ButtonContinue>DELETE</ButtonContinue>
-          <ButtonCancel>CANCEL</ButtonCancel>
+          <ButtonContinue onClick={handleContinueClick}>DELETE</ButtonContinue>
+          <ButtonCancel onClick={handleCancelClick}>CANCEL</ButtonCancel>
         </ButtonBlock>
       </BoardWindow>
     </BoardOverlay>

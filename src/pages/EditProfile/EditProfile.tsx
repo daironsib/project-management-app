@@ -112,7 +112,7 @@ const EditProfile: React.FC = () => {
         />
       )}
       {isLoading ? (
-        <Loading isLoading={isLoading} />
+        <Loading />
       ) : (
         <Alert
           message={errorMessage || `Пользователь успешно изменён`}
@@ -125,4 +125,4 @@ const EditProfile: React.FC = () => {
   );
 };
 
-export default EditProfile
+export default EditProfile;
