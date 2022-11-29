@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { BoardBlock } from './styles';
+import { AddColumnBlock, AddColumnBtn, BoardBlock } from './styles';
 import { COLUMN_NAMES } from '../../constants/constants';
 import { Task } from '../../components/Task/Task';
 import { Column } from '../../components/Column/Column';
-import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useParams } from 'react-router-dom';
+import { toogleCreateModal } from '../../store/columnsSlice/columnsSlice';
+import { AddColumn } from '../../components/AddColumn/AddColumn';
+import { getColumns } from '../../store/columnsSlice/columnsActions';
 
 const { DO_IT } = COLUMN_NAMES;
 const tasks = [
@@ -16,7 +20,26 @@ const tasks = [
 ];
 
 export const BoardPage = () => {
+  const { id } = useParams();
   const [items, setItems] = useState(tasks);
+  const {
+    columns,
+    shouldLoadColumns,
+    isCreateModalOpen,
+  } = useAppSelector((state) => state.columns);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (shouldLoadColumns && id) {
+      dispatch(getColumns(id));
+    }
+  }, [shouldLoadColumns, dispatch]);
+
+  const createModalOpen = () => {
+    dispatch(toogleCreateModal(true));
+  };
+
   const moveCardHandler = (dragIndex: number, hoverIndex: number) => {
     const dragItem = items[dragIndex];
 
@@ -63,6 +86,10 @@ export const BoardPage = () => {
         <Column title={DONE}>
           {renderItemsForColumn(DONE)}
         </Column>
+        <AddColumnBlock>
+          <AddColumnBtn onClick={createModalOpen}>+ Add column</AddColumnBtn> 
+        </AddColumnBlock>
+        <AddColumn isOpened={isCreateModalOpen}></AddColumn>
       </DndProvider>
     </BoardBlock>
   );
