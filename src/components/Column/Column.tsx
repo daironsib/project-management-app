@@ -1,5 +1,5 @@
 import { useDrop } from 'react-dnd';
-import { AddBoardImg, AddTaskBtn, ColumnBlock, ColumnTitle } from './styles';
+import { AddBoardImg, AddTaskBtn, RemoveBtn, ColumnBlock, ColumnTitle } from './styles';
 import AddButton from '../../assets/images/add-board.svg';
 
 type Props = {
@@ -26,6 +26,7 @@ export const Column = ({ children, title }: Props) => {
       <AddTaskBtn>
         <AddBoardImg src={AddButton} />
       </AddTaskBtn>
+      <RemoveBtn>x</RemoveBtn>
     </ColumnBlock>
   );
 };

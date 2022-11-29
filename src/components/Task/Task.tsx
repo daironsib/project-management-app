@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
 import { COLUMN_NAMES } from '../../constants/constants';
 import { IDnDItem, IdropResult, ITask } from '../../types/interfaces';
-import { TaskBlock } from './styles';
+import { RemoveBtn, TaskBlock } from './styles';
 
 interface Props {
   name: string;
@@ -108,6 +108,7 @@ export const Task = ({
   return (
     <TaskBlock ref={ref} style={{ opacity }}>
       {name}
+      <RemoveBtn>x</RemoveBtn>
     </TaskBlock>
   );
 };
