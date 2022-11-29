@@ -8,7 +8,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     board: boardReducer,
-    columns: columnsReducer
+    columns: columnsReducer,
     tasks: tasksReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
