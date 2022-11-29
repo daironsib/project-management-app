@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { ROUTES } from './constants/constants';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -7,6 +7,7 @@ import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { lazy } from 'react';
 import { BoardPage } from './pages/Board/Board';
 import './App.css';
+import { NotFound } from './pages/NotFound/NotFound';
 
 const WelcomePage = lazy(() => import('./pages/WelcomePage/WelcomePage'));
 const Boards = lazy(() => import('./pages/Boards/Boards'));
@@ -28,10 +29,7 @@ function App() {
             <Route path={ROUTES.boards} element={<Boards />} />
             <Route path={`${ROUTES.board}/:id`} element={<BoardPage />} />
           </Route>
-          <Route
-            path='*'
-            element={<Navigate to={ROUTES.welcomePage} />}
-          ></Route>
+          <Route path='*' element={<NotFound />}></Route>
         </Routes>
       </AppBlock>
       <Footer />
