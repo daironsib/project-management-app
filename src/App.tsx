@@ -1,9 +1,9 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { ROUTES } from './constants/constants';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import { AppBlock, GlobalStyle } from './style';
-import { PrivateRoute } from './PrivateRoute/PrivateRoute';
+import { PrivateRoute } from './components/PrivateRoute/PrivateRoute';
 import { lazy } from 'react';
 import { BoardPage } from './pages/Board/Board';
 import './App.css';
@@ -26,8 +26,12 @@ function App() {
             <Route path={ROUTES.signIn} element={<Login />} />
             <Route path={ROUTES.editProfile} element={<EditProfile />} />
             <Route path={ROUTES.boards} element={<Boards />} />
+            <Route path={`${ROUTES.board}/:id`} element={<BoardPage />} />
           </Route>
-          <Route path={`${ROUTES.board}/:id`} element={<BoardPage />} />
+          <Route
+            path='*'
+            element={<Navigate to={ROUTES.welcomePage} />}
+          ></Route>
         </Routes>
       </AppBlock>
       <Footer />

@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { Loading } from '../components/Loading/Loading';
-import { ROUTES } from '../constants/constants';
-import { useAppSelector } from '../hooks';
+import { Loading } from '../Loading/Loading';
+import { ROUTES } from '../../constants/constants';
+import { useAppSelector } from '../../hooks';
 
 export const PrivateRoute: React.FC = () => {
   const { isAuth } = useAppSelector((state) => state.user);
@@ -15,7 +15,9 @@ export const PrivateRoute: React.FC = () => {
   }
   if (
     !isAuth &&
-    (pathname === ROUTES.editProfile || pathname === ROUTES.boards)
+    (pathname === ROUTES.editProfile ||
+      pathname === ROUTES.boards ||
+      pathname.includes(`${ROUTES.board}/`))
   ) {
     return <Navigate to={ROUTES.welcomePage} />;
   }
