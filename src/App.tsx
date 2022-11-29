@@ -29,7 +29,7 @@ function App() {
             <Route path={ROUTES.boards} element={<Boards />} />
             <Route path={`${ROUTES.board}/:id`} element={<BoardPage />} />
           </Route>
-          <Route path='*' element={<NotFound />}></Route>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </AppBlock>
       <Footer />
