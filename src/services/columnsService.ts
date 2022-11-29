@@ -9,7 +9,7 @@ class ColumnService {
     });
   }
 
-  async createColumn({ id, data }: IColumnCreate) {
+  async addColumn({ id, data }: IColumnCreate) {
     return await axiosPrivate({
       method: 'POST',
       url: `/boards/${id}/columns`,
