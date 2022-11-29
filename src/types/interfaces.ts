@@ -72,3 +72,36 @@ export interface IColumnDelete {
   boardId: string;
   columnId: string;
 }
+
+export interface ITaskAPI {
+  title: string;
+  order: number;
+  description: string;
+  columnId: string;
+  userId: number;
+  users: string[];
+}
+
+export interface ITaskGet {
+  boardId: string;
+  columnId: string;
+}
+
+export interface ITaskCreate {
+  boardId: string;
+  columnId: string;
+  data: ITaskAPI;
+}
+
+export interface ITaskUpdate {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+  data: ITaskAPI;
+}
+
+export interface ITaskDelete {
+  boardId: string;
+  columnId: string;
+  taskId: string;
+}
