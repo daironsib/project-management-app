@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Alert } from '../../components/Alert/Alert';
 import { Form } from '../../components/Form/Form';
 import { InputAuth } from '../../components/InputAuth/InputAuth';
@@ -14,6 +15,7 @@ import { registrationSchema } from '../../validation/validation';
 import { ButtonDelete, ButtonUpdate, UpdateButtonsWrapper } from './styles';
 
 const EditProfile: React.FC = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'authPages' });
   const {
     handleSubmit,
     control,
@@ -55,7 +57,7 @@ const EditProfile: React.FC = () => {
 
   return (
     <>
-      <Form title='Изменить профиль' onSubmit={handleSubmit(onSubmit)}>
+      <Form title={t('titleEditProfile')} onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name='name'
@@ -63,10 +65,14 @@ const EditProfile: React.FC = () => {
             <InputAuth
               onChange={onChange}
               value={value || ''}
-              label='Имя'
+              label={t('name')}
               type='text'
               error={!!errors.name?.message}
-              helperText={errors?.name?.message}
+              helperText={
+                errors?.name?.message
+                  ? t(`${errors?.name?.message}`)
+                  : undefined
+              }
             />
           )}
         />
@@ -77,10 +83,14 @@ const EditProfile: React.FC = () => {
             <InputAuth
               onChange={onChange}
               value={value || ''}
-              label='Логин'
+              label={t('login')}
               type='text'
               error={!!errors.login?.message}
-              helperText={errors?.login?.message}
+              helperText={
+                errors?.login?.message
+                  ? t(`${errors?.login?.message}`)
+                  : undefined
+              }
             />
           )}
         />
@@ -91,16 +101,22 @@ const EditProfile: React.FC = () => {
             <InputAuth
               onChange={onChange}
               value={value || ''}
-              label='Пароль'
+              label={t('password')}
               type='password'
               error={!!errors.password?.message}
-              helperText={errors?.password?.message}
+              helperText={
+                errors?.password?.message
+                  ? t(`${errors?.password?.message}`)
+                  : undefined
+              }
             />
           )}
         />
         <UpdateButtonsWrapper>
-          <ButtonDelete onClick={handleDelete}>Удалить профиль</ButtonDelete>
-          <ButtonUpdate>Изменить профиль</ButtonUpdate>
+          <ButtonDelete onClick={handleDelete}>
+            {t('deleteButton')}
+          </ButtonDelete>
+          <ButtonUpdate>{t('titleEditProfile')}</ButtonUpdate>
         </UpdateButtonsWrapper>
       </Form>
       {isOpenModal && (

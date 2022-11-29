@@ -24,6 +24,26 @@ const translationEN = {
           companies and countries.`,
     aboutTeamHeading: 'Our team',
   },
+  authPages: {
+    titleRegistration: 'Sign up',
+    titleLogin: 'Sign in',
+    titleEditProfile: 'Edit profile',
+    linkRegistration: 'Already have an account?',
+    linkLogin: "Don't have an account yet?",
+    name: 'Name',
+    login: 'Login',
+    password: 'Password',
+    deleteButton: 'Delete profile',
+    updateProfile: 'Update profile',
+    validation: {
+      require: 'This field is required',
+      latinName: 'The name must contain only latin letters',
+      minName: 'Name must contain at least 2 characters',
+      latinLogin: 'Login must contain only latin letters',
+      minLogin: 'Login must contain at least 2 characters',
+      minPassword: 'Password must contain at least 6 characters',
+    },
+  },
 };
 
 const translationRU = {
@@ -47,6 +67,25 @@ const translationRU = {
           школа — фронтенд- и javascript-разработчики из разных
           компании и стран.`,
     aboutTeamHeading: 'О команде',
+  },
+  authPages: {
+    titleRegistration: 'Регистрация',
+    titleLogin: 'Войти',
+    titleEditProfile: 'Изменить профиль',
+    linkRegistration: 'Уже есть аккаунт?',
+    linkLogin: 'Еще нет аккаунта?',
+    name: 'Имя',
+    login: 'Логин',
+    password: 'Пароль',
+    deleteButton: 'Удалить профиль',
+    validation: {
+      require: 'Обязательно для заполнения',
+      latinName: 'Имя должно содержать только латинские буквы',
+      minName: 'Имя должно содержать не менее 2 символов',
+      latinLogin: 'Логин должен содержать только латинские буквы',
+      minLogin: 'Логин должен содержать не менее 2 символов',
+      minPassword: 'Пароль должен coдержать не менее 6-ти символов',
+    },
   },
 };
 i18next.use(initReactI18next).init({

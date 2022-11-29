@@ -3,28 +3,28 @@ import * as yup from 'yup';
 export const registrationSchema = yup.object().shape({
   name: yup
     .string()
-    .required('Обязательно для заполнения')
-    .matches(/^[a-zA-Z]+$/, 'Имя должно содержать только латинские буквы')
-    .min(2, 'Имя должно содержать не менее 2 символов'),
+    .required('validation.require')
+    .matches(/^[a-zA-Z]+$/, 'validation.latinName')
+    .min(2, 'validation.minName'),
   login: yup
     .string()
-    .required('Обязательно для заполнения')
-    .matches(/^[a-zA-Z]+$/, 'Имя должно содержать только латинские буквы')
-    .min(2, 'Логин должен содержать не менее 2 символов'),
+    .required('validation.require')
+    .matches(/^[a-zA-Z]+$/, 'validation.latinLogin')
+    .min(2, 'validation.minLogin'),
   password: yup
     .string()
-    .min(6, 'Пароль должен coдержать не менее 6-ти символов')
-    .required('Обязательно для заполнения'),
+    .min(6, 'validation.minPassword')
+    .required('validation.require'),
 });
 
 export const loginSchema = yup.object().shape({
   login: yup
     .string()
-    .required('Обязательно для заполнения')
-    .matches(/^[a-zA-Z]+$/, 'Имя должно содержать только латинские буквы')
-    .min(2, 'Логин должен содержать не менее 2 символов'),
+    .required('validation.require')
+    .matches(/^[a-zA-Z]+$/, 'validation.latinLogin')
+    .min(2, 'validation.minLogin'),
   password: yup
     .string()
-    .min(6, 'Пароль должен coдержать не менее 6-ти символов')
-    .required('Обязательно для заполнения'),
+    .min(6, 'validation.minPassword')
+    .required('validation.require'),
 });

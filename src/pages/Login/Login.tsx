@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Alert } from '../../components/Alert/Alert';
 import { Form } from '../../components/Form/Form';
 import {
@@ -17,6 +18,7 @@ import { ISignInForm } from '../../types/interfaces';
 import { loginSchema } from '../../validation/validation';
 
 const Login: React.FC = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'authPages' });
   const {
     handleSubmit,
     control,
@@ -41,7 +43,7 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <Form title='Войти' onSubmit={handleSubmit(onSubmit)}>
+      <Form title={t('titleLogin')} onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name='login'
@@ -49,10 +51,14 @@ const Login: React.FC = () => {
             <InputAuth
               onChange={onChange}
               value={value || ''}
-              label='Логин'
+              label={t('login')}
               type='text'
               error={!!errors.login?.message}
-              helperText={errors?.login?.message}
+              helperText={
+                errors?.login?.message
+                  ? t(`${errors?.login?.message}`)
+                  : undefined
+              }
             />
           )}
         />
@@ -63,18 +69,24 @@ const Login: React.FC = () => {
             <InputAuth
               onChange={onChange}
               value={value || ''}
-              label='Пароль'
+              label={t('password')}
               type='password'
               error={!!errors.password?.message}
-              helperText={errors?.password?.message}
+              helperText={
+                errors?.password?.message
+                  ? t(`${errors?.password?.message}`)
+                  : undefined
+              }
             />
           )}
         />
         <LinkFormWrapper>
-          <span>Еще нет аккаунта?</span>
-          <NavLinkForm to={ROUTES.registration}>Регистрация</NavLinkForm>
+          <span>{t('linkLogin')} </span>
+          <NavLinkForm to={ROUTES.registration}>
+            {t('titleRegistration')}
+          </NavLinkForm>
         </LinkFormWrapper>
-        <ButtonSubmit>Войти</ButtonSubmit>
+        <ButtonSubmit>{t('titleLogin')}</ButtonSubmit>
       </Form>
       {isLoading ? (
         <Loading />
