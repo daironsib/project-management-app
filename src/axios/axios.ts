@@ -1,11 +1,18 @@
 import axios from 'axios';
 
 const baseURL = 'https://final-task-backend-production-c179.up.railway.app';
-const token = localStorage.getItem('token');
 
 export const axiosPrivate = axios.create({
   baseURL,
-  headers: { authorization: `Bearer ${token}` },
+});
+
+axiosPrivate.interceptors.request.use(async (config) => {
+  const token = await localStorage.getItem('token');
+  config.headers = {
+    ...config.headers,
+    authorization: `Bearer ${token}`,
+  };
+  return config;
 });
 
 export const axiosPublic = axios.create({
