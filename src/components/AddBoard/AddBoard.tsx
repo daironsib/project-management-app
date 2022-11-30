@@ -13,11 +13,11 @@ import {
 } from './style';
 import { IBoard } from '../../types/interfaces';
 import {
-  creationOfBoard,
   changeIsCreateModalOpened,
 } from '../../store/boardSlice/boardSlice';
 import { Loading } from '../Loading/Loading';
 import { parseJWT } from '../../utils/utils';
+import { creationOfBoard } from '../../store/boardSlice/boardActions';
 
 interface IAddBoard {
   isOpened: boolean;

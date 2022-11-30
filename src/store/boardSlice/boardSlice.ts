@@ -1,14 +1,13 @@
-import { IBoard, IBoardGot, IEditBoard } from '../../types/interfaces';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AxiosError } from 'axios';
+import { IBoardGot } from '../../types/interfaces';
+import { createSlice } from '@reduxjs/toolkit';
 import {
-  createBoard,
-  editBoard,
-  getBoardsByUserId,
-  deleteBoard,
-} from './boardRequests';
+  creationOfBoard,
+  editBoards,
+  getBoards,
+  removeBoard,
+} from './boardActions';
 
-export const initialState = {
+const initialState = {
   errorMessage: '',
   error: false,
   loading: false,
@@ -22,54 +21,6 @@ export const initialState = {
   isEditLoadingError: false,
   isDeleteLoading: false,
 };
-
-export const creationOfBoard = createAsyncThunk(
-  'board/create',
-  async (data: IBoard, { rejectWithValue }) => {
-    try {
-      const response = await createBoard(data);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue((error as AxiosError).response?.data);
-    }
-  }
-);
-
-export const getBoards = createAsyncThunk(
-  'boards/get',
-  async (userId: string, { rejectWithValue }) => {
-    try {
-      const response = await getBoardsByUserId(userId);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue((error as AxiosError).response?.data);
-    }
-  }
-);
-
-export const editBoards = createAsyncThunk(
-  'boards/edit',
-  async (data: IEditBoard, { rejectWithValue }) => {
-    try {
-      const response = await editBoard(data);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue((error as AxiosError).response?.data);
-    }
-  }
-);
-
-export const removeBoard = createAsyncThunk(
-  'boards/delete',
-  async (boardId: string, { rejectWithValue }) => {
-    try {
-      const response = await deleteBoard(boardId);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue((error as AxiosError).response?.data);
-    }
-  }
-);
 
 export const boardSlice = createSlice({
   name: 'board',

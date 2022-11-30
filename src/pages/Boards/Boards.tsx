@@ -7,11 +7,11 @@ import DeleteBoard from '../../components/DeleteBoard/DeleteBoard';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   changeIsCreateModalOpened,
-  getBoards,
 } from '../../../src/store/boardSlice/boardSlice';
 import BoardPreview from '../../components/BoardPreview/BoardPreview';
 import { Loading } from '../../components/Loading/Loading';
 import { ErrorMessage } from './style';
+import { getBoards } from '../../store/boardSlice/boardActions';
 
 const Boards = () => {
   const {
@@ -23,11 +23,13 @@ const Boards = () => {
     errorBoardsMessage,
   } = useAppSelector((state) => state.board);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (shouldLoadBoards) {
       dispatch(getBoards(parseJWT(localStorage.getItem('token')!).id));
     }
   }, [shouldLoadBoards, dispatch]);
+  
   const createModalOpen = () => {
     dispatch(changeIsCreateModalOpened(true));
   };

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useAppDispatch } from '../../hooks';
-import { editBoards } from '../../store/boardSlice/boardSlice';
 import {
   BoardOverlay,
   BoardWindow,
@@ -16,6 +15,7 @@ import { IEditBoard } from '../../types/interfaces';
 import { SubmitHandler } from 'react-hook-form';
 import { useAppSelector } from '../../hooks';
 import { ErrorMessage } from '../../pages/Boards/style';
+import { editBoards } from '../../store/boardSlice/boardActions';
 
 interface IProps {
   isOpened: boolean;
