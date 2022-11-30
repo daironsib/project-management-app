@@ -15,8 +15,10 @@ import {
   NavLinkForm,
 } from '../../components/Form/styles';
 import { userRegistration } from '../../store/userSlice/userActions';
+import { useTranslation } from 'react-i18next';
 
 const Registration: React.FC = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'authPages' });
   const {
     handleSubmit,
     control,
@@ -41,7 +43,7 @@ const Registration: React.FC = () => {
 
   return (
     <>
-      <Form title='Регистрация' onSubmit={handleSubmit(onSubmit)}>
+      <Form title={t('titleRegistration')} onSubmit={handleSubmit(onSubmit)}>
         <Controller
           control={control}
           name='name'
@@ -49,10 +51,14 @@ const Registration: React.FC = () => {
             <InputAuth
               onChange={onChange}
               value={value || ''}
-              label='Имя'
+              label={t('name')}
               type='text'
               error={!!errors.name?.message}
-              helperText={errors?.name?.message}
+              helperText={
+                errors?.name?.message
+                  ? t(`${errors?.name?.message}`)
+                  : undefined
+              }
             />
           )}
         />
@@ -63,10 +69,14 @@ const Registration: React.FC = () => {
             <InputAuth
               onChange={onChange}
               value={value || ''}
-              label='Логин'
+              label={t('login')}
               type='text'
               error={!!errors.login?.message}
-              helperText={errors?.login?.message}
+              helperText={
+                errors?.login?.message
+                  ? t(`${errors?.login?.message}`)
+                  : undefined
+              }
             />
           )}
         />
@@ -77,18 +87,22 @@ const Registration: React.FC = () => {
             <InputAuth
               onChange={onChange}
               value={value || ''}
-              label='Пароль'
+              label={t('password')}
               type='password'
               error={!!errors.password?.message}
-              helperText={errors?.password?.message}
+              helperText={
+                errors?.password?.message
+                  ? t(`${errors?.password?.message}`)
+                  : undefined
+              }
             />
           )}
         />
         <LinkFormWrapper>
-          <span>Уже есть аккаунт?</span>
-          <NavLinkForm to={ROUTES.signIn}>Войти</NavLinkForm>
+          <span>{t('linkRegistration')}</span>
+          <NavLinkForm to={ROUTES.signIn}>{t('titleLogin')}</NavLinkForm>
         </LinkFormWrapper>
-        <ButtonSubmit>Регистрация</ButtonSubmit>
+        <ButtonSubmit>{t('titleRegistration')}</ButtonSubmit>
       </Form>
       {isLoading ? (
         <Loading />
