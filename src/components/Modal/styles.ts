@@ -1,5 +1,6 @@
 import { Box, Button } from '@mui/material';
 import styled from 'styled-components';
+import { widthEntryPoints } from '../../constants/constants';
 
 export const BoxModal = styled(Box)`
   position: absolute;
@@ -10,6 +11,9 @@ export const BoxModal = styled(Box)`
   background-color: white;
   border: 2px solid #000;
   padding: 40px;
+  @media (${widthEntryPoints.tablet}) {
+    width: 300px;
+  }
 `;
 
 export const TitleModal = styled.h3`

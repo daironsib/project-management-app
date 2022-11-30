@@ -1,39 +1,40 @@
 import styled from 'styled-components';
+import { styleVars } from '../../constants/constants';
 
 const ColumnBlock = styled.div`
-  position: relative;
-  height: max-content;
+  max-height: 65vh;
   min-height: 100px;
-  width: 250px;
+  min-width: 250px;
   margin: 10px;
   border-radius: 10px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-  border: 2px solid #7d7d7d;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  flex-wrap: wrap;
   padding: 10px;
-`
+  overflow-y: scroll;
+  background-color: ${styleVars.white};
+`;
 
 const ColumnTitle = styled.div`
   margin-bottom: 15px;
-`
+`;
 
 const AddTaskBtn = styled.div`
   cursor: pointer;
-`
+  display: block;
+`;
 
 const AddBoardImg = styled.img`
   width: 30px;
-`
+`;
 const RemoveBtn = styled.div`
   cursor: pointer;
   position: absolute;
   top: 10px;
   right: 10px;
   font-size: 15px;
-`
+`;
 
 export { ColumnBlock, AddTaskBtn, AddBoardImg, ColumnTitle, RemoveBtn };

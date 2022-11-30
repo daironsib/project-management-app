@@ -8,8 +8,8 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeIsCreateModalOpened } from '../../../src/store/boardSlice/boardSlice';
 import BoardPreview from '../../components/BoardPreview/BoardPreview';
 import { Loading } from '../../components/Loading/Loading';
-import { ErrorMessage } from './style';
 import { getBoards } from '../../store/boardSlice/boardActions';
+import { ErrorMessage, BoardsList } from './style';
 
 const Boards = () => {
   const {
@@ -48,7 +48,7 @@ const Boards = () => {
         {!!errorMessage ? (
           <ErrorMessage>{errorMessage} </ErrorMessage>
         ) : (
-          <ul>{view}</ul>
+          <BoardsList>{view}</BoardsList>
         )}
         <AddBoardButton onClick={createModalOpen}>
           <AddBoardImg src={AddButton} alt='add' />
