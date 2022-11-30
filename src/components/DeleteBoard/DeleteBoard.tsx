@@ -26,8 +26,10 @@ const DeleteBoard = ({ isOpened, boardId, closeModal }: IProps) => {
   const handleContinueClick = () => {
     if (boardId) {
       dispatch(removeBoard(boardId));
+      closeModal();
     }
   };
+
   return (
     <BoardOverlay isOpened={isOpened}>
       <BoardWindow>

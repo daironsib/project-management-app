@@ -14,21 +14,17 @@ import BinImage from '../../assets/images/bin.svg';
 import KanbanImage from '../../assets/images/kanban.png';
 import { useNavigate } from 'react-router-dom';
 import EditBoard from '../EditBoard/EditBoard';
-import { useAppSelector } from '../../hooks';
-import { Loading } from '../Loading/Loading';
 import DeleteBoard from '../DeleteBoard/DeleteBoard';
 
 interface IProps {
   title: string;
   boardId: string;
 }
-const BoardPreview = ({ title, boardId }: IProps) => {
+const BoardPreview = React.memo(({ title, boardId }: IProps) => {
   const [isEditModalOpened, setIsEditModalOpened] = useState(false);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
-  const { isEditLoading, isDeleteLoading } = useAppSelector(
-    (state) => state.board
-  );
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate(`/board/${boardId}`);
   };
@@ -49,24 +45,6 @@ const BoardPreview = ({ title, boardId }: IProps) => {
   };
   return (
     <>
-      {isEditLoading ? (
-        <Loading />
-      ) : (
-        <EditBoard
-          isOpened={isEditModalOpened}
-          boardId={boardId}
-          closeModal={closeModal}
-        ></EditBoard>
-      )}
-      {isDeleteLoading ? (
-        <Loading />
-      ) : (
-        <DeleteBoard
-          isOpened={isDeleteModalOpened}
-          boardId={boardId}
-          closeModal={closeModal}
-        ></DeleteBoard>
-      )}
       <BoardCard onClick={handleClick}>
         <KanbanImg src={KanbanImage} alt='kanban' />
         <CardBlock>
@@ -83,8 +61,18 @@ const BoardPreview = ({ title, boardId }: IProps) => {
           </NameBlock>
         </CardBlock>
       </BoardCard>
+      <DeleteBoard
+        isOpened={isDeleteModalOpened}
+        boardId={boardId}
+        closeModal={closeModal}
+      />
+      <EditBoard
+        isOpened={isEditModalOpened}
+        boardId={boardId}
+        closeModal={closeModal}
+      />
     </>
   );
-};
+});
 
 export default BoardPreview;

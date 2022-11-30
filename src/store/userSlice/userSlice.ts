@@ -66,9 +66,6 @@ export const userSlice = createSlice({
     builder.addCase(updateUser.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = (action.payload as Error).message || '';
-      // if (state.errorMessage === 'Invalid token') {
-      //   state.isAuth = false;
-      // }
     });
     builder.addCase(deleteUser.pending, (state) => {
       state.isLoading = true;
@@ -82,9 +79,6 @@ export const userSlice = createSlice({
     builder.addCase(deleteUser.rejected, (state, action) => {
       state.isLoading = false;
       state.errorMessage = (action.payload as Error).message || '';
-      // if (state.errorMessage === 'Invalid token') {
-      //   state.isAuth = false;
-      // }
     });
   },
 });

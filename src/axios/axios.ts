@@ -18,7 +18,7 @@ axiosPrivate.interceptors.request.use(async (config) => {
   const token = await localStorage.getItem('token');
   config.headers = {
     ...config.headers,
-    authorization: `Bearer ${token}1`,
+    authorization: `Bearer ${token}`,
   };
   return config;
 });
@@ -27,10 +27,8 @@ axiosPrivate.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error?.response?.status === 403) {
-      console.log(error)
       store.dispatch(logOut());
     }
-
     return Promise.reject(error);
   }
 );
