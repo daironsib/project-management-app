@@ -53,7 +53,9 @@ const AddBoard = ({ isOpened }: IAddBoard) => {
           ) : null}
           <ButtonBlock>
             <ButtonContinue type='submit'>CONTINUE</ButtonContinue>
-            <ButtonCancel onClick={createModalClose}>CANCEL</ButtonCancel>
+            <ButtonCancel type='button' onClick={createModalClose}>
+              CANCEL
+            </ButtonCancel>
           </ButtonBlock>
         </BoardWindow>
       </form>

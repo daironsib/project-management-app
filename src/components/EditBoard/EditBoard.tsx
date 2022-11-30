@@ -51,7 +51,9 @@ const AddBoard = ({ isOpened, boardId, closeModal }: IProps) => {
           <input type='hidden' {...register('boardId')} value={boardId} />
           <ButtonBlock>
             <ButtonContinue type='submit'>CONTINUE</ButtonContinue>
-            <ButtonCancel onClick={handleCancelClick}>CANCEL</ButtonCancel>
+            <ButtonCancel type='button' onClick={handleCancelClick}>
+              CANCEL
+            </ButtonCancel>
           </ButtonBlock>
         </form>
       </BoardWindow>
