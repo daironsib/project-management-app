@@ -27,12 +27,6 @@ export const AddTask = ({ isOpened }: IAddTask) => {
   );
 
   const clickHandler: SubmitHandler<ITaskAPI> = (data: ITaskAPI) => {
-    data.order = 0;
-    data.userId = parseJWT(localStorage.getItem('token')!).id;
-    data.users = [parseJWT(localStorage.getItem('token')!).id];
-    console.log('data', data);
-    console.log('boardid', id);
-    console.log('columnid', currentColumn);
     if (id && currentColumn) {
       dispatch(addTask({ boardId: id, columnId: currentColumn, data }));
       reset();
@@ -46,6 +40,9 @@ export const AddTask = ({ isOpened }: IAddTask) => {
           <CreateBoard>CREATE TASK</CreateBoard>
           <InputName {...register('title')} type='text' placeholder='NAME' />
           <InputName {...register('description')} type='text' placeholder='DESCRIPTION' />
+          <input {...register('order')} type='hidden' value={0} />
+          <input {...register('userId')} type='hidden' value={parseJWT(localStorage.getItem('token')!).id} />
+          <input {...register('users')} type='hidden' value={[parseJWT(localStorage.getItem('token')!).id]} />
           { error && <ErrorMessage>{errorMessage}</ErrorMessage> }
           <ButtonBlock>
             <ButtonContinue type='submit'>CONTINUE</ButtonContinue>
