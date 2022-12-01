@@ -69,7 +69,7 @@ const Header = () => {
         ) : (
           <>
             <NavLink to={ROUTES.editProfile}>edit profile</NavLink>
-            <NavLink to={ROUTES.createBoard}>create board</NavLink>
+            <NavLink to={ROUTES.boards}>boards</NavLink>
             <div onClick={handlerSignOut}>sign out</div>
           </>
         )}

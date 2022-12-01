@@ -1,4 +1,12 @@
+import { StoreType } from './../store/index';
 import axios from 'axios';
+import { logOut } from '../store/userSlice/userSlice';
+
+let store: StoreType
+
+export const injectStore = (_store: StoreType) => {
+  store = _store;
+};
 
 const baseURL = 'https://final-task-backend-production-c179.up.railway.app';
 
@@ -14,6 +22,16 @@ axiosPrivate.interceptors.request.use(async (config) => {
   };
   return config;
 });
+
+axiosPrivate.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error?.response?.status === 403) {
+      store.dispatch(logOut());
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const axiosPublic = axios.create({
   baseURL,

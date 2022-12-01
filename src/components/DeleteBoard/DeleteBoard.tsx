@@ -9,8 +9,8 @@ import {
   DelBoard,
 } from './style';
 import Image from '../../assets/images/warning.png';
-import { removeBoard } from '../../store/boardSlice/boardSlice';
 import { useAppDispatch } from '../../hooks';
+import { removeBoard } from '../../store/boardSlice/boardActions';
 
 interface IProps {
   isOpened: boolean;
@@ -26,8 +26,10 @@ const DeleteBoard = ({ isOpened, boardId, closeModal }: IProps) => {
   const handleContinueClick = () => {
     if (boardId) {
       dispatch(removeBoard(boardId));
+      closeModal();
     }
   };
+
   return (
     <BoardOverlay isOpened={isOpened}>
       <BoardWindow>
