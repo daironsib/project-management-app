@@ -32,7 +32,6 @@ export const AddColumn = ({ isOpened }: IAddBoard) => {
   );
 
   const clickHandler: SubmitHandler<IColumn> = (data: IColumn) => {
-    data.order = 0;
     if (id) {
       dispatch(addColumn({ id, data }));
       reset();
@@ -45,6 +44,7 @@ export const AddColumn = ({ isOpened }: IAddBoard) => {
         <BoardWindow>
           <CreateBoard>CREATE COLUMN</CreateBoard>
           <InputName {...register('title')} type='text' placeholder='NAME' />
+          <input {...register('order')} type='hidden' value={0} />
           { error && <ErrorMessage>{errorMessage}</ErrorMessage> }
           <ButtonBlock>
             <ButtonContinue type='submit'>CONTINUE</ButtonContinue>
