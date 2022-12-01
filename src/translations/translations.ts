@@ -44,6 +44,11 @@ const translationEN = {
       minPassword: 'Password must contain at least 6 characters',
     },
   },
+  deleteModal: {
+    title: 'Are you sure?',
+    delete: 'Delete',
+    cancel: 'Cancel',
+  },
 };
 
 const translationRU = {
@@ -86,6 +91,11 @@ const translationRU = {
       minLogin: 'Логин должен содержать не менее 2 символов',
       minPassword: 'Пароль должен coдержать не менее 6-ти символов',
     },
+  },
+  deleteModal: {
+    title: 'Вы уверены?',
+    delete: 'Удалить',
+    cancel: 'Отмена',
   },
 };
 i18next.use(initReactI18next).init({
