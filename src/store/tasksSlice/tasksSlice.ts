@@ -11,11 +11,11 @@ export const tasksSlice = createSlice({
     loadingTasks: false,
     errorTasks: false,
     shouldLoadTasks: true,
-    isCreateModalOpen: false,
+    isTaskModalOpen: false,
   },
   reducers: {
-    toogleCreateModal: (state, action) => {
-      state.isCreateModalOpen = action.payload;
+    toogleTaskModal: (state, action) => {
+      state.isTaskModalOpen = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -25,7 +25,7 @@ export const tasksSlice = createSlice({
     builder.addCase(addTask.fulfilled, (state) => {
       state.error = false;
       state.loading = false;
-      state.isCreateModalOpen = false;
+      state.isTaskModalOpen = false;
       state.shouldLoadTasks = true;
     });
     builder.addCase(addTask.rejected, (state, action) => {
@@ -51,4 +51,4 @@ export const tasksSlice = createSlice({
 });
 
 export const tasksReducer = tasksSlice.reducer;
-export const { toogleCreateModal } = tasksSlice.actions;
+export const { toogleTaskModal } = tasksSlice.actions;

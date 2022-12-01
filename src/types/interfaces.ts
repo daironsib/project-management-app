@@ -51,7 +51,7 @@ export interface IEditBoard {
 }  
 
 export interface IColumn {
-  _id?: string;
+  _id: string;
   title: string;
   order: number;
   boardId?: string;
@@ -78,13 +78,8 @@ export interface ITaskAPI {
   order: number;
   description: string;
   columnId: string;
-  userId: number;
+  userId: string;
   users: string[];
-}
-
-export interface ITaskGet {
-  boardId: string;
-  columnId: string;
 }
 
 export interface ITaskCreate {

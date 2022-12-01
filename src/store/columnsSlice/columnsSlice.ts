@@ -11,11 +11,15 @@ export const columnsSlice = createSlice({
     loadingColumns: false,
     errorColumns: false,
     shouldLoadColumns: true,
-    isCreateModalOpen: false,
+    isColumnModalOpen: false,
+    currentColumn: '',
   },
   reducers: {
-    toogleCreateModal: (state, action) => {
-      state.isCreateModalOpen = action.payload;
+    setCurrentColumn: (state, action) => {
+      state.currentColumn = action.payload;
+    },
+    toogleColumnModal: (state, action) => {
+      state.isColumnModalOpen = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -25,7 +29,7 @@ export const columnsSlice = createSlice({
     builder.addCase(addColumn.fulfilled, (state) => {
       state.error = false;
       state.loading = false;
-      state.isCreateModalOpen = false;
+      state.isColumnModalOpen = false;
       state.shouldLoadColumns = true;
     });
     builder.addCase(addColumn.rejected, (state, action) => {
@@ -51,4 +55,4 @@ export const columnsSlice = createSlice({
 });
 
 export const columnsReducer = columnsSlice.reducer;
-export const { toogleCreateModal } = columnsSlice.actions;
+export const { setCurrentColumn, toogleColumnModal } = columnsSlice.actions;

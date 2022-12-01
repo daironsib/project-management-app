@@ -7,37 +7,42 @@ import { Task } from '../../components/Task/Task';
 import { Column } from '../../components/Column/Column';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { toogleCreateModal } from '../../store/columnsSlice/columnsSlice';
+import { toogleColumnModal } from '../../store/columnsSlice/columnsSlice';
 import { AddColumn } from '../../components/AddColumn/AddColumn';
 import { getColumns } from '../../store/columnsSlice/columnsActions';
+import { getTasks } from '../../store/tasksSlice/tasksActions';
+import { AddTask } from '../../components/AddTask/AddTask';
 
 const { DO_IT } = COLUMN_NAMES;
-const tasks = [
-    {id: 1, name: 'Item 1', column: DO_IT},
-    {id: 2, name: 'Item 2', column: DO_IT},
-    {id: 3, name: 'Item 3', column: DO_IT},
-    {id: 4, name: 'Item 4', column: DO_IT},
+const exampletasks = [
+  {id: 1, name: 'Item 1', column: DO_IT},
+  {id: 2, name: 'Item 2', column: DO_IT},
+  {id: 3, name: 'Item 3', column: DO_IT},
+  {id: 4, name: 'Item 4', column: DO_IT},
 ];
 
 export const BoardPage = () => {
   const { id } = useParams();
-  const [items, setItems] = useState(tasks);
+  const [items, setItems] = useState(exampletasks);
   const {
     columns,
     shouldLoadColumns,
-    isCreateModalOpen,
+    isColumnModalOpen,
   } = useAppSelector((state) => state.columns);
+
+  const { tasks, isTaskModalOpen } = useAppSelector((state) => state.tasks);
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (shouldLoadColumns && id) {
       dispatch(getColumns(id));
+      dispatch(getTasks(id));
     }
-  }, [shouldLoadColumns, dispatch]);
+  }, [shouldLoadColumns, dispatch, id]);
 
   const createModalOpen = () => {
-    dispatch(toogleCreateModal(true));
+    dispatch(toogleColumnModal(true));
   };
 
   const moveCardHandler = (dragIndex: number, hoverIndex: number) => {
@@ -71,10 +76,13 @@ export const BoardPage = () => {
 
   const { DO_IT, IN_PROGRESS, AWAITING_REVIEW, DONE } = COLUMN_NAMES;
 
+  console.log('columns', columns);
+  console.log('tasks', tasks);
+
   return (
     <BoardBlock>
       <DndProvider backend={HTML5Backend}>
-        <Column title={DO_IT}>
+        {/* <Column title={DO_IT}>
           {renderItemsForColumn(DO_IT)}
         </Column>
         <Column title={IN_PROGRESS}>
@@ -85,11 +93,21 @@ export const BoardPage = () => {
         </Column>
         <Column title={DONE}>
           {renderItemsForColumn(DONE)}
-        </Column>
+        </Column> */}
+
+        {
+          columns.map((column, i) => 
+            <Column data={column} title={DONE} key={`column-${i}'}`}>
+              {renderItemsForColumn(DONE)}
+            </Column>
+          )
+        }
+
         <AddColumnBlock>
           <AddColumnBtn onClick={createModalOpen}>+ Add column</AddColumnBtn> 
         </AddColumnBlock>
-        <AddColumn isOpened={isCreateModalOpen}></AddColumn>
+        <AddColumn isOpened={isColumnModalOpen}/>
+        <AddTask isOpened={isTaskModalOpen} />
       </DndProvider>
     </BoardBlock>
   );

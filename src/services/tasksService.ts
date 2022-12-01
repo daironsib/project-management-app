@@ -1,11 +1,11 @@
-import { ITaskCreate, ITaskDelete, ITaskGet, ITaskUpdate } from './../types/interfaces';
+import { ITaskCreate, ITaskDelete, ITaskUpdate } from './../types/interfaces';
 import { axiosPrivate } from '../axios/axios';
 
 class TasksService {
-  async getTasks({ boardId, columnId }: ITaskGet) {
+  async getTasks(boardId: string) {
     return await axiosPrivate({
       method: 'GET',
-      url: `/boards/${boardId}/columns/${columnId}/tasks`
+      url: `/tasksSet/${boardId}`
     });
   }
 
