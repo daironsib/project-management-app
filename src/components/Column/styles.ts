@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 const ColumnBlock = styled.div`
+  position: relative;
   height: max-content;
   min-height: 100px;
-  width: 160px;
+  width: 250px;
   margin: 10px;
   border-radius: 10px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
@@ -22,11 +23,17 @@ const ColumnTitle = styled.div`
 
 const AddTaskBtn = styled.div`
   cursor: pointer;
-  display: block;
 `
 
 const AddBoardImg = styled.img`
   width: 30px;
-`;
+`
+const RemoveBtn = styled.div`
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 15px;
+`
 
-export { ColumnBlock, AddTaskBtn, AddBoardImg, ColumnTitle };
+export { ColumnBlock, AddTaskBtn, AddBoardImg, ColumnTitle, RemoveBtn };
