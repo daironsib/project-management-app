@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { widthEntryPoints } from '../../constants/constants';
+import { widthEntryPoints, fonts } from '../../constants/constants';
 
 const BoardOverlay = styled.div<{ isOpened: boolean }>`
   width: 100%;
@@ -36,7 +36,7 @@ const BoardWindow = styled.div`
 
 const CreateBoard = styled.h2`
   color: grey;
-  font-family: Roboto;
+  font-family: ${fonts.montserrat};
   @media (${widthEntryPoints.tablet}) {
     font-size: 19px;
   }
@@ -45,7 +45,7 @@ const CreateBoard = styled.h2`
 const InputName = styled.input`
   width: 275px;
   height: 55px;
-  font-family: Roboto;
+  font-family: ${fonts.raleway};
   border: 1px solid grey;
   padding: 15px 10px;
   border-radius: 7px;
@@ -59,7 +59,7 @@ const InputName = styled.input`
 const InputDescription = styled.textarea`
   width: 275px;
   height: 180px;
-  font-family: Roboto;
+  font-family: ${fonts.raleway};
   border: 1px solid grey;
   padding: 15px 10px;
   border-radius: 7px;
@@ -71,7 +71,7 @@ const Button = styled.button`
   width: 130px;
   height: 40px;
   padding: 10px;
-  font-family: Roboto;
+  font-family: ${fonts.montserrat};
   border-radius: 7px;
   outline: none;
   border: none;

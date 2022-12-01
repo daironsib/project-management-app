@@ -20,6 +20,8 @@ export const styleVars = {
   white: '#ffffff',
   grey: '#8a9ba7',
   verylightblue: 'rgba(183, 234, 247, 0.5)',
+  sand: '#ffe4c9',
+  black: '#000000',
 };
 
 export const fonts = {

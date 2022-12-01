@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { widthEntryPoints } from '../../constants/constants';
+import { widthEntryPoints, fonts } from '../../constants/constants';
 
 interface IProps {
   isOpened: boolean;
@@ -46,7 +46,7 @@ const Button = styled.button`
   width: 130px;
   height: 40px;
   padding: 10px;
-  font-family: Roboto;
+  font-family: ${fonts.raleway};
   border-radius: 7px;
   outline: none;
   border: none;
@@ -67,7 +67,7 @@ const ButtonCancel = styled(Button)`
 
 const DelBoard = styled.h2`
   color: grey;
-  font-family: Roboto;
+  font-family: ${fonts.montserrat};
 `;
 
 export {

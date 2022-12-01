@@ -1,25 +1,37 @@
 import { Box, Button, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { fonts, widthEntryPoints, styleVars } from '../../constants/constants';
 
 export const TitleForm = styled(Typography).attrs({
   variant: 'h3',
   component: 'div',
 })`
   &&.MuiTypography-root {
-    margin: 20px 0;
+    margin: 30px 0 20px;
     text-align: center;
+    font-family: ${fonts.montserrat};
+    font-size: 2.7rem;
+  }
+  @media (${widthEntryPoints.tablet}) {
+    &&.MuiTypography-root {
+      font-size: 2rem;
+    }
   }
 `;
 
 export const FormWrapper = styled(Box).attrs({ component: 'form' })`
   background-color: #fff;
   border-radius: 10px;
-  border: 1px solid #000;
   margin: 0 auto;
   max-width: 450px;
-  padding: 20px 10px;
+  padding: 40px 5px;
   width: 100%;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px auto;
 `;
 
 export const ButtonSubmit = styled(Button).attrs({
@@ -32,7 +44,9 @@ export const ButtonSubmit = styled(Button).attrs({
     font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
+    font-family: ${fonts.montserrat};
   }
+  font-family: ${fonts.montserrat};
 `;
 
 export const LinkFormWrapper = styled.div`
@@ -42,11 +56,12 @@ export const LinkFormWrapper = styled.div`
   margin-top: 15px;
   && {
     font-size: 14px;
+    font-family: ${fonts.montserrat};
   }
 `;
 
 export const NavLinkForm = styled(NavLink)`
   font-weight: bold;
-  color: #1976d2;
+  color: ${styleVars.darkblue};
   text-decoration: none;
 `;
