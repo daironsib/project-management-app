@@ -48,7 +48,7 @@ const AddBoard = React.memo(({ isOpened }: IAddBoard) => {
             value={parseJWT(localStorage.getItem('token')!).id}
           />
           <ButtonBlock>
-            <ButtonContinue>CONTINUE</ButtonContinue>
+            <ButtonContinue type='submit'>CONTINUE</ButtonContinue>
             <ButtonCancel type='button' onClick={createModalClose}>
               CANCEL
             </ButtonCancel>
