@@ -5,6 +5,14 @@ interface IProps {
   isOpened: boolean;
 }
 
+const BoardWindowForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+`;
+
 const BoardOverlay = styled.div<IProps>`
   width: 100%;
   height: 100%;
@@ -88,7 +96,8 @@ const Button = styled.button`
 
 const ButtonBlock = styled.div`
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
+  width: 275px;
 `;
 
 const ButtonContinue = styled(Button)`
@@ -109,4 +118,5 @@ export {
   CreateBoard,
   Button,
   ButtonBlock,
+  BoardWindowForm,
 };

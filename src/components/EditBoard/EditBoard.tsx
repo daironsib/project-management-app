@@ -8,6 +8,7 @@ import {
   ButtonCancel,
   ButtonBlock,
   CreateBoard,
+  BoardWindowForm,
 } from './style';
 import { parseJWT } from '../../utils/utils';
 import { useForm } from 'react-hook-form';
@@ -38,7 +39,7 @@ const EditBoard = ({ isOpened, boardId, closeModal }: IProps) => {
   return (
     <BoardOverlay isOpened={isOpened}>
       <BoardWindow>
-        <form onSubmit={handleSubmit(clickHandler)}>
+        <BoardWindowForm onSubmit={handleSubmit(clickHandler)}>
           <CreateBoard>EDIT BOARD</CreateBoard>
           <InputName type='text' placeholder='NAME' {...register('title')} />
           <input
@@ -53,7 +54,7 @@ const EditBoard = ({ isOpened, boardId, closeModal }: IProps) => {
               CANCEL
             </ButtonCancel>
           </ButtonBlock>
-        </form>
+        </BoardWindowForm>
       </BoardWindow>
     </BoardOverlay>
   );

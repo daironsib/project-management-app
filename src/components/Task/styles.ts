@@ -9,7 +9,7 @@ const RemoveBtn = styled.div`
   right: 10px;
   transform: translateY(-50%);
   font-size: 15px;
-`
+`;
 
 const TaskBlock = styled.div`
   position: relative;
@@ -21,20 +21,11 @@ const TaskBlock = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-<<<<<<< HEAD
-  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
   cursor: pointer;
-
+  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
+  border: none;
   &:hover ${RemoveBtn} {
     display: block;
   }
-`
-
-export { TaskBlock, RemoveBtn };
-=======
-  box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
-  border: none;
 `;
-
-export { TaskBlock };
->>>>>>> cf983de (feat: add responsive design to modals)
+export { TaskBlock, RemoveBtn };
