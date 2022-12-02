@@ -14,7 +14,9 @@ import BinImage from '../../assets/images/bin.svg';
 import KanbanImage from '../../assets/images/kanban.png';
 import { useNavigate } from 'react-router-dom';
 import EditBoard from '../EditBoard/EditBoard';
-import DeleteBoard from '../DeleteBoard/DeleteBoard';
+import DeleteBoard from '../DeleteModal/DeleteModal';
+import { useAppDispatch } from '../../hooks';
+import { removeBoard } from '../../store/boardSlice/boardActions';
 
 interface IProps {
   title: string;
@@ -23,10 +25,16 @@ interface IProps {
 const BoardPreview = React.memo(({ title, boardId }: IProps) => {
   const [isEditModalOpened, setIsEditModalOpened] = useState(false);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/board/${boardId}`);
+  };
+
+  const deleteBoard = () => {
+    closeModal();
+    dispatch(removeBoard(boardId));
   };
 
   const closeModal = () => {
@@ -63,7 +71,7 @@ const BoardPreview = React.memo(({ title, boardId }: IProps) => {
       </BoardCard>
       <DeleteBoard
         isOpened={isDeleteModalOpened}
-        boardId={boardId}
+        dispatch={deleteBoard}
         closeModal={closeModal}
       />
       <EditBoard
