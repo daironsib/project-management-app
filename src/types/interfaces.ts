@@ -30,11 +30,13 @@ export interface IDnDItem {
   name?: string;
   currentColumnName?: string;
   type?: string;
+  columnId: string;
 }
 
 export interface IdropResult {
   dropEffect: string;
-  name: string;
+  newColumnId: string;
+  children: JSX.Element[];
 }
 
 export interface IBoardGot {
@@ -74,6 +76,16 @@ export interface IColumnDelete {
 }
 
 export interface ITaskAPI {
+  _id: string;
+  title: string;
+  order: number;
+  description: string;
+  columnId: string;
+  userId: string;
+  users: string[];
+}
+
+export interface ITaskUpdateAPI {
   title: string;
   order: number;
   description: string;
@@ -92,7 +104,7 @@ export interface ITaskUpdate {
   boardId: string;
   columnId: string;
   taskId: string;
-  data: ITaskAPI;
+  data: ITaskUpdateAPI;
 }
 
 export interface ITaskDelete {

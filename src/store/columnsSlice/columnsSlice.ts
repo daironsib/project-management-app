@@ -1,19 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addColumn, getColumns } from './columnsActions';
+import { IColumn } from '../../types/interfaces';
+
+interface IColumnsState {
+  columns: IColumn[];
+  errorMessage: string;
+  error: boolean;
+  loading: boolean;
+  loadingColumns: boolean;
+  errorColumns: boolean;
+  shouldLoadColumns: boolean;
+  isColumnModalOpen: boolean;
+  currentColumn: string;
+}
+export const initialState: IColumnsState = {
+  columns: [],
+  errorMessage: '',
+  error: false,
+  loading: false,
+  loadingColumns: false,
+  errorColumns: false,
+  shouldLoadColumns: true,
+  isColumnModalOpen: false,
+  currentColumn: '',
+};
 
 export const columnsSlice = createSlice({
   name: 'columns',
-  initialState: {
-    columns: [],
-    errorMessage: '',
-    error: false,
-    loading: false,
-    loadingColumns: false,
-    errorColumns: false,
-    shouldLoadColumns: true,
-    isColumnModalOpen: false,
-    currentColumn: '',
-  },
+  initialState,
   reducers: {
     setCurrentColumn: (state, action) => {
       state.currentColumn = action.payload;

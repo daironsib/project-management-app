@@ -7,17 +7,16 @@ import { useAppDispatch } from '../../hooks';
 import { setCurrentColumn } from '../../store/columnsSlice/columnsSlice';
 
 type Props = {
-  title?: string,
   data: IColumn,
   children: JSX.Element[],
 };
 
-export const Column = ({ children, title, data }: Props) => {
+export const Column = ({ children, data }: Props) => {
   const dispatch = useAppDispatch();
 
   const [_, drop] = useDrop({
     accept: 'task',
-    drop: () => ({ name: title }),
+    drop: () => ({ newColumnId: data._id, children }),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
       canDrop: monitor.canDrop()
@@ -33,7 +32,7 @@ export const Column = ({ children, title, data }: Props) => {
     <ColumnBlock
       ref={drop}
     >
-      <ColumnTitle>{title}</ColumnTitle>
+      <ColumnTitle>{data.title}</ColumnTitle>
       {children}
       <AddTaskBtn onClick={() => taskModalOpen(data._id)}>
         <AddBoardImg src={AddButton} />
