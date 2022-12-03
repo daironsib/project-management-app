@@ -49,6 +49,12 @@ const translationEN = {
     delete: 'Delete',
     cancel: 'Cancel',
   },
+  addEditModal: {
+    titleAdd: 'CREATE BOARD',
+    titleEdit: 'EDIT BOARD',
+    continue: 'CONTINUE',
+    cancel: 'CANCEL',
+  },
 };
 
 const translationRU = {
@@ -96,6 +102,12 @@ const translationRU = {
     title: 'Вы уверены?',
     delete: 'Удалить',
     cancel: 'Отмена',
+  },
+  addEditModal: {
+    titleAdd: 'СОЗДАТЬ ДОСКУ',
+    titleEdit: 'РЕДАКТИРОВАТЬ ДОСКУ',
+    continue: 'ПРОДОЛЖИТЬ',
+    cancel: 'ОМЕНИТЬ',
   },
 };
 i18next.use(initReactI18next).init({

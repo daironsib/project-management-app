@@ -1,25 +1,24 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { BoardsBlock, BoardList, AddBoardButton, AddBoardImg } from './style';
 import AddButton from '../../assets/images/add-board.svg';
-import AddBoard from '../../components/AddBoard/AddBoard';
 import { parseJWT } from '../../utils/utils';
-
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeIsCreateModalOpened } from '../../../src/store/boardSlice/boardSlice';
 import BoardPreview from '../../components/BoardPreview/BoardPreview';
 import { Loading } from '../../components/Loading/Loading';
 import { ErrorMessage } from './style';
-import { getBoards } from '../../store/boardSlice/boardActions';
+import {
+  creationOfBoard,
+  getBoards,
+} from '../../store/boardSlice/boardActions';
+import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
+import { IBoard } from '../../types/interfaces';
 
 const Boards = () => {
-  const {
-    isCreateModalOpened,
-    boards,
-    shouldLoadBoards,
-    errorMessage,
-    isLoading,
-  } = useAppSelector((state) => state.board);
+  const { boards, shouldLoadBoards, errorMessage, isLoading } = useAppSelector(
+    (state) => state.board
+  );
   const dispatch = useAppDispatch();
+  const [isModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getBoards(parseJWT(localStorage.getItem('token')!).id));
@@ -31,9 +30,21 @@ const Boards = () => {
     }
   }, [dispatch, shouldLoadBoards]);
 
-  const createModalOpen = useCallback(() => {
-    dispatch(changeIsCreateModalOpened(true));
-  }, [dispatch]);
+  const openModal = () => {
+    setModalOpen(true);
+  };
+
+  const closeModal = useCallback(() => {
+    setModalOpen(false);
+  }, []);
+
+  const addBoard = useCallback(
+    (data: IBoard) => {
+      dispatch(creationOfBoard(data));
+      closeModal();
+    },
+    [closeModal, dispatch]
+  );
 
   const view = boards.map((board) => {
     return (
@@ -50,10 +61,15 @@ const Boards = () => {
         ) : (
           <ul>{view}</ul>
         )}
-        <AddBoardButton onClick={createModalOpen}>
+        <AddBoardButton onClick={openModal}>
           <AddBoardImg src={AddButton} alt='add' />
         </AddBoardButton>
-        <AddBoard isOpened={isCreateModalOpened}></AddBoard>
+        <AddEditModal
+          title={'titleAdd'}
+          isOpened={isModalOpen}
+          closeModal={closeModal}
+          dispatch={addBoard}
+        />
       </BoardList>
     </BoardsBlock>
   );

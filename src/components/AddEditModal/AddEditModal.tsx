@@ -1,42 +1,51 @@
-import React from 'react';
-import { useAppDispatch } from '../../hooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { IBoard } from '../../types/interfaces';
+import { parseJWT } from '../../utils/utils';
 import {
   BoardOverlay,
   BoardWindow,
-  InputName,
-  ButtonContinue,
-  ButtonCancel,
   ButtonBlock,
+  ButtonCancel,
+  ButtonContinue,
   CreateBoard,
-} from './style';
-import { IBoard } from '../../types/interfaces';
-import { changeIsCreateModalOpened } from '../../store/boardSlice/boardSlice';
-import { parseJWT } from '../../utils/utils';
-import { creationOfBoard } from '../../store/boardSlice/boardActions';
+  InputName,
+} from './styles';
 
 interface IAddBoard {
+  title: string;
   isOpened: boolean;
+  closeModal: () => void;
+  dispatch: (data: IBoard) => void;
 }
 
-const AddBoard = React.memo(({ isOpened }: IAddBoard) => {
+export const AddEditModal: React.FC<IAddBoard> = ({
+  title,
+  isOpened,
+  closeModal,
+  dispatch,
+}) => {
+  const { t } = useTranslation('translation', { keyPrefix: 'addEditModal' });
   const { register, handleSubmit, reset } = useForm<IBoard>();
-  const dispatch = useAppDispatch();
 
   const createModalClose = () => {
-    dispatch(changeIsCreateModalOpened(false));
+    closeModal();
   };
 
   const clickHandler: SubmitHandler<IBoard> = (data: IBoard) => {
-    dispatch(creationOfBoard(data));
+    dispatch(data);
     reset();
   };
 
   return (
-    <BoardOverlay isOpened={isOpened}>
+    <BoardOverlay
+      open={isOpened}
+      onClose={createModalClose}
+      disableAutoFocus={true}
+    >
       <form onSubmit={handleSubmit(clickHandler)}>
         <BoardWindow>
-          <CreateBoard>CREATE BOARD</CreateBoard>
+          <CreateBoard>{t(`${title}`)}</CreateBoard>
           <InputName
             {...register('title', { required: true })}
             type='text'
@@ -48,15 +57,13 @@ const AddBoard = React.memo(({ isOpened }: IAddBoard) => {
             value={parseJWT(localStorage.getItem('token')!).id}
           />
           <ButtonBlock>
-            <ButtonContinue type='submit'>CONTINUE</ButtonContinue>
+            <ButtonContinue type='submit'>{t('continue')}</ButtonContinue>
             <ButtonCancel type='button' onClick={createModalClose}>
-              CANCEL
+              {t('cancel')}
             </ButtonCancel>
           </ButtonBlock>
         </BoardWindow>
       </form>
     </BoardOverlay>
   );
-});
-
-export default AddBoard;
+};
