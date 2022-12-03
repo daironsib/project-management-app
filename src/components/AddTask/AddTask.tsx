@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ITaskAPI } from '../../types/interfaces';
 import { useParams } from 'react-router-dom';
-import { BoardOverlay, BoardWindow, ButtonBlock, ButtonCancel, ButtonContinue, CreateBoard, ErrorMessage, InputName } from '../AddBoard/style';
+import { BoardOverlay, BoardWindow, ButtonBlock, ButtonCancel, ButtonContinue, CreateBoard, ErrorMessage, InputName } from './style';
 import { toogleTaskModal } from '../../store/tasksSlice/tasksSlice';
 import { addTask } from '../../store/tasksSlice/tasksActions';
 import { parseJWT } from '../../utils/utils';
