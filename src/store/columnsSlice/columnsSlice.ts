@@ -1,21 +1,39 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addColumn, getColumns } from './columnsActions';
+import { IColumn } from '../../types/interfaces';
+
+interface IColumnsState {
+  columns: IColumn[];
+  errorMessage: string;
+  error: boolean;
+  loading: boolean;
+  loadingColumns: boolean;
+  errorColumns: boolean;
+  shouldLoadColumns: boolean;
+  isColumnModalOpen: boolean;
+  currentColumn: string;
+}
+export const initialState: IColumnsState = {
+  columns: [],
+  errorMessage: '',
+  error: false,
+  loading: false,
+  loadingColumns: false,
+  errorColumns: false,
+  shouldLoadColumns: true,
+  isColumnModalOpen: false,
+  currentColumn: '',
+};
 
 export const columnsSlice = createSlice({
   name: 'columns',
-  initialState: {
-    columns: [],
-    errorMessage: '',
-    error: false,
-    loading: false,
-    loadingColumns: false,
-    errorColumns: false,
-    shouldLoadColumns: true,
-    isCreateModalOpen: false,
-  },
+  initialState,
   reducers: {
-    toogleCreateModal: (state, action) => {
-      state.isCreateModalOpen = action.payload;
+    setCurrentColumn: (state, action) => {
+      state.currentColumn = action.payload;
+    },
+    toogleColumnModal: (state, action) => {
+      state.isColumnModalOpen = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -25,7 +43,7 @@ export const columnsSlice = createSlice({
     builder.addCase(addColumn.fulfilled, (state) => {
       state.error = false;
       state.loading = false;
-      state.isCreateModalOpen = false;
+      state.isColumnModalOpen = false;
       state.shouldLoadColumns = true;
     });
     builder.addCase(addColumn.rejected, (state, action) => {
@@ -51,4 +69,4 @@ export const columnsSlice = createSlice({
 });
 
 export const columnsReducer = columnsSlice.reducer;
-export const { toogleCreateModal } = columnsSlice.actions;
+export const { setCurrentColumn, toogleColumnModal } = columnsSlice.actions;

@@ -11,7 +11,7 @@ import {
   ErrorMessage,
 } from './styles';
 import { IColumn } from '../../types/interfaces';
-import { toogleCreateModal } from '../../store/columnsSlice/columnsSlice';
+import { toogleColumnModal } from '../../store/columnsSlice/columnsSlice';
 import { useParams } from 'react-router-dom';
 import { addColumn } from '../../store/columnsSlice/columnsActions';
 
@@ -23,8 +23,8 @@ export const AddColumn = ({ isOpened }: IAddBoard) => {
   const { register, handleSubmit, reset } = useForm<IColumn>();
   const dispatch = useAppDispatch();
 
-  const createModalClose = () => {
-    dispatch(toogleCreateModal(false));
+  const closeModal = () => {
+    dispatch(toogleColumnModal(false));
   };
 
   const { error, errorMessage } = useAppSelector(
@@ -32,7 +32,6 @@ export const AddColumn = ({ isOpened }: IAddBoard) => {
   );
 
   const clickHandler: SubmitHandler<IColumn> = (data: IColumn) => {
-    data.order = 0;
     if (id) {
       dispatch(addColumn({ id, data }));
       reset();
@@ -45,10 +44,11 @@ export const AddColumn = ({ isOpened }: IAddBoard) => {
         <BoardWindow>
           <CreateBoard>CREATE COLUMN</CreateBoard>
           <InputName {...register('title')} type='text' placeholder='NAME' />
+          <input {...register('order')} type='hidden' value={0} />
           { error && <ErrorMessage>{errorMessage}</ErrorMessage> }
           <ButtonBlock>
             <ButtonContinue type='submit'>CONTINUE</ButtonContinue>
-            <ButtonCancel onClick={createModalClose}>CANCEL</ButtonCancel>
+            <ButtonCancel onClick={closeModal}>CANCEL</ButtonCancel>
           </ButtonBlock>
         </BoardWindow>
       </form>

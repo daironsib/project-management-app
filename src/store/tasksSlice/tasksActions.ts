@@ -1,13 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import TasksService from '../../services/tasksService';
-import { ITaskCreate, ITaskDelete, ITaskGet, ITaskUpdate } from '../../types/interfaces';
+import { ITaskCreate, ITaskDelete, ITaskUpdate } from '../../types/interfaces';
 
 export const getTasks = createAsyncThunk(
   'tasks/get',
-  async ({ boardId, columnId }: ITaskGet, { rejectWithValue }) => {
+  async (boardId: string, { rejectWithValue }) => {
     try {
-      const response = await TasksService.getTasks({ boardId, columnId });
+      const response = await TasksService.getTasks(boardId);
       return response.data;
     } catch (error) {
       return rejectWithValue((error as AxiosError).response?.data);

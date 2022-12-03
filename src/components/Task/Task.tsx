@@ -1,34 +1,20 @@
 import { useRef } from 'react';
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
-import { COLUMN_NAMES } from '../../constants/constants';
-import { IDnDItem, IdropResult, ITask } from '../../types/interfaces';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks';
+import { updateTask } from '../../store/tasksSlice/tasksActions';
+import { IDnDItem, IdropResult, ITaskAPI } from '../../types/interfaces';
 import { RemoveBtn, TaskBlock } from './styles';
 
 interface Props {
-  name: string;
+  data: ITaskAPI;
   index: number;
-  currentColumnName: string;
-  moveCardHandler: Function;
-  setItems: Function;
 }
 
-export const Task = ({
-  name,
-  index,
-  currentColumnName,
-  moveCardHandler,
-  setItems
-}: Props) => {
-  const changeItemColumn = (currentItem: IDnDItem, columnName: string) => {
-    setItems((prevState: ITask[]) => {
-      return prevState.map((e: ITask) => {
-        return {
-          ...e,
-          column: e.name === currentItem.name ? columnName : e.column
-        };
-      });
-    });
-  };
+export const Task = ({ data, index }: Props) => {
+  const { _id, title, order, columnId, description, userId, users } = data;
+  const boardId = useParams().id;
+  const dispatch = useAppDispatch();
 
   const ref = useRef<HTMLInputElement>(null);
 
@@ -64,36 +50,36 @@ export const Task = ({
          }
       }
 
-      moveCardHandler(dragIndex, hoverIndex);
       item.index = hoverIndex;
     }
   });
 
   const [{ isDragging }, drag] = useDrag({
     type: 'task',
-    item: { index, name, currentColumnName, type: 'task' },
+    item: { index, title, _id, columnId, type: 'task' },
     end: (item, monitor) => {
       const dropResult: IdropResult | null = monitor.getDropResult();
 
-      if (dropResult) {
-        const { name } = dropResult;
-        const { DO_IT, IN_PROGRESS, AWAITING_REVIEW, DONE } = COLUMN_NAMES;
-        switch (name) {
-          case IN_PROGRESS:
-            changeItemColumn(item, IN_PROGRESS);
-            break;
-          case AWAITING_REVIEW:
-            changeItemColumn(item, AWAITING_REVIEW);
-            break;
-          case DONE:
-            changeItemColumn(item, DONE);
-            break;
-          case DO_IT:
-            changeItemColumn(item, DO_IT);
-            break;
-          default:
-            break;
+      if (dropResult && boardId) {
+        const { _id } = item;
+        const order = item.index;
+        const columnId = dropResult.newColumnId;
+
+        if (dropResult.children.length > order) {
+          console.log(order);
+          const prevTask = dropResult?.children[order].props.data;
+
+          dispatch(updateTask({ boardId, columnId, taskId: prevTask._id, data: { 
+            title: prevTask.title,
+            description: prevTask.description,
+            columnId: prevTask.columnId,
+            userId: prevTask.userId,
+            users: prevTask.users,
+            order: prevTask.order - 1 
+          }}));
         }
+
+        dispatch(updateTask({ boardId, columnId, taskId: _id, data: { title, order, description, columnId, userId, users }}));
       }
     },
     collect: (monitor) => ({
@@ -107,7 +93,7 @@ export const Task = ({
 
   return (
     <TaskBlock ref={ref} style={{ opacity }}>
-      {name}
+      {title}
       <RemoveBtn>x</RemoveBtn>
     </TaskBlock>
   );
