@@ -12,6 +12,8 @@ import {
 } from '../../store/boardSlice/boardActions';
 import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
 import { IBoard } from '../../types/interfaces';
+import { resetColumns } from '../../store/columnsSlice/columnsSlice';
+import { resetTasks } from '../../store/tasksSlice/tasksSlice';
 
 const Boards = () => {
   const { boards, shouldLoadBoards, errorMessage, isLoading } = useAppSelector(
@@ -37,6 +39,11 @@ const Boards = () => {
   const closeModal = useCallback(() => {
     setModalOpen(false);
   }, []);
+
+  useEffect(() => {
+    dispatch(resetColumns());
+    dispatch(resetTasks());
+  }, [dispatch] );
 
   const addBoard = useCallback(
     (data: IBoard) => {

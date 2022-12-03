@@ -14,15 +14,8 @@ import { AddTask } from '../../components/AddTask/AddTask';
 
 export const BoardPage = () => {
   const { id } = useParams();
-
-  const {
-    columns,
-    shouldLoadColumns,
-    isColumnModalOpen,
-  } = useAppSelector((state) => state.columns);
-
+  const { columns, isColumnModalOpen } = useAppSelector((state) => state.columns);
   const { tasks, isTaskModalOpen } = useAppSelector((state) => state.tasks);
-
   const dispatch = useAppDispatch();
 
   const createModalOpen = () => {
@@ -43,11 +36,11 @@ export const BoardPage = () => {
   }, [tasks]);
 
   useEffect(() => {
-    if (shouldLoadColumns && id) {
+    if (id) {
       dispatch(getColumns(id));
       dispatch(getTasks(id));
     }
-  }, [shouldLoadColumns, dispatch, id]);
+  }, [dispatch, id]);
 
   return (
     <BoardBlock>
