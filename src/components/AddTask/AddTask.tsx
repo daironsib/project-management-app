@@ -12,7 +12,7 @@ interface IAddTask {
 }
 export const AddTask = ({ isOpened }: IAddTask) => {
   const { id } = useParams();
-  const { register, handleSubmit, reset } = useForm<any>();
+  const { register, handleSubmit, reset } = useForm<ITaskAPI>();
   const dispatch = useAppDispatch();
   const { tasks, error, errorMessage } = useAppSelector((state) => state.tasks);
   const { currentColumn } = useAppSelector((state) => state.columns);
