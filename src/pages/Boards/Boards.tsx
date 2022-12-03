@@ -47,7 +47,7 @@ const Boards = () => {
 
   const addBoard = useCallback(
     (data: IBoard) => {
-      dispatch(creationOfBoard(data));
+      dispatch(creationOfBoard({ ...data, owner: parseJWT(localStorage.getItem('token')!).id }));
       closeModal();
     },
     [closeModal, dispatch]

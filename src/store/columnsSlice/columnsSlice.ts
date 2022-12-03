@@ -10,7 +10,7 @@ interface IColumnsState {
   loadingColumns: boolean;
   errorColumns: boolean;
   shouldLoadColumns: boolean;
-  isColumnModalOpen: boolean;
+  isColAddModalOpen: boolean;
   currentColumn: string;
 }
 export const initialState: IColumnsState = {
@@ -21,7 +21,7 @@ export const initialState: IColumnsState = {
   loadingColumns: false,
   errorColumns: false,
   shouldLoadColumns: true,
-  isColumnModalOpen: false,
+  isColAddModalOpen: false,
   currentColumn: '',
 };
 
@@ -36,18 +36,19 @@ export const columnsSlice = createSlice({
       state.currentColumn = action.payload;
     },
     toogleColumnModal: (state, action) => {
-      state.isColumnModalOpen = action.payload;
+      state.isColAddModalOpen = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder.addCase(addColumn.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(addColumn.fulfilled, (state) => {
+    builder.addCase(addColumn.fulfilled, (state, action) => {
       state.error = false;
       state.loading = false;
-      state.isColumnModalOpen = false;
+      state.isColAddModalOpen = false;
       state.shouldLoadColumns = true;
+      state.columns.push(action.payload);
     });
     builder.addCase(addColumn.rejected, (state, action) => {
       state.errorMessage = (action.payload as Error).message || '';

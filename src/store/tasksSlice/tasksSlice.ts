@@ -1,16 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ITaskAPI } from '../../types/interfaces';
+import { ITask } from '../../types/interfaces';
 import { addTask, getTasks, updateTask } from './tasksActions';
 
 interface ITaskState {
-  tasks: ITaskAPI[];
+  tasks: ITask[];
   errorMessage: string;
   error: boolean;
   loading: boolean;
   loadingTasks: boolean;
   errorTasks: boolean;
   shouldLoadTasks: boolean;
-  isTaskModalOpen: boolean;
+  isTaskAddModalOpen: boolean;
 }
 export const initialState: ITaskState = {
   tasks: [],
@@ -20,7 +20,7 @@ export const initialState: ITaskState = {
   loadingTasks: false,
   errorTasks: false,
   shouldLoadTasks: true,
-  isTaskModalOpen: false,
+  isTaskAddModalOpen: false,
 };
 
 export const tasksSlice = createSlice({
@@ -31,7 +31,7 @@ export const tasksSlice = createSlice({
       state.tasks = []
     },
     toogleTaskModal: (state, action) => {
-      state.isTaskModalOpen = action.payload;
+      state.isTaskAddModalOpen = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -55,7 +55,7 @@ export const tasksSlice = createSlice({
     builder.addCase(addTask.fulfilled, (state, action) => {
       state.error = false;
       state.loading = false;
-      state.isTaskModalOpen = false;
+      state.isTaskAddModalOpen = false;
       state.shouldLoadTasks = true;
       state.tasks.push(action.payload);
     });

@@ -1,3 +1,5 @@
+import { string } from "yup";
+
 export interface ISignUpForm {
   name: string;
   login: string;
@@ -17,12 +19,6 @@ export interface IBoard {
 export interface UserUpdateInterface {
   id: string;
   data: ISignUpForm;
-}
-
-export interface ITask {
-  column: string;
-  id: number;
-  name: string;
 }
 
 export interface IDnDItem {
@@ -75,7 +71,7 @@ export interface IColumnDelete {
   columnId: string;
 }
 
-export interface ITaskAPI {
+export interface ITask {
   _id: string;
   title: string;
   order: number;
@@ -97,7 +93,7 @@ export interface ITaskUpdateAPI {
 export interface ITaskCreate {
   boardId: string;
   columnId: string;
-  data: ITaskAPI;
+  data: ITask;
 }
 
 export interface ITaskUpdate {
@@ -111,4 +107,9 @@ export interface ITaskDelete {
   boardId: string;
   columnId: string;
   taskId: string;
+}
+
+export interface IAddEditModal {
+  title?: string;
+  description?: string;
 }
