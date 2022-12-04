@@ -1,5 +1,6 @@
 import { Modal } from '@mui/material';
 import styled from 'styled-components';
+import { widthEntryPoints, fonts } from '../../constants/constants';
 
 const BoardOverlay = styled(Modal)`
   && .MuiBackdrop-root {
@@ -8,7 +9,8 @@ const BoardOverlay = styled(Modal)`
   }
   width: 100%;
   height: 100%;
-  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  position: fixed;
   top: 0;
   right: 0;
 `;
@@ -29,6 +31,10 @@ const BoardWindow = styled.div`
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 16px 40px rgb(0 0 0 / 50%);
+  @media (${widthEntryPoints.tablet}) {
+    max-width: 300px;
+    min-width: 300px;
+  }
 `;
 
 const DeleteImg = styled.img`
@@ -39,7 +45,7 @@ const Button = styled.button`
   width: 130px;
   height: 40px;
   padding: 10px;
-  font-family: Roboto;
+  font-family: ${fonts.raleway};
   border-radius: 7px;
   outline: none;
   border: none;
@@ -62,7 +68,7 @@ const ButtonCancel = styled(Button)`
 
 const DelBoard = styled.h2`
   color: grey;
-  font-family: Roboto;
+  font-family: ${fonts.montserrat};
 `;
 
 export {

@@ -6,6 +6,9 @@ import { logOut } from '../../store/userSlice/userSlice';
 import SignInImg from '../../assets/images/login.png';
 import SignUpImg from '../../assets/images/add-user.png';
 import LogoImage from '../../assets/images/trello.png';
+import EditProfileImage from '../../assets/images/user-avatar.png';
+import CreateBoardImage from '../../assets/images/add.png';
+import SignOutImage from '../../assets/images/log-out.png';
 import {
   HeaderBlock,
   SwitcherLabel,
@@ -14,9 +17,13 @@ import {
   SwitcherBlock,
   UserImage,
   LogoImg,
+  EditProfile,
+  CreateBoardImg,
+  SignOutImg,
 } from './style';
 import i18next from '../../translations/translations';
 import { langs } from '../../constants/constants';
+import { CreateBoard } from '../AddBoard/style';
 
 const Header = () => {
   const [lang, setLang] = useState(langs.ru);
@@ -68,9 +75,15 @@ const Header = () => {
           </>
         ) : (
           <>
-            <NavLink to={ROUTES.editProfile}>edit profile</NavLink>
-            <NavLink to={ROUTES.boards}>boards</NavLink>
-            <div onClick={handlerSignOut}>sign out</div>
+            <NavLink to={ROUTES.editProfile}>
+              <EditProfile src={EditProfileImage}></EditProfile>
+            </NavLink>
+            <NavLink to={ROUTES.createBoard}>
+              <CreateBoardImg src={CreateBoardImage}></CreateBoardImg>
+            </NavLink>
+            <div onClick={handlerSignOut}>
+              <SignOutImg src={SignOutImage} alt='SignOut' />
+            </div>
           </>
         )}
       </NavBlock>

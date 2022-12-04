@@ -1,5 +1,28 @@
 import styled from 'styled-components';
-import { fonts } from '../../constants/constants';
+import { widthEntryPoints, fonts } from '../../constants/constants';
+
+interface IProps {
+  isOpened: boolean;
+}
+
+const BoardWindowForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const BoardOverlay = styled.div<IProps>`
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  position: fixed;
+  top: 0;
+  right: 0;
+  visibility: ${(props) => (props.isOpened ? 'visible' : 'hidden')};
+  opacity: ${(props) => (props.isOpened ? 1 : 0)};
+`;
 
 const BoardWindow = styled.div`
   position: absolute;
@@ -17,11 +40,18 @@ const BoardWindow = styled.div`
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 16px 40px rgb(0 0 0 / 50%);
+  @media (${widthEntryPoints.tablet}) {
+    max-width: 300px;
+    min-width: 300px;
+  }
 `;
 
 const CreateBoard = styled.h2`
   color: grey;
   font-family: ${fonts.montserrat};
+  @media (${widthEntryPoints.tablet}) {
+    font-size: 19px;
+  }
 `;
 
 const InputName = styled.input`
@@ -32,6 +62,10 @@ const InputName = styled.input`
   padding: 15px 10px;
   border-radius: 7px;
   outline-color: #b7eaf7;
+  @media (${widthEntryPoints.tablet}) {
+    width: 180px;
+    padding: 10px 7px;
+  }
 `;
 
 const InputDescription = styled.textarea`
@@ -53,11 +87,17 @@ const Button = styled.button`
   border-radius: 7px;
   outline: none;
   border: none;
+  @media (${widthEntryPoints.tablet}) {
+    width: 90px;
+    padding: 8px 4px;
+    font-size: 12px;
+  }
 `;
 
 const ButtonBlock = styled.div`
   display: flex;
-  gap: 20px;
+  justify-content: space-between;
+  width: 275px;
 `;
 
 const ButtonContinue = styled(Button)`
@@ -68,9 +108,8 @@ const ButtonCancel = styled(Button)`
   background-color: #8a9ba7;
 `;
 
-const ErrorMessage = styled.p``;
-
 export {
+  BoardOverlay,
   BoardWindow,
   InputName,
   InputDescription,
@@ -79,5 +118,5 @@ export {
   CreateBoard,
   Button,
   ButtonBlock,
-  ErrorMessage,
+  BoardWindowForm,
 };

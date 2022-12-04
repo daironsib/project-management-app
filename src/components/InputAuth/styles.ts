@@ -1,5 +1,6 @@
 import { TextField } from '@mui/material';
 import styled from 'styled-components';
+import { fonts } from '../../constants/constants';
 
 export const InputForm = styled(TextField).attrs({
   fullWidth: true,
@@ -11,5 +12,16 @@ export const InputForm = styled(TextField).attrs({
   }
   &&.MuiTextField-root p {
     font-size: 15px;
+  }
+  &&.MuiTextField-root input {
+    font-size: 20px;
+    font-family: ${fonts.raleway};
+    height: 28px;
+  }
+  &&.MuiTextField-root * {
+    font-family: ${fonts.raleway};
+  }
+  &&.MuiTextField-root {
+    width: 70%;
   }
 `;

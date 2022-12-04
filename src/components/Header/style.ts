@@ -74,6 +74,19 @@ const UserImage = styled.img`
   height: 20px;
 `;
 
+const EditProfile = styled.img`
+  height: 20px;
+`;
+
+const CreateBoardImg = styled.img`
+  height: 20px;
+`;
+
+const SignOutImg = styled.img`
+  height: 20px;
+  cursor: pointer;
+`;
+
 export {
   HeaderBlock,
   SwitcherLabel,
@@ -82,4 +95,7 @@ export {
   SwitcherBlock,
   UserImage,
   LogoImg,
+  EditProfile,
+  CreateBoardImg,
+  SignOutImg,
 };

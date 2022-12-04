@@ -5,8 +5,11 @@ import { parseJWT } from '../../utils/utils';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import BoardPreview from '../../components/BoardPreview/BoardPreview';
 import { Loading } from '../../components/Loading/Loading';
-import { ErrorMessage } from './style';
-import { creationOfBoard, getBoards } from '../../store/boardSlice/boardActions';
+import { ErrorMessage, BoardsList } from './style';
+import {
+  creationOfBoard,
+  getBoards,
+} from '../../store/boardSlice/boardActions';
 import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
 import { IBoard } from '../../types/interfaces';
 import { resetColumns } from '../../store/columnsSlice/columnsSlice';
@@ -41,7 +44,7 @@ const Boards = () => {
   useEffect(() => {
     dispatch(resetColumns());
     dispatch(resetTasks());
-  }, [dispatch] );
+  }, [dispatch]);
 
   const addBoard = useCallback(
     (data: IBoard) => {
@@ -64,7 +67,7 @@ const Boards = () => {
         {!!errorMessage ? (
           <ErrorMessage>{errorMessage} </ErrorMessage>
         ) : (
-          <ul>{view}</ul>
+          <BoardsList>{view}</BoardsList>
         )}
         <AddBoardButton onClick={openModal}>
           <AddBoardImg src={AddButton} alt='add' />

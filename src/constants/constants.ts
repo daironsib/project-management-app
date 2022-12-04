@@ -19,6 +19,9 @@ export const styleVars = {
   darkblue: '#50B4D8',
   white: '#ffffff',
   grey: '#8a9ba7',
+  verylightblue: 'rgba(183, 234, 247, 0.5)',
+  sand: '#ffe4c9',
+  black: '#000000',
 };
 
 export const fonts = {
@@ -29,4 +32,6 @@ export const fonts = {
 export const widthEntryPoints = {
   laptop: 'max-width: 991px',
   tablet: 'max-width: 530px',
+  small: 'max-width: 410px',
+  screen: 'max-width: 1045px',
 };

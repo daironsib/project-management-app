@@ -31,7 +31,7 @@ export const AddEditModal: React.FC<IAddBoard> = ({
   dispatch,
 }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'addEditModal' });
-  const defaultValues: IAddEditModal = { title: titleValue ? titleValue : '' }
+  const defaultValues: IAddEditModal = { title: titleValue ? titleValue : '' };
 
   if (description) {
     defaultValues.description = descrValue ? descrValue : '';
@@ -50,17 +50,25 @@ export const AddEditModal: React.FC<IAddBoard> = ({
   return (
     <BoardOverlay
       open={isOpened}
+      isOpened={isOpened}
       onClose={createModalClose}
       disableAutoFocus={true}
     >
       <form onSubmit={handleSubmit(clickHandler)}>
         <BoardWindow>
           <CreateBoard>{t(`${title}`)}</CreateBoard>
-          <InputName {...register('title', { required: true })} type='text' placeholder='NAME' />
-          {
-            description && 
-            <InputName {...register('description')} type='text' placeholder='DESCRIPTION' />
-          }
+          <InputName
+            {...register('title', { required: true })}
+            type='text'
+            placeholder='NAME'
+          />
+          {description && (
+            <InputName
+              {...register('description')}
+              type='text'
+              placeholder='DESCRIPTION'
+            />
+          )}
           <ButtonBlock>
             <ButtonContinue type='submit'>{t('continue')}</ButtonContinue>
             <ButtonCancel type='button' onClick={createModalClose}>

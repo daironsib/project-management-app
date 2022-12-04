@@ -111,7 +111,7 @@ const translationRU = {
     titleTaskAdd: 'СОЗДАТЬ ЗАДАЧУ',
     titleEdit: 'РЕДАКТИРОВАТЬ ДОСКУ',
     continue: 'ПРОДОЛЖИТЬ',
-    cancel: 'ОМЕНИТЬ',
+    cancel: 'ОТМЕНИТЬ',
   },
 };
 i18next.use(initReactI18next).init({
