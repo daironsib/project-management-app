@@ -1,5 +1,3 @@
-import { string } from "yup";
-
 export interface ISignUpForm {
   name: string;
   login: string;
