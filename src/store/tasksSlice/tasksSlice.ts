@@ -13,6 +13,8 @@ interface ITaskState {
   isTaskAddModalOpen: boolean;
   isTaskDeleteModalOpen: boolean;
   currentTask: string;
+  isTaskDetailsOpen: boolean;
+  taskDetails: ITask | null;
 }
 export const initialState: ITaskState = {
   tasks: [],
@@ -24,7 +26,9 @@ export const initialState: ITaskState = {
   shouldLoadTasks: true,
   isTaskAddModalOpen: false,
   isTaskDeleteModalOpen: false,
-  currentTask: ''
+  currentTask: '',
+  isTaskDetailsOpen: false,
+  taskDetails: null,
 };
 
 export const tasksSlice = createSlice({
@@ -42,6 +46,12 @@ export const tasksSlice = createSlice({
     },
     toogleDeleteTaskModal: (state, action) => {
       state.isTaskDeleteModalOpen = action.payload;
+    },
+    toogleTaskDetailsModal: (state, action) => {
+      state.isTaskDetailsOpen = action.payload;
+    },
+    setTaskDetails: (state, action) => {
+      state.taskDetails = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -100,4 +110,4 @@ export const tasksSlice = createSlice({
 });
 
 export const tasksReducer = tasksSlice.reducer;
-export const { resetTasks, toogleAddTaskModal, toogleDeleteTaskModal, setCurrentTask } = tasksSlice.actions;
+export const { resetTasks, toogleAddTaskModal, toogleDeleteTaskModal, setCurrentTask, toogleTaskDetailsModal, setTaskDetails } = tasksSlice.actions;

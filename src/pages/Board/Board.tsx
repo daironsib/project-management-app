@@ -12,13 +12,14 @@ import { addTask, getTasks } from '../../store/tasksSlice/tasksActions';
 import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
 import { IColumn, ITask } from '../../types/interfaces';
 import { addColumn } from '../../store/columnsSlice/columnsActions';
-import { toogleAddTaskModal } from '../../store/tasksSlice/tasksSlice';
+import { setTaskDetails, toogleAddTaskModal, toogleTaskDetailsModal } from '../../store/tasksSlice/tasksSlice';
 import { parseJWT } from '../../utils/utils';
+import TaskDetails from '../../components/TaskDetails/TaskDetails';
 
 export const BoardPage = () => {
   const { id } = useParams();
   const { columns, isColAddModalOpen, currentColumn } = useAppSelector((state) => state.columns);
-  const { tasks, isTaskAddModalOpen } = useAppSelector((state) => state.tasks);
+  const { tasks, isTaskAddModalOpen, isTaskDetailsOpen } = useAppSelector((state) => state.tasks);
   const dispatch = useAppDispatch();
 
   const createModalOpen = useCallback(() => {
@@ -28,6 +29,10 @@ export const BoardPage = () => {
   const closeModal = useCallback(() => {
     dispatch(toogleAddColumnModal(false));
     dispatch(toogleAddTaskModal(false));
+  }, [dispatch]);
+
+  const closeTaskDetails = useCallback(() => {
+    dispatch(toogleTaskDetailsModal(false));
   }, [dispatch]);
 
   const addColumnHandler = useCallback(
@@ -57,6 +62,11 @@ export const BoardPage = () => {
     [closeModal, currentColumn, dispatch, id, tasks]
   );
 
+  const openTaskDetails = useCallback((data: ITask) => {
+    dispatch(setTaskDetails(data));
+    dispatch(toogleTaskDetailsModal(true));
+  }, [dispatch]);
+
   const renderItemsForColumn = useCallback((columnId: string) => {
     return tasks
       .filter(task => task.columnId === columnId)
@@ -66,9 +76,10 @@ export const BoardPage = () => {
           data={item}
           key={`task-${item._id}`}
           index={i}
+          onClick={openTaskDetails}
         />
       ))
-  }, [tasks]);
+  }, [openTaskDetails, tasks]);
 
   useEffect(() => {
     if (id) {
@@ -103,6 +114,13 @@ export const BoardPage = () => {
           closeModal={closeModal}
           dispatch={addTaskHandler}
         />
+        {
+          isTaskDetailsOpen && 
+          <TaskDetails
+            isOpened={isTaskDetailsOpen}
+            closeModal={closeTaskDetails}
+          />
+        }
       </DndProvider>
     </BoardBlock>
   );
