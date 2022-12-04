@@ -13,6 +13,8 @@ import {
 
 interface IAddBoard {
   title: string;
+  titleValue?: string;
+  descrValue?: string;
   description?: boolean;
   isOpened: boolean;
   closeModal: () => void;
@@ -21,13 +23,20 @@ interface IAddBoard {
 
 export const AddEditModal: React.FC<IAddBoard> = ({
   title,
+  titleValue,
+  descrValue,
   description,
   isOpened,
   closeModal,
   dispatch,
 }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'addEditModal' });
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      title: titleValue ? titleValue : '',
+      description: descrValue ? descrValue : ''
+    }
+  });
 
   const createModalClose = () => {
     closeModal();

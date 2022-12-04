@@ -6,16 +6,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import BoardPreview from '../../components/BoardPreview/BoardPreview';
 import { Loading } from '../../components/Loading/Loading';
 import { ErrorMessage } from './style';
-import {
-  creationOfBoard,
-  getBoards,
-} from '../../store/boardSlice/boardActions';
+import { creationOfBoard, getBoards } from '../../store/boardSlice/boardActions';
 import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
 import { IBoard } from '../../types/interfaces';
 import { resetColumns } from '../../store/columnsSlice/columnsSlice';
 import { resetTasks } from '../../store/tasksSlice/tasksSlice';
 
 const Boards = () => {
+  const owner = parseJWT(localStorage.getItem('token')!).id;
   const { boards, shouldLoadBoards, errorMessage, isLoading } = useAppSelector(
     (state) => state.board
   );
@@ -23,14 +21,14 @@ const Boards = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(getBoards(parseJWT(localStorage.getItem('token')!).id));
-  }, [dispatch]);
+    dispatch(getBoards(owner));
+  }, [dispatch, owner]);
 
   useEffect(() => {
     if (shouldLoadBoards) {
-      dispatch(getBoards(parseJWT(localStorage.getItem('token')!).id));
+      dispatch(getBoards(owner));
     }
-  }, [dispatch, shouldLoadBoards]);
+  }, [dispatch, owner, shouldLoadBoards]);
 
   const openModal = () => {
     setModalOpen(true);
@@ -47,7 +45,7 @@ const Boards = () => {
 
   const addBoard = useCallback(
     (data: IBoard) => {
-      dispatch(creationOfBoard({ ...data, owner: parseJWT(localStorage.getItem('token')!).id }));
+      dispatch(creationOfBoard({ ...data, owner }));
       closeModal();
     },
     [closeModal, dispatch]

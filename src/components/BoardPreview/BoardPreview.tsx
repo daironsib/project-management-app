@@ -18,6 +18,7 @@ import { useAppDispatch } from '../../hooks';
 import { editBoards, removeBoard } from '../../store/boardSlice/boardActions';
 import { AddEditModal } from '../AddEditModal/AddEditModal';
 import { IBoard } from '../../types/interfaces';
+import { parseJWT } from '../../utils/utils';
 
 interface IProps {
   title: string;
@@ -46,7 +47,8 @@ const BoardPreview = React.memo(({ title, boardId }: IProps) => {
 
   const editBoard = useCallback(
     (data: IBoard) => {
-      dispatch(editBoards({ boardId, ...data }));
+      const owner = parseJWT(localStorage.getItem('token')!).id;
+      dispatch(editBoards({ boardId, ...data, owner }));
       closeModal();
     },
     [boardId, closeModal, dispatch]
@@ -87,6 +89,7 @@ const BoardPreview = React.memo(({ title, boardId }: IProps) => {
       />
       <AddEditModal
         title={'titleEdit'}
+        titleValue={title}
         isOpened={isEditModalOpened}
         closeModal={closeModal}
         dispatch={editBoard}
