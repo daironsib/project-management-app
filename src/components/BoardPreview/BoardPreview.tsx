@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   BoardCard,
   KanbanImg,
@@ -13,26 +13,46 @@ import EditImage from '../../assets/images/edit.svg';
 import BinImage from '../../assets/images/bin.svg';
 import KanbanImage from '../../assets/images/kanban.png';
 import { useNavigate } from 'react-router-dom';
-import EditBoard from '../EditBoard/EditBoard';
-import DeleteBoard from '../DeleteBoard/DeleteBoard';
+import DeleteBoard from '../DeleteModal/DeleteModal';
+import { useAppDispatch } from '../../hooks';
+import { editBoards, removeBoard } from '../../store/boardSlice/boardActions';
+import { AddEditModal } from '../AddEditModal/AddEditModal';
+import { IBoard } from '../../types/interfaces';
+import { parseJWT } from '../../utils/utils';
 
 interface IProps {
   title: string;
   boardId: string;
 }
+
 const BoardPreview = React.memo(({ title, boardId }: IProps) => {
   const [isEditModalOpened, setIsEditModalOpened] = useState(false);
   const [isDeleteModalOpened, setIsDeleteModalOpened] = useState(false);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleClick = () => {
     navigate(`/board/${boardId}`);
   };
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setIsEditModalOpened(false);
     setIsDeleteModalOpened(false);
-  };
+  }, []);
+
+  const deleteBoard = useCallback(() => {
+    closeModal();
+    dispatch(removeBoard(boardId));
+  }, [boardId, closeModal, dispatch]);
+
+  const editBoard = useCallback(
+    (data: IBoard) => {
+      const owner = parseJWT(localStorage.getItem('token')!).id;
+      dispatch(editBoards({ boardId, ...data, owner }));
+      closeModal();
+    },
+    [boardId, closeModal, dispatch]
+  );
 
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -43,6 +63,7 @@ const BoardPreview = React.memo(({ title, boardId }: IProps) => {
     e.stopPropagation();
     setIsDeleteModalOpened(true);
   };
+
   return (
     <>
       <BoardCard onClick={handleClick}>
@@ -63,13 +84,15 @@ const BoardPreview = React.memo(({ title, boardId }: IProps) => {
       </BoardCard>
       <DeleteBoard
         isOpened={isDeleteModalOpened}
-        boardId={boardId}
+        dispatch={deleteBoard}
         closeModal={closeModal}
       />
-      <EditBoard
+      <AddEditModal
+        title={'titleEdit'}
+        titleValue={title}
         isOpened={isEditModalOpened}
-        boardId={boardId}
         closeModal={closeModal}
+        dispatch={editBoard}
       />
     </>
   );

@@ -3,10 +3,10 @@ import { useCallback, useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Alert } from '../../components/Alert/Alert';
+import DeleteModal from '../../components/DeleteModal/DeleteModal';
 import { Form } from '../../components/Form/Form';
 import { InputAuth } from '../../components/InputAuth/InputAuth';
 import { Loading } from '../../components/Loading/Loading';
-import { Modal } from '../../components/Modal/Modal';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { deleteUser, updateUser } from '../../store/userSlice/userActions';
 import { ISignUpForm } from '../../types/interfaces';
@@ -41,8 +41,12 @@ const EditProfile: React.FC = () => {
     setIsAlertOpen(false);
   }, []);
 
-  const handleDelete = () => {
-    setModal(true);
+  const openModal = () => {
+    setOpenModal(true);
+  };
+
+  const closeModal = () => {
+    setOpenModal(false);
   };
 
   const deleteProfile = useCallback(() => {
@@ -51,9 +55,9 @@ const EditProfile: React.FC = () => {
     dispatch(deleteUser(id));
   }, [dispatch]);
 
-  const setModal = useCallback((isOpen: boolean) => {
-    setOpenModal(isOpen);
-  }, []);
+  // const setModal = useCallback((isOpen: boolean) => {
+  //   setOpenModal(isOpen);
+  // }, []);
 
   return (
     <>
@@ -113,20 +117,15 @@ const EditProfile: React.FC = () => {
           )}
         />
         <UpdateButtonsWrapper>
-          <ButtonDelete onClick={handleDelete}>
-            {t('deleteButton')}
-          </ButtonDelete>
+          <ButtonDelete onClick={openModal}>{t('deleteButton')}</ButtonDelete>
           <ButtonUpdate>{t('titleEditProfile')}</ButtonUpdate>
         </UpdateButtonsWrapper>
       </Form>
-      {isOpenModal && (
-        <Modal
-          modalTitle='Вы действительно хотите удалить свой аккаунт?'
-          isOpen={isOpenModal}
-          setModal={setModal}
-          dispatch={deleteProfile}
-        />
-      )}
+      <DeleteModal
+        isOpened={isOpenModal}
+        closeModal={closeModal}
+        dispatch={deleteProfile}
+      />
       {isLoading ? (
         <Loading />
       ) : (

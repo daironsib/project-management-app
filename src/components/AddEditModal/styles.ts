@@ -1,10 +1,14 @@
+import { Modal } from '@mui/material';
 import styled from 'styled-components';
 import { widthEntryPoints, fonts } from '../../constants/constants';
 
-const BoardOverlay = styled.div<{ isOpened: boolean }>`
+const BoardOverlay = styled(Modal)<{ isOpened: boolean }>`
+  && .MuiBackdrop-root {
+    background-color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+  }
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.7);
   position: absolute;
   top: 0;
   right: 0;
@@ -80,6 +84,7 @@ const Button = styled.button`
     padding: 8px 4px;
     font-size: 12px;
   }
+  cursor: pointer;
 `;
 
 const ButtonBlock = styled.div`

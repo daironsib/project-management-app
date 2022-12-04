@@ -35,10 +35,3 @@ export const widthEntryPoints = {
   small: 'max-width: 410px',
   screen: 'max-width: 1045px',
 };
-
-export const COLUMN_NAMES = {
-  DO_IT: 'Do it',
-  IN_PROGRESS: 'In Progress',
-  AWAITING_REVIEW: 'Awaiting review',
-  DONE: 'Done',
-};

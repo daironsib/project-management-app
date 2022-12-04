@@ -10,7 +10,6 @@ import {
 const initialState = {
   errorMessage: '',
   isLoading: false,
-  isCreateModalOpened: false,
   boards: [] as IBoardGot[],
   shouldLoadBoards: true,
 };
@@ -18,11 +17,7 @@ const initialState = {
 export const boardSlice = createSlice({
   name: 'board',
   initialState,
-  reducers: {
-    changeIsCreateModalOpened: (state, action) => {
-      state.isCreateModalOpened = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getBoards.pending, (state) => {
       state.isLoading = true;
@@ -32,7 +27,6 @@ export const boardSlice = createSlice({
       state.isLoading = false;
       state.errorMessage = '';
       state.boards = action.payload;
-      state.isCreateModalOpened = false;
       state.shouldLoadBoards = false;
     });
     builder.addCase(getBoards.rejected, (state, action) => {
@@ -47,7 +41,6 @@ export const boardSlice = createSlice({
     builder.addCase(creationOfBoard.fulfilled, (state) => {
       state.isLoading = false;
       state.errorMessage = '';
-      state.isCreateModalOpened = false;
       state.shouldLoadBoards = true;
     });
     builder.addCase(creationOfBoard.rejected, (state, action) => {
@@ -84,4 +77,3 @@ export const boardSlice = createSlice({
 });
 
 export const boardReducer = boardSlice.reducer;
-export const { changeIsCreateModalOpened } = boardSlice.actions;

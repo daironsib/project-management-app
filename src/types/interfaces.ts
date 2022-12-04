@@ -19,22 +19,18 @@ export interface UserUpdateInterface {
   data: ISignUpForm;
 }
 
-export interface ITask {
-  column: string;
-  id: number;
-  name: string;
-}
-
 export interface IDnDItem {
   index?: number;
   name?: string;
   currentColumnName?: string;
   type?: string;
+  columnId: string;
 }
 
 export interface IdropResult {
   dropEffect: string;
-  name: string;
+  newColumnId: string;
+  children: JSX.Element[];
 }
 
 export interface IBoardGot {
@@ -51,7 +47,7 @@ export interface IEditBoard {
 }  
 
 export interface IColumn {
-  _id?: string;
+  _id: string;
   title: string;
   order: number;
   boardId?: string;
@@ -73,35 +69,45 @@ export interface IColumnDelete {
   columnId: string;
 }
 
-export interface ITaskAPI {
+export interface ITask {
+  _id: string;
   title: string;
   order: number;
   description: string;
   columnId: string;
-  userId: number;
+  userId: string;
   users: string[];
 }
 
-export interface ITaskGet {
-  boardId: string;
+export interface ITaskUpdateAPI {
+  title: string;
+  order: number;
+  description: string;
   columnId: string;
+  userId: string;
+  users: string[];
 }
 
 export interface ITaskCreate {
   boardId: string;
   columnId: string;
-  data: ITaskAPI;
+  data: ITask;
 }
 
 export interface ITaskUpdate {
   boardId: string;
   columnId: string;
   taskId: string;
-  data: ITaskAPI;
+  data: ITaskUpdateAPI;
 }
 
 export interface ITaskDelete {
   boardId: string;
   columnId: string;
   taskId: string;
+}
+
+export interface IAddEditModal {
+  title?: string;
+  description?: string;
 }

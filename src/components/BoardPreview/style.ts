@@ -1,17 +1,6 @@
 import styled from 'styled-components';
 import { fonts } from '../../constants/constants';
 
-const BoardOverlay = styled.div<{ isOpened: boolean }>`
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.7);
-  position: absolute;
-  top: 0;
-  right: 0;
-  visibility: ${(props) => (props.isOpened ? 'visible' : 'hidden')};
-  opacity: ${(props) => (props.isOpened ? 1 : 0)}; ;
-`;
-
 const BoardWindow = styled.div`
   position: absolute;
   top: 50%;
@@ -82,7 +71,6 @@ const ButtonCancel = styled(Button)`
 const ErrorMessage = styled.p``;
 
 export {
-  BoardOverlay,
   BoardWindow,
   InputName,
   InputDescription,
