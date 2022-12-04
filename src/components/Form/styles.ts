@@ -40,11 +40,15 @@ export const ButtonSubmit = styled(Button).attrs({
   disableElevation: true,
 })`
   && {
-    width: 100%;
+    width: 60%;
+    background-color: ${styleVars.sand};
     font-size: 20px;
-    font-weight: bold;
+    color: ${styleVars.black};
     margin-top: 20px;
     font-family: ${fonts.montserrat};
+  }
+  &&:hover {
+    background-color: ${styleVars.grey};
   }
   font-family: ${fonts.montserrat};
 `;
