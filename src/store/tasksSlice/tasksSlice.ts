@@ -27,6 +27,9 @@ export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
+    resetTasks: (state) => {
+      state.tasks = []
+    },
     toogleTaskModal: (state, action) => {
       state.isTaskModalOpen = action.payload;
     },
@@ -72,4 +75,4 @@ export const tasksSlice = createSlice({
 });
 
 export const tasksReducer = tasksSlice.reducer;
-export const { toogleTaskModal } = tasksSlice.actions;
+export const { resetTasks, toogleTaskModal } = tasksSlice.actions;

@@ -29,6 +29,9 @@ export const columnsSlice = createSlice({
   name: 'columns',
   initialState,
   reducers: {
+    resetColumns: (state) => {
+      state.columns = []
+    },
     setCurrentColumn: (state, action) => {
       state.currentColumn = action.payload;
     },
@@ -69,4 +72,4 @@ export const columnsSlice = createSlice({
 });
 
 export const columnsReducer = columnsSlice.reducer;
-export const { setCurrentColumn, toogleColumnModal } = columnsSlice.actions;
+export const { resetColumns, setCurrentColumn, toogleColumnModal } = columnsSlice.actions;
