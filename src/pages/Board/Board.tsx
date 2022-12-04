@@ -7,20 +7,55 @@ import { Column } from '../../components/Column/Column';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import { toogleColumnModal } from '../../store/columnsSlice/columnsSlice';
-import { AddColumn } from '../../components/AddColumn/AddColumn';
 import { getColumns } from '../../store/columnsSlice/columnsActions';
-import { getTasks } from '../../store/tasksSlice/tasksActions';
-import { AddTask } from '../../components/AddTask/AddTask';
+import { addTask, getTasks } from '../../store/tasksSlice/tasksActions';
+import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
+import { IColumn, ITask } from '../../types/interfaces';
+import { addColumn } from '../../store/columnsSlice/columnsActions';
+import { toogleTaskModal } from '../../store/tasksSlice/tasksSlice';
+import { parseJWT } from '../../utils/utils';
 
 export const BoardPage = () => {
   const { id } = useParams();
-  const { columns, isColumnModalOpen } = useAppSelector((state) => state.columns);
-  const { tasks, isTaskModalOpen } = useAppSelector((state) => state.tasks);
+  const { columns, isColAddModalOpen, currentColumn } = useAppSelector((state) => state.columns);
+  const { tasks, isTaskAddModalOpen } = useAppSelector((state) => state.tasks);
   const dispatch = useAppDispatch();
 
-  const createModalOpen = () => {
+  const createModalOpen = useCallback(() => {
     dispatch(toogleColumnModal(true));
-  };
+  }, [dispatch]);
+
+  const closeModal = useCallback(() => {
+    dispatch(toogleColumnModal(false));
+    dispatch(toogleTaskModal(false));
+  }, [dispatch]);
+
+  const addColumnHandler = useCallback(
+    (data: IColumn) => {
+      if (id) {
+        dispatch(addColumn({ id, data: { ...data, order: 0 } }));
+        closeModal();
+      }
+    },
+    [closeModal, dispatch, id]
+  );
+
+  const addTaskHandler = useCallback(
+    (data: ITask) => {
+      if (id && currentColumn) {
+        const taskCounter = tasks.filter(task => task.columnId === currentColumn).length;
+        const newOrder = taskCounter === 0 ? 0 : taskCounter;
+        const userId = parseJWT(localStorage.getItem('token')!).id;
+        
+        if (data.title && data.description) {
+          data.order = newOrder;
+          dispatch(addTask({ boardId: id, columnId: currentColumn, data: { ...data, userId, users: [userId] } }));
+          closeModal();
+        }
+      }
+    },
+    [closeModal, currentColumn, dispatch, id, tasks]
+  );
 
   const renderItemsForColumn = useCallback((columnId: string) => {
     return tasks
@@ -55,8 +90,19 @@ export const BoardPage = () => {
         <AddColumnBlock>
           <AddColumnBtn onClick={createModalOpen}>+ Add column</AddColumnBtn> 
         </AddColumnBlock>
-        <AddColumn isOpened={isColumnModalOpen}/>
-        <AddTask isOpened={isTaskModalOpen} />
+        <AddEditModal
+          title={'titleColumnAdd'}
+          isOpened={isColAddModalOpen}
+          closeModal={closeModal}
+          dispatch={addColumnHandler}
+        />
+        <AddEditModal
+          title={'titleTaskAdd'}
+          description={true}
+          isOpened={isTaskAddModalOpen}
+          closeModal={closeModal}
+          dispatch={addTaskHandler}
+        />
       </DndProvider>
     </BoardBlock>
   );

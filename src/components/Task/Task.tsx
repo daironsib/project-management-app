@@ -3,16 +3,16 @@ import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks';
 import { updateTask } from '../../store/tasksSlice/tasksActions';
-import { IDnDItem, IdropResult, ITaskAPI } from '../../types/interfaces';
+import { IDnDItem, IdropResult, ITask } from '../../types/interfaces';
 import { RemoveBtn, TaskBlock } from './styles';
 
 interface Props {
-  data: ITaskAPI;
+  data: ITask;
   index: number;
 }
 
 export const Task = ({ data, index }: Props) => {
-  const { _id, title, order, columnId, description, userId, users } = data;
+  const { _id, title, columnId, description, userId, users } = data;
   const boardId = useParams().id;
   const dispatch = useAppDispatch();
 

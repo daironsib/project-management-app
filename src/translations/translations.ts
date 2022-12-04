@@ -51,6 +51,8 @@ const translationEN = {
   },
   addEditModal: {
     titleAdd: 'CREATE BOARD',
+    titleColumnAdd: 'CREATE COLUMN',
+    titleTaskAdd: 'CREATE TASK',
     titleEdit: 'EDIT BOARD',
     continue: 'CONTINUE',
     cancel: 'CANCEL',
@@ -105,6 +107,8 @@ const translationRU = {
   },
   addEditModal: {
     titleAdd: 'СОЗДАТЬ ДОСКУ',
+    titleColumnAdd: 'СОЗДАТЬ КОЛОНКУ',
+    titleTaskAdd: 'СОЗДАТЬ ЗАДАЧУ',
     titleEdit: 'РЕДАКТИРОВАТЬ ДОСКУ',
     continue: 'ПРОДОЛЖИТЬ',
     cancel: 'ОМЕНИТЬ',
