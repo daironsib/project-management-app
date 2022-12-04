@@ -1,9 +1,11 @@
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { DropTargetMonitor, useDrag, useDrop } from 'react-dnd';
 import { useParams } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
-import { updateTask } from '../../store/tasksSlice/tasksActions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { deleteTask, updateTask } from '../../store/tasksSlice/tasksActions';
+import { setCurrentTask, toogleDeleteTaskModal } from '../../store/tasksSlice/tasksSlice';
 import { IDnDItem, IdropResult, ITask } from '../../types/interfaces';
+import DeleteModal from '../DeleteModal/DeleteModal';
 import { RemoveBtn, TaskBlock } from './styles';
 
 interface Props {
@@ -13,6 +15,7 @@ interface Props {
 
 export const Task = ({ data, index }: Props) => {
   const { _id, title, columnId, description, userId, users } = data;
+  const { isTaskDeleteModalOpen, currentTask } = useAppSelector((state) => state.tasks);
   const boardId = useParams().id;
   const dispatch = useAppDispatch();
 
@@ -33,9 +36,7 @@ export const Task = ({ data, index }: Props) => {
       }
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-
       const clientOffset = monitor.getClientOffset();
 
       if (clientOffset) {
@@ -91,10 +92,37 @@ export const Task = ({ data, index }: Props) => {
 
   drag(drop(ref));
 
+  const deleteTaskModalOpen = useCallback(() => {
+    dispatch(setCurrentTask(data._id));
+    dispatch(toogleDeleteTaskModal(true));
+  }, [data._id, dispatch]);
+
+
+  const closeModal = useCallback(() => {
+    dispatch(toogleDeleteTaskModal(false));
+  }, [dispatch]);
+
+  const deleteTaskHandler = () => {
+    if (boardId) {
+      dispatch(deleteTask({ boardId, columnId, taskId: currentTask }));
+    }
+
+    closeModal();
+  };
+
   return (
     <TaskBlock ref={ref} style={{ opacity }}>
       {title}
-      <RemoveBtn>x</RemoveBtn>
+      <RemoveBtn onClick={() => deleteTaskModalOpen()}>x</RemoveBtn>
+      {
+        isTaskDeleteModalOpen && 
+        <DeleteModal
+          isOpened={isTaskDeleteModalOpen}
+          dispatch={deleteTaskHandler}
+          closeModal={closeModal}
+        />
+      }
     </TaskBlock>
   );
 };
+

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { ITask } from '../../types/interfaces';
-import { addTask, getTasks, updateTask } from './tasksActions';
+import { addTask, deleteTask, getTasks, updateTask } from './tasksActions';
 
 interface ITaskState {
   tasks: ITask[];
@@ -11,6 +11,8 @@ interface ITaskState {
   errorTasks: boolean;
   shouldLoadTasks: boolean;
   isTaskAddModalOpen: boolean;
+  isTaskDeleteModalOpen: boolean;
+  currentTask: string;
 }
 export const initialState: ITaskState = {
   tasks: [],
@@ -21,6 +23,8 @@ export const initialState: ITaskState = {
   errorTasks: false,
   shouldLoadTasks: true,
   isTaskAddModalOpen: false,
+  isTaskDeleteModalOpen: false,
+  currentTask: ''
 };
 
 export const tasksSlice = createSlice({
@@ -30,8 +34,14 @@ export const tasksSlice = createSlice({
     resetTasks: (state) => {
       state.tasks = []
     },
-    toogleTaskModal: (state, action) => {
+    setCurrentTask: (state, action) => {
+      state.currentTask = action.payload;
+    },
+    toogleAddTaskModal: (state, action) => {
       state.isTaskAddModalOpen = action.payload;
+    },
+    toogleDeleteTaskModal: (state, action) => {
+      state.isTaskDeleteModalOpen = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -64,6 +74,21 @@ export const tasksSlice = createSlice({
       state.error = true;
       state.loading = false;
     });
+    builder.addCase(deleteTask.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteTask.fulfilled, (state, action) => {
+      state.error = false;
+      state.loading = false;
+      state.isTaskAddModalOpen = false;
+      state.shouldLoadTasks = true;
+      state.tasks = state.tasks.filter(task => task._id !== action.payload._id);
+    });
+    builder.addCase(deleteTask.rejected, (state, action) => {
+      state.errorMessage = (action.payload as Error).message || '';
+      state.error = true;
+      state.loading = false;
+    });
     builder.addCase(updateTask.fulfilled, (state, action) => {
       state.errorTasks = false;
       state.loadingTasks = false;
@@ -75,4 +100,4 @@ export const tasksSlice = createSlice({
 });
 
 export const tasksReducer = tasksSlice.reducer;
-export const { resetTasks, toogleTaskModal } = tasksSlice.actions;
+export const { resetTasks, toogleAddTaskModal, toogleDeleteTaskModal, setCurrentTask } = tasksSlice.actions;

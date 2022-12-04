@@ -2,7 +2,7 @@ import { useDrop } from 'react-dnd';
 import { AddBoardImg, AddTaskBtn, RemoveBtn, ColumnBlock, ColumnTitle } from './styles';
 import AddButton from '../../assets/images/add-board.svg';
 import { IColumn } from '../../types/interfaces';
-import { toogleTaskModal } from '../../store/tasksSlice/tasksSlice';
+import { toogleAddTaskModal } from '../../store/tasksSlice/tasksSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setCurrentColumn, toogleDeleteColumnModal } from '../../store/columnsSlice/columnsSlice';
 import DeleteModal from '../DeleteModal/DeleteModal';
@@ -31,7 +31,7 @@ export const Column = ({ children, data }: Props) => {
 
   const taskModalOpen = useCallback(() => {
     dispatch(setCurrentColumn(data._id));
-    dispatch(toogleTaskModal(true));
+    dispatch(toogleAddTaskModal(true));
   }, [data._id, dispatch]);
 
   const deleteColModalOpen = useCallback(() => {
