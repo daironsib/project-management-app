@@ -31,12 +31,12 @@ export const AddEditModal: React.FC<IAddBoard> = ({
   dispatch,
 }) => {
   const { t } = useTranslation('translation', { keyPrefix: 'addEditModal' });
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: {
-      title: titleValue ? titleValue : '',
-      description: descrValue ? descrValue : ''
-    }
-  });
+  const defaultValues: IAddEditModal = { title: titleValue ? titleValue : '' }
+
+  if (description) {
+    defaultValues.description = descrValue ? descrValue : '';
+  }
+  const { register, handleSubmit, reset } = useForm({ defaultValues });
 
   const createModalClose = () => {
     closeModal();
