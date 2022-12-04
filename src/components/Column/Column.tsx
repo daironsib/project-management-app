@@ -3,8 +3,12 @@ import { AddBoardImg, AddTaskBtn, RemoveBtn, ColumnBlock, ColumnTitle } from './
 import AddButton from '../../assets/images/add-board.svg';
 import { IColumn } from '../../types/interfaces';
 import { toogleTaskModal } from '../../store/tasksSlice/tasksSlice';
-import { useAppDispatch } from '../../hooks';
-import { setCurrentColumn } from '../../store/columnsSlice/columnsSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setCurrentColumn, toogleDeleteColumnModal } from '../../store/columnsSlice/columnsSlice';
+import DeleteModal from '../DeleteModal/DeleteModal';
+import { useCallback } from 'react';
+import { deleteColumn } from '../../store/columnsSlice/columnsActions';
+import { useParams } from 'react-router-dom';
 
 type Props = {
   data: IColumn,
@@ -12,7 +16,9 @@ type Props = {
 };
 
 export const Column = ({ children, data }: Props) => {
+  const { isColDeleteModalOpen, currentColumn } = useAppSelector((state) => state.columns);
   const dispatch = useAppDispatch();
+  const boardId = useParams().id;
 
   const [_, drop] = useDrop({
     accept: 'task',
@@ -23,9 +29,26 @@ export const Column = ({ children, data }: Props) => {
     }),
   });
 
-  const taskModalOpen = (columnId: string) => {
-    dispatch(setCurrentColumn(columnId));
+  const taskModalOpen = useCallback(() => {
+    dispatch(setCurrentColumn(data._id));
     dispatch(toogleTaskModal(true));
+  }, [data._id, dispatch]);
+
+  const deleteColModalOpen = useCallback(() => {
+    dispatch(setCurrentColumn(data._id));
+    dispatch(toogleDeleteColumnModal(true));
+  }, [data._id, dispatch]);
+
+  const closeModal = useCallback(() => {
+    dispatch(toogleDeleteColumnModal(false));
+  }, [dispatch]);
+
+  const deleteColumnHandler = () => {
+    if (boardId) {
+      dispatch(deleteColumn({ boardId, columnId: currentColumn } ));
+    }
+
+    closeModal();
   };
 
   return (
@@ -34,10 +57,18 @@ export const Column = ({ children, data }: Props) => {
     >
       <ColumnTitle>{data.title}</ColumnTitle>
       {children}
-      <AddTaskBtn onClick={() => taskModalOpen(data._id)}>
+      <AddTaskBtn onClick={() => taskModalOpen()}>
         <AddBoardImg src={AddButton} />
       </AddTaskBtn>
-      <RemoveBtn>x</RemoveBtn>
+      <RemoveBtn onClick={() => deleteColModalOpen()}>x</RemoveBtn>
+      {
+        isColDeleteModalOpen && 
+        <DeleteModal
+          isOpened={isColDeleteModalOpen}
+          dispatch={deleteColumnHandler}
+          closeModal={closeModal}
+        />
+      }
     </ColumnBlock>
   );
 };

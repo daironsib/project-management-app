@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { BoardsBlock, BoardList, AddBoardButton, AddBoardImg } from './style';
 import AddButton from '../../assets/images/add-board.svg';
 import { parseJWT } from '../../utils/utils';
@@ -48,7 +48,7 @@ const Boards = () => {
       dispatch(creationOfBoard({ ...data, owner }));
       closeModal();
     },
-    [closeModal, dispatch]
+    [closeModal, dispatch, owner]
   );
 
   const view = boards.map((board) => {

@@ -6,7 +6,7 @@ import { Task } from '../../components/Task/Task';
 import { Column } from '../../components/Column/Column';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { toogleColumnModal } from '../../store/columnsSlice/columnsSlice';
+import { toogleAddColumnModal } from '../../store/columnsSlice/columnsSlice';
 import { getColumns } from '../../store/columnsSlice/columnsActions';
 import { addTask, getTasks } from '../../store/tasksSlice/tasksActions';
 import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
@@ -22,11 +22,11 @@ export const BoardPage = () => {
   const dispatch = useAppDispatch();
 
   const createModalOpen = useCallback(() => {
-    dispatch(toogleColumnModal(true));
+    dispatch(toogleAddColumnModal(true));
   }, [dispatch]);
 
   const closeModal = useCallback(() => {
-    dispatch(toogleColumnModal(false));
+    dispatch(toogleAddColumnModal(false));
     dispatch(toogleTaskModal(false));
   }, [dispatch]);
 
