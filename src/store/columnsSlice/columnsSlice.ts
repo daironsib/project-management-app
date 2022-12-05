@@ -6,6 +6,7 @@ import {
   updateColumn,
 } from './columnsActions';
 import { IColumn } from '../../types/interfaces';
+import { swapArray } from '../../utils/utils';
 
 interface IColumnsState {
   columns: IColumn[];
@@ -28,18 +29,6 @@ export const initialState: IColumnsState = {
   isColAddModalOpen: false,
   isColDeleteModalOpen: false,
   currentColumn: '',
-};
-export const swapArray = function (
-  inputArr: IColumn[],
-  oldPlace: number,
-  newPlace: number
-) {
-  const arr = inputArr.slice();
-  const item = arr.splice(oldPlace - 1, 1);
-  arr.splice(newPlace > 0 ? newPlace - 1 : 0, 0, item[0]);
-  return arr.map((el, i) => {
-    return { ...el, order: i + 1 };
-  });
 };
 
 export const columnsSlice = createSlice({

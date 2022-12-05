@@ -7,7 +7,6 @@ import { Column } from '../../components/Column/Column';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
 import {
-  swapArray,
   swapColumn,
   toogleAddColumnModal,
 } from '../../store/columnsSlice/columnsSlice';
@@ -22,6 +21,7 @@ import { addColumn } from '../../store/columnsSlice/columnsActions';
 import { setTaskDetails, toogleAddTaskModal, toogleTaskDetailsModal } from '../../store/tasksSlice/tasksSlice';
 import { parseJWT } from '../../utils/utils';
 import TaskDetails from '../../components/TaskDetails/TaskDetails';
+import { parseJWT, swapArray } from '../../utils/utils';
 import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
 import {
   horizontalListSortingStrategy,
@@ -121,6 +121,7 @@ export const BoardPage = () => {
     if (over) {
       if (active.id !== over.id) {
         dispatch(swapColumn([active.id, over.id]));
+
         swapArray(columns, active.id as number, over.id as number).forEach(
           (el) => {
             dispatch(
