@@ -6,8 +6,15 @@ import { Task } from '../../components/Task/Task';
 import { Column } from '../../components/Column/Column';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { toogleAddColumnModal } from '../../store/columnsSlice/columnsSlice';
-import { getColumns } from '../../store/columnsSlice/columnsActions';
+import {
+  swapArray,
+  swapColumn,
+  toogleAddColumnModal,
+} from '../../store/columnsSlice/columnsSlice';
+import {
+  getColumns,
+  updateColumn,
+} from '../../store/columnsSlice/columnsActions';
 import { addTask, getTasks } from '../../store/tasksSlice/tasksActions';
 import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
 import { IColumn, ITask } from '../../types/interfaces';
@@ -15,16 +22,16 @@ import { addColumn } from '../../store/columnsSlice/columnsActions';
 import { setTaskDetails, toogleAddTaskModal, toogleTaskDetailsModal } from '../../store/tasksSlice/tasksSlice';
 import { parseJWT } from '../../utils/utils';
 import TaskDetails from '../../components/TaskDetails/TaskDetails';
-import { DndContext, closestCenter } from '@dnd-kit/core';
+import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
 import {
-  arrayMove,
   horizontalListSortingStrategy,
   SortableContext,
 } from '@dnd-kit/sortable';
+import { Loading } from '../../components/Loading/Loading';
 
 export const BoardPage = () => {
   const { id } = useParams();
-  const { columns, isColAddModalOpen, currentColumn } = useAppSelector((state) => state.columns);
+  const { columns, isColAddModalOpen, currentColumn, isLoading } = useAppSelector((state) => state.columns);
   const { tasks, isTaskAddModalOpen, isTaskDetailsOpen } = useAppSelector((state) => state.tasks);
   const dispatch = useAppDispatch();
   const createModalOpen = useCallback(() => {
@@ -43,11 +50,19 @@ export const BoardPage = () => {
   const addColumnHandler = useCallback(
     (data: IColumn) => {
       if (id) {
-        dispatch(addColumn({ id, data: { ...data, order: 0 } }));
+        dispatch(
+          addColumn({
+            id,
+            data: {
+              ...data,
+              order: columns.length ? columns[columns.length - 1].order + 1 : 1,
+            },
+          })
+        );
         closeModal();
       }
     },
-    [closeModal, dispatch, id]
+    [closeModal, columns, dispatch, id]
   );
 
   const addTaskHandler = useCallback(
@@ -101,27 +116,28 @@ export const BoardPage = () => {
     }
   }, [dispatch, id]);
 
-  function handleDragEnd(event: { active: any; over: any }) {
-    console.log('Drag end called');
+  const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
-    console.log(active);
-    console.log(over);
-
-    if (active.id !== over.id) {
-      // const prevColumn = columns[active.id - 1];
-      // const column = columns[over.id - 1];
-      // console.log(prevColumn, column);
-      // setLanguages((items) => {
-      //   const activeIndex = items.indexOf(active.id);
-      //   const overIndex = items.indexOf(over.id);
-      //   console.log(activeIndex, overIndex);
-      //   console.log(arrayMove(items, activeIndex, overIndex));
-      //   return arrayMove(items, activeIndex, overIndex);
-      //   // items: [2, 3, 1]   0  -> 2
-      //   // [1, 2, 3] oldIndex: 0 newIndex: 2  -> [2, 3, 1]
-      // });
+    if (over) {
+      if (active.id !== over.id) {
+        dispatch(swapColumn([active.id, over.id]));
+        swapArray(columns, active.id as number, over.id as number).forEach(
+          (el) => {
+            dispatch(
+              updateColumn({
+                boardId: el.boardId as string,
+                columnId: el._id,
+                data: {
+                  title: el.title,
+                  order: el.order,
+                },
+              })
+            );
+          }
+        );
+      }
     }
-  }
+  };
 
   return (
     <BoardBlock>
@@ -135,13 +151,11 @@ export const BoardPage = () => {
             items={columns.map((el) => el.order)}
             strategy={horizontalListSortingStrategy}
           >
-            {columns
-              // .sort((a, b) => a.order - b.order)
-              .map((column, i) => (
-                <Column data={column} key={`column-${i}'}`}>
-                  {renderItemsForColumn(column._id)}
-                </Column>
-              ))}
+            {columns.map((column, i) => (
+              <Column data={column} key={`column-${i}'}`}>
+                {renderItemsForColumn(column._id)}
+              </Column>
+            ))}
           </SortableContext>
           <AddColumnBlock>
             <AddColumnBtn onClick={createModalOpen}>+ Add column</AddColumnBtn>
@@ -166,6 +180,7 @@ export const BoardPage = () => {
             closeModal={closeTaskDetails}
           />
         }
+          {isLoading && <Loading />}
         </DndContext>
       </DndProvider>
     </BoardBlock>

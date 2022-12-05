@@ -28,7 +28,7 @@ type Props = {
 };
 
 export const Column = ({ children, data }: Props) => {
-  const { isColDeleteModalOpen, currentColumn, isLoading } = useAppSelector(
+  const { isColDeleteModalOpen, currentColumn} = useAppSelector(
     (state) => state.columns
   );
   const dispatch = useAppDispatch();
@@ -89,7 +89,6 @@ export const Column = ({ children, data }: Props) => {
           />
         )}
       </ColumnBlock>
-      {isLoading && <Loading />}
     </div>
   );
 };

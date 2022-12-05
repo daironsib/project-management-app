@@ -79,7 +79,6 @@ export const Task = ({ data, index, onClick }: Props) => {
         const columnId = dropResult.newColumnId;
 
         if (dropResult.children.length > order) {
-          console.log(order);
           const prevTask = dropResult?.children[order].props.data;
 
           dispatch(

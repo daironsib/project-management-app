@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addColumn, deleteColumn, getColumns } from './columnsActions';
+import {
+  addColumn,
+  deleteColumn,
+  getColumns,
+  updateColumn,
+} from './columnsActions';
 import { IColumn } from '../../types/interfaces';
 
 interface IColumnsState {
@@ -24,6 +29,18 @@ export const initialState: IColumnsState = {
   isColDeleteModalOpen: false,
   currentColumn: '',
 };
+export const swapArray = function (
+  inputArr: IColumn[],
+  oldPlace: number,
+  newPlace: number
+) {
+  const arr = inputArr.slice();
+  const item = arr.splice(oldPlace - 1, 1);
+  arr.splice(newPlace > 0 ? newPlace - 1 : 0, 0, item[0]);
+  return arr.map((el, i) => {
+    return { ...el, order: i + 1 };
+  });
+};
 
 export const columnsSlice = createSlice({
   name: 'columns',
@@ -41,6 +58,13 @@ export const columnsSlice = createSlice({
     toogleDeleteColumnModal: (state, action) => {
       state.isColDeleteModalOpen = action.payload;
     },
+    swapColumn: (state, action) => {
+      state.columns = swapArray(
+        state.columns,
+        action.payload[0],
+        action.payload[1]
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(addColumn.pending, (state) => {
@@ -51,6 +75,9 @@ export const columnsSlice = createSlice({
       state.isLoading = false;
       state.isColAddModalOpen = false;
       state.shouldLoadColumns = true;
+      state.columns = state.columns.map((el, i) => {
+        return { ...el, order: i + 1 };
+      });
       state.columns.push({
         ...action.payload,
         order: state.columns.length
@@ -71,9 +98,11 @@ export const columnsSlice = createSlice({
       state.isLoading = false;
       state.isColAddModalOpen = false;
       state.shouldLoadColumns = true;
-      state.columns = state.columns.filter(
-        (column) => column._id !== action.payload._id
-      );
+      state.columns = state.columns
+        .filter((column) => column._id !== action.payload._id)
+        .map((el, i) => {
+          return { ...el, order: i + 1 };
+        });
     });
     builder.addCase(deleteColumn.rejected, (state, action) => {
       state.errorMessage = (action.payload as Error).message || '';
@@ -85,10 +114,12 @@ export const columnsSlice = createSlice({
     });
     builder.addCase(getColumns.fulfilled, (state, action) => {
       state.errorColumns = false;
-      state.isLoading= false;
-      state.columns = [...action.payload].map((el, i) => {
-        return { ...el, order: i + 1 };
-      });
+      state.isLoading = false;
+      state.columns = [...action.payload]
+        .sort((a, b) => a.order - b.order)
+        .map((el, i) => {
+          return { ...el, order: i + 1 };
+        });
       state.shouldLoadColumns = false;
     });
     builder.addCase(getColumns.rejected, (state) => {
@@ -96,7 +127,19 @@ export const columnsSlice = createSlice({
       state.isLoading = false;
       state.shouldLoadColumns = false;
     });
-    
+    builder.addCase(updateColumn.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateColumn.fulfilled, (state) => {
+      state.errorColumns = false;
+      state.isLoading = false;
+      state.shouldLoadColumns = true;
+    });
+    builder.addCase(updateColumn.rejected, (state, action) => {
+      state.errorColumns = true;
+      state.isLoading = false;
+      state.errorMessage = (action.payload as Error).message || '';
+    });
   },
 });
 
@@ -106,4 +149,5 @@ export const {
   setCurrentColumn,
   toogleAddColumnModal,
   toogleDeleteColumnModal,
+  swapColumn,
 } = columnsSlice.actions;

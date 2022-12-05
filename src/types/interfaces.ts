@@ -57,11 +57,15 @@ export interface IColumnCreate {
   id: string;
   data: IColumn;
 }
+export interface IColumnForUpdate{
+  title: string;
+  order: number;
+}
 
 export interface IColumnUpdate {
   boardId: string;
   columnId: string;
-  data: IColumn;
+  data: IColumnForUpdate;
 }
 
 export interface IColumnDelete {
