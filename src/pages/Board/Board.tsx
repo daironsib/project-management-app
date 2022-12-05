@@ -89,9 +89,11 @@ export const BoardPage = () => {
     [closeModal, currentColumn, dispatch, id, tasks]
   );
 
-  const openTaskDetails = useCallback((data: ITask) => {
-    dispatch(setTaskDetails(data));
-    dispatch(toogleTaskDetailsModal(true));
+  const openTaskDetails = useCallback((e: MouseEvent, data: ITask) => {
+    if (e.currentTarget === e.target) {
+      dispatch(setTaskDetails(data));
+      dispatch(toogleTaskDetailsModal(true));
+    }
   }, [dispatch]);
 
   const renderItemsForColumn = useCallback((columnId: string) => {

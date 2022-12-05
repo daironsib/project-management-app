@@ -136,7 +136,7 @@ export const Task = ({ data, index, onClick }: Props) => {
   };
 
   return (
-    <TaskBlock ref={ref} style={{ opacity }} onClick={() => onClick(data)}>
+    <TaskBlock ref={ref} style={{ opacity }} onClick={(e) => onClick(e, data)}>
       {title}
       <RemoveBtn onClick={() => deleteTaskModalOpen()}>x</RemoveBtn>
       {
