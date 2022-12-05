@@ -12,7 +12,7 @@ import { addTask, getTasks } from '../../store/tasksSlice/tasksActions';
 import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
 import { IColumn, ITask } from '../../types/interfaces';
 import { addColumn } from '../../store/columnsSlice/columnsActions';
-import { toogleTaskModal } from '../../store/tasksSlice/tasksSlice';
+import { toogleAddTaskModal } from '../../store/tasksSlice/tasksSlice';
 import { parseJWT } from '../../utils/utils';
 
 export const BoardPage = () => {
@@ -27,7 +27,7 @@ export const BoardPage = () => {
 
   const closeModal = useCallback(() => {
     dispatch(toogleAddColumnModal(false));
-    dispatch(toogleTaskModal(false));
+    dispatch(toogleAddTaskModal(false));
   }, [dispatch]);
 
   const addColumnHandler = useCallback(

@@ -24,6 +24,7 @@ const TaskBlock = styled.div`
   cursor: pointer;
   box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.5) inset;
   border: none;
+  padding: 15px 30px 15px 15px;
   &:hover ${RemoveBtn} {
     display: block;
   }
