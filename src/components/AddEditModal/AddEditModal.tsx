@@ -64,7 +64,7 @@ export const AddEditModal: React.FC<IAddBoard> = ({
           />
           {description && (
             <InputName
-              {...register('description')}
+              {...register('description', { required: true })}
               type='text'
               placeholder='DESCRIPTION'
             />
