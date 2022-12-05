@@ -21,7 +21,6 @@ const DeleteModal = ({ isOpened, closeModal }: IProps) => {
   const { taskDetails } = useAppSelector((state) => state.tasks);
   const dispatch = useAppDispatch();
   const boardId = useParams().id;
-  console.log(taskDetails);
 
   const taskTitle = taskDetails?.title as string;
   const handleCancelClick = () => {
