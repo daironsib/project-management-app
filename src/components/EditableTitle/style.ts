@@ -13,6 +13,18 @@ const InputName = styled.input`
   outline-color: #b7eaf7;
 `;
 
+const InputDescription = styled.textarea`
+  width: 400px;
+  height: 200px;
+  border: 1px solid grey;
+  padding: 15px 50px 15px 15px;
+  border-radius: 7px;
+  outline-color: #b7eaf7;
+  box-sizing: border-box;
+  max-width: 100%;
+  resize: none;
+`;
+
 const ApplyBtn = styled.img`
   display: inline-block;
   position: absolute;
@@ -35,4 +47,4 @@ const CancelBtn = styled.img`
   cursor: pointer;
 `;
 
-export { Form, InputName, ApplyBtn, CancelBtn };
+export { Form, InputName, InputDescription, ApplyBtn, CancelBtn };

@@ -2,20 +2,28 @@ import { useCallback, useState } from 'react';
 import { ColumnTitle } from '../Column/styles';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IAddEditModal } from '../../types/interfaces';
-import { ApplyBtn, CancelBtn, Form, InputName } from './style';
+import { ApplyBtn, CancelBtn, Form, InputDescription, InputName } from './style';
 import CancelIcon from '../../assets/images/cancel.svg';
 import ApplyIcon from '../../assets/images/apply.svg';
 
 type Props = {
-  title: string;
+  title?: string;
+  description?: string;
   dispatch: Function;
 };
 
-export const EditableTitle = ({ title, dispatch }: Props) => {
+export const EditableTitle = ({ title, description, dispatch }: Props) => {
   const [isActive, setActive] = useState(false);
-  const defaultValues: IAddEditModal = { title };
+  const defaultValues: IAddEditModal = { title, description };
   const { register, handleSubmit, reset, setValue } = useForm({ defaultValues });
-  setValue('title', title);
+  
+  if (title) {
+    setValue('title', title);
+  }
+  
+  if (description) {
+    setValue('description', description);
+  }
 
   const clickHandler = useCallback(() => {
     setActive(true);
@@ -43,14 +51,30 @@ export const EditableTitle = ({ title, dispatch }: Props) => {
       {
         isActive ? 
           <Form onSubmit={handleSubmit(formHandler)}>
-            <InputName
-              {...register('title', { required: true })}
-              type='text'
-            />
+            {
+              title && 
+              <InputName
+                {...register('title', { required: true })}
+                type='text'
+              />
+            }
+            {
+              description && 
+              <InputDescription
+                {...register('description', { required: true })}
+              />
+            }
             <ApplyBtn onClick={handleSubmit(data => applyHandler(data))} src={ApplyIcon}/>
             <CancelBtn onClick={cancelHandler} src={CancelIcon}/>
           </Form> : 
-        <div onClick={() => clickHandler()}>{title}</div>
+        <>
+          {
+            title && <div onClick={() => clickHandler()}>{title}</div>
+          }
+          {
+            description && <div onClick={() => clickHandler()}>{description}</div>
+          }
+        </>
       }
     </ColumnTitle>
   );

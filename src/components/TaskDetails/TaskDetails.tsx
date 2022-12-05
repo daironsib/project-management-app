@@ -28,26 +28,35 @@ const DeleteModal = ({ isOpened, closeModal }: IProps) => {
   };
 
   const updateТaskHandler = useCallback(
-    ({ title }: IAddEditModal) => {
+    ({ title, description }: IAddEditModal) => {
       if (taskDetails && boardId) {
         const { columnId, _id, order, userId, users } = taskDetails;
+
+        if (!title) {
+          title = taskDetails.title;
+        }
+
+        if (!description) {
+          description = taskDetails.description;
+        }
+
         const data = {
-          title: title ? title : taskDetails.title,
+          title,
           order: order,
-          description: taskDetails.description,
+          description,
           columnId,
           userId,
           users,
         };
-        dispatch(setTaskDetails(data));
         dispatch(
           updateTask({
             boardId,
             columnId,
-            taskId: _id,
+            taskId: taskDetails._id,
             data,
           })
         );
+        dispatch(setTaskDetails({ ...data, boardId, columnId, taskId: _id }));
       }
     },
     [boardId, dispatch, taskDetails]
@@ -64,7 +73,7 @@ const DeleteModal = ({ isOpened, closeModal }: IProps) => {
           <EditableTitle title={taskTitle} dispatch={updateТaskHandler} />
         </TaskDetailsTitle>
         <TaskDetailsDescription>
-          {taskDetails?.description}
+          <EditableTitle description={taskDetails?.description} dispatch={updateТaskHandler} />
         </TaskDetailsDescription>
       </TaskDetailsModal>
     </Overlay>
