@@ -36,6 +36,7 @@ export const AddEditModal: React.FC<IAddBoard> = ({
   if (description) {
     defaultValues.description = descrValue ? descrValue : '';
   }
+  
   const { register, handleSubmit, reset } = useForm({ defaultValues });
 
   const createModalClose = () => {
