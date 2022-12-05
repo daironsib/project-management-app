@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const BoardBlock = styled.div`
   width: 95%;
+  height: 70vh;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
