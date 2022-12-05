@@ -1,15 +1,16 @@
 import { useCallback, useEffect } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { AddColumnBlock, AddColumnBtn, BoardBlock } from './styles';
+import { AddColumnBlock, AddColumnBtn, BoardBlock, BackImage } from './styles';
 import { Task } from '../../components/Task/Task';
 import { Column } from '../../components/Column/Column';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import {
   swapColumn,
   toogleAddColumnModal,
 } from '../../store/columnsSlice/columnsSlice';
+import BackImg from '../../assets/images/back-button.png';
 import {
   getColumns,
   updateColumn,
@@ -31,6 +32,7 @@ import {
   SortableContext,
 } from '@dnd-kit/sortable';
 import { Loading } from '../../components/Loading/Loading';
+import { ROUTES } from '../../constants/constants';
 
 export const BoardPage = () => {
   const { id } = useParams();
@@ -96,12 +98,15 @@ export const BoardPage = () => {
     [closeModal, currentColumn, dispatch, id, tasks]
   );
 
-  const openTaskDetails = useCallback((e: MouseEvent, data: ITask) => {
-    if (e.currentTarget === e.target) {
-      dispatch(setTaskDetails(data));
-      dispatch(toogleTaskDetailsModal(true));
-    }
-  }, [dispatch]);
+  const openTaskDetails = useCallback(
+    (e: MouseEvent, data: ITask) => {
+      if (e.currentTarget === e.target) {
+        dispatch(setTaskDetails(data));
+        dispatch(toogleTaskDetailsModal(true));
+      }
+    },
+    [dispatch]
+  );
 
   const renderItemsForColumn = useCallback(
     (columnId: string) => {
@@ -152,49 +157,56 @@ export const BoardPage = () => {
   };
 
   return (
-    <BoardBlock>
-      <DndProvider backend={HTML5Backend}>
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-          autoScroll={false}
-        >
-          <SortableContext
-            items={columns.map((el) => el.order)}
-            strategy={horizontalListSortingStrategy}
+    <>
+      <NavLink to={ROUTES.boards}>
+        <BackImage src={BackImg} alt='SignIn'></BackImage>
+      </NavLink>
+      <BoardBlock>
+        <DndProvider backend={HTML5Backend}>
+          <DndContext
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+            autoScroll={false}
           >
-            {columns.map((column, i) => (
-              <Column data={column} key={`column-${i}'}`}>
-                {renderItemsForColumn(column._id)}
-              </Column>
-            ))}
-          </SortableContext>
-          
-          <AddColumnBlock>
-            <AddColumnBtn onClick={createModalOpen}>+ Add column</AddColumnBtn>
-          </AddColumnBlock>
-          <AddEditModal
-            title={'titleColumnAdd'}
-            isOpened={isColAddModalOpen}
-            closeModal={closeModal}
-            dispatch={addColumnHandler}
-          />
-          <AddEditModal
-            title={'titleTaskAdd'}
-            description={true}
-            isOpened={isTaskAddModalOpen}
-            closeModal={closeModal}
-            dispatch={addTaskHandler}
-          />
-          {isTaskDetailsOpen && (
-            <TaskDetails
-              isOpened={isTaskDetailsOpen}
-              closeModal={closeTaskDetails}
+            <SortableContext
+              items={columns.map((el) => el.order)}
+              strategy={horizontalListSortingStrategy}
+            >
+              {columns.map((column, i) => (
+                <Column data={column} key={`column-${i}'}`}>
+                  {renderItemsForColumn(column._id)}
+                </Column>
+              ))}
+            </SortableContext>
+
+            <AddColumnBlock>
+              <AddColumnBtn onClick={createModalOpen}>
+                + Add column
+              </AddColumnBtn>
+            </AddColumnBlock>
+            <AddEditModal
+              title={'titleColumnAdd'}
+              isOpened={isColAddModalOpen}
+              closeModal={closeModal}
+              dispatch={addColumnHandler}
             />
-          )}
-          {isLoading && <Loading />}
-        </DndContext>
-      </DndProvider>
-    </BoardBlock>
+            <AddEditModal
+              title={'titleTaskAdd'}
+              description={true}
+              isOpened={isTaskAddModalOpen}
+              closeModal={closeModal}
+              dispatch={addTaskHandler}
+            />
+            {isTaskDetailsOpen && (
+              <TaskDetails
+                isOpened={isTaskDetailsOpen}
+                closeModal={closeTaskDetails}
+              />
+            )}
+            {isLoading && <Loading />}
+          </DndContext>
+        </DndProvider>
+      </BoardBlock>
+    </>
   );
 };

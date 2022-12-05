@@ -89,7 +89,7 @@ const Header = () => {
               </EditProfile>
             </NavLink>
             <NavLink to={ROUTES.boards}>
-              <CreateBoard data-tooltip='Create board'>
+              <CreateBoard data-tooltip='Boards'>
                 <CreateBoardImg src={CreateBoardImage}></CreateBoardImg>
               </CreateBoard>
             </NavLink>
