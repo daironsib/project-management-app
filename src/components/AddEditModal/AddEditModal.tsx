@@ -8,6 +8,7 @@ import {
   ButtonCancel,
   ButtonContinue,
   CreateBoard,
+  InputDescription,
   InputName,
 } from './styles';
 
@@ -63,9 +64,8 @@ export const AddEditModal: React.FC<IAddBoard> = ({
             placeholder='NAME'
           />
           {description && (
-            <InputName
+            <InputDescription
               {...register('description', { required: true })}
-              type='text'
               placeholder='DESCRIPTION'
             />
           )}
