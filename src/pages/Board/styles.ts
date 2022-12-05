@@ -20,4 +20,9 @@ const AddColumnBtn = styled.div`
   cursor: pointer;
 `;
 
-export { BoardBlock, AddColumnBlock, AddColumnBtn };
+const BackImage = styled.img`
+  height: 40px;
+  margin: 15px 0 15px 110px;
+`;
+
+export { BoardBlock, AddColumnBlock, AddColumnBtn, BackImage };
