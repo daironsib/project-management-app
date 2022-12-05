@@ -20,7 +20,6 @@ import { deleteColumn } from '../../store/columnsSlice/columnsActions';
 import { useParams } from 'react-router-dom';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Loading } from '../Loading/Loading';
 
 type Props = {
   data: IColumn;
@@ -41,7 +40,7 @@ export const Column = ({ children, data }: Props) => {
     transition,
   };
 
-  const [_, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: 'task',
     drop: () => ({ newColumnId: data._id, children }),
     collect: (monitor) => ({
