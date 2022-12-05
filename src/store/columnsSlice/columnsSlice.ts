@@ -116,9 +116,11 @@ export const columnsSlice = createSlice({
       state.isLoading = false;
       state.shouldLoadColumns = false;
     });
-    builder.addCase(updateColumn.fulfilled, (state) => {
+    builder.addCase(updateColumn.fulfilled, (state, action) => {
       state.errorColumns = false;
       state.shouldLoadColumns = true;
+      const index = state.columns.findIndex(column => column._id === action.payload._id);
+      state.columns[index] = action.payload;
     });
     builder.addCase(updateColumn.rejected, (state, action) => {
       state.errorColumns = true;
