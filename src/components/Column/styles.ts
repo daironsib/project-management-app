@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { styleVars } from '../../constants/constants';
 
 const ColumnBlock = styled.div`
+  position: relative;
   max-height: 65vh;
   min-height: 100px;
   min-width: 250px;
