@@ -28,7 +28,7 @@ export const Task = ({ data, index, onClick }: Props) => {
       if (!ref.current) {
         return;
       }
-      
+
       const dragIndex = item.index;
       const hoverIndex = index;
 
@@ -37,23 +37,34 @@ export const Task = ({ data, index, onClick }: Props) => {
       }
 
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
       const clientOffset = monitor.getClientOffset();
 
       if (clientOffset) {
-         const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-         if (dragIndex && dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-           return;
-         }
+        if (
+          dragIndex &&
+          dragIndex < hoverIndex &&
+          hoverClientY < hoverMiddleY
+        ) {
+          return;
+        }
 
-         if (dragIndex && dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-           return;
-         }
+        if (
+          dragIndex &&
+          dragIndex > hoverIndex &&
+          hoverClientY > hoverMiddleY
+        ) {
+          return;
+        }
       }
 
       item.index = hoverIndex;
-    }
+    },
   });
 
   const [{ isDragging }, drag] = useDrag({
@@ -68,25 +79,38 @@ export const Task = ({ data, index, onClick }: Props) => {
         const columnId = dropResult.newColumnId;
 
         if (dropResult.children.length > order) {
-          console.log(order);
           const prevTask = dropResult?.children[order].props.data;
 
-          dispatch(updateTask({ boardId, columnId, taskId: prevTask._id, data: { 
-            title: prevTask.title,
-            description: prevTask.description,
-            columnId: prevTask.columnId,
-            userId: prevTask.userId,
-            users: prevTask.users,
-            order: prevTask.order - 1 
-          }}));
+          dispatch(
+            updateTask({
+              boardId,
+              columnId,
+              taskId: prevTask._id,
+              data: {
+                title: prevTask.title,
+                description: prevTask.description,
+                columnId: prevTask.columnId,
+                userId: prevTask.userId,
+                users: prevTask.users,
+                order: prevTask.order - 1,
+              },
+            })
+          );
         }
 
-        dispatch(updateTask({ boardId, columnId, taskId: _id, data: { title, order, description, columnId, userId, users }}));
+        dispatch(
+          updateTask({
+            boardId,
+            columnId,
+            taskId: _id,
+            data: { title, order, description, columnId, userId, users },
+          })
+        );
       }
     },
     collect: (monitor) => ({
-      isDragging: monitor.isDragging()
-    })
+      isDragging: monitor.isDragging(),
+    }),
   });
 
   const opacity = isDragging ? 0.4 : 1;

@@ -19,6 +19,9 @@ const ColumnBlock = styled.div`
 
 const ColumnTitle = styled.div`
   margin-bottom: 15px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
 `;
 
 const AddTaskBtn = styled.div`

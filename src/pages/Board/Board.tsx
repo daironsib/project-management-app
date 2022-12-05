@@ -6,22 +6,33 @@ import { Task } from '../../components/Task/Task';
 import { Column } from '../../components/Column/Column';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useParams } from 'react-router-dom';
-import { toogleAddColumnModal } from '../../store/columnsSlice/columnsSlice';
-import { getColumns } from '../../store/columnsSlice/columnsActions';
+import {
+  swapColumn,
+  toogleAddColumnModal,
+} from '../../store/columnsSlice/columnsSlice';
+import {
+  getColumns,
+  updateColumn,
+} from '../../store/columnsSlice/columnsActions';
 import { addTask, getTasks } from '../../store/tasksSlice/tasksActions';
 import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
 import { IColumn, ITask } from '../../types/interfaces';
 import { addColumn } from '../../store/columnsSlice/columnsActions';
 import { setTaskDetails, toogleAddTaskModal, toogleTaskDetailsModal } from '../../store/tasksSlice/tasksSlice';
-import { parseJWT } from '../../utils/utils';
 import TaskDetails from '../../components/TaskDetails/TaskDetails';
+import { parseJWT, swapArray } from '../../utils/utils';
+import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
+import {
+  horizontalListSortingStrategy,
+  SortableContext,
+} from '@dnd-kit/sortable';
+import { Loading } from '../../components/Loading/Loading';
 
 export const BoardPage = () => {
   const { id } = useParams();
-  const { columns, isColAddModalOpen, currentColumn } = useAppSelector((state) => state.columns);
+  const { columns, isColAddModalOpen, currentColumn, isLoading } = useAppSelector((state) => state.columns);
   const { tasks, isTaskAddModalOpen, isTaskDetailsOpen } = useAppSelector((state) => state.tasks);
   const dispatch = useAppDispatch();
-
   const createModalOpen = useCallback(() => {
     dispatch(toogleAddColumnModal(true));
   }, [dispatch]);
@@ -38,23 +49,39 @@ export const BoardPage = () => {
   const addColumnHandler = useCallback(
     (data: IColumn) => {
       if (id) {
-        dispatch(addColumn({ id, data: { ...data, order: 0 } }));
+        dispatch(
+          addColumn({
+            id,
+            data: {
+              ...data,
+              order: columns.length ? columns[columns.length - 1].order + 1 : 1,
+            },
+          })
+        );
         closeModal();
       }
     },
-    [closeModal, dispatch, id]
+    [closeModal, columns, dispatch, id]
   );
 
   const addTaskHandler = useCallback(
     (data: ITask) => {
       if (id && currentColumn) {
-        const taskCounter = tasks.filter(task => task.columnId === currentColumn).length;
+        const taskCounter = tasks.filter(
+          (task) => task.columnId === currentColumn
+        ).length;
         const newOrder = taskCounter === 0 ? 0 : taskCounter;
         const userId = parseJWT(localStorage.getItem('token')!).id;
-        
+
         if (data.title && data.description) {
           data.order = newOrder;
-          dispatch(addTask({ boardId: id, columnId: currentColumn, data: { ...data, userId, users: [userId] } }));
+          dispatch(
+            addTask({
+              boardId: id,
+              columnId: currentColumn,
+              data: { ...data, userId, users: [userId] },
+            })
+          );
           closeModal();
         }
       }
@@ -88,19 +115,51 @@ export const BoardPage = () => {
     }
   }, [dispatch, id]);
 
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over) {
+      if (active.id !== over.id) {
+        dispatch(swapColumn([active.id, over.id]));
+
+        swapArray(columns, active.id as number, over.id as number).forEach(
+          (el) => {
+            dispatch(
+              updateColumn({
+                boardId: el.boardId as string,
+                columnId: el._id,
+                data: {
+                  title: el.title,
+                  order: el.order,
+                },
+              })
+            );
+          }
+        );
+      }
+    }
+  };
+
   return (
     <BoardBlock>
       <DndProvider backend={HTML5Backend}>
-        {
-          columns.map((column, i) => 
-            <Column data={column} key={`column-${i}'}`}>
-              {renderItemsForColumn(column._id)}
-            </Column>
-          )
-        }
-        <AddColumnBlock>
-          <AddColumnBtn onClick={createModalOpen}>+ Add column</AddColumnBtn> 
-        </AddColumnBlock>
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+          autoScroll={false}
+        >
+          <SortableContext
+            items={columns.map((el) => el.order)}
+            strategy={horizontalListSortingStrategy}
+          >
+            {columns.map((column, i) => (
+              <Column data={column} key={`column-${i}'}`}>
+                {renderItemsForColumn(column._id)}
+              </Column>
+            ))}
+          </SortableContext>
+          <AddColumnBlock>
+            <AddColumnBtn onClick={createModalOpen}>+ Add column</AddColumnBtn>
+          </AddColumnBlock>
         <AddEditModal
           title={'titleColumnAdd'}
           isOpened={isColAddModalOpen}
@@ -121,6 +180,8 @@ export const BoardPage = () => {
             closeModal={closeTaskDetails}
           />
         }
+          {isLoading && <Loading />}
+        </DndContext>
       </DndProvider>
     </BoardBlock>
   );
