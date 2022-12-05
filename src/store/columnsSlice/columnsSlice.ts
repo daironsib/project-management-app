@@ -32,7 +32,7 @@ export const columnsSlice = createSlice({
   initialState,
   reducers: {
     resetColumns: (state) => {
-      state.columns = []
+      state.columns = [];
     },
     setCurrentColumn: (state, action) => {
       state.currentColumn = action.payload;
@@ -53,7 +53,12 @@ export const columnsSlice = createSlice({
       state.loading = false;
       state.isColAddModalOpen = false;
       state.shouldLoadColumns = true;
-      state.columns.push(action.payload);
+      state.columns.push({
+        ...action.payload,
+        order: state.columns.length
+          ? state.columns[state.columns.length - 1].order + 1
+          : 1,
+      });
     });
     builder.addCase(addColumn.rejected, (state, action) => {
       state.errorMessage = (action.payload as Error).message || '';
@@ -68,7 +73,9 @@ export const columnsSlice = createSlice({
       state.loading = false;
       state.isColAddModalOpen = false;
       state.shouldLoadColumns = true;
-      state.columns = state.columns.filter(column => column._id !== action.payload._id);
+      state.columns = state.columns.filter(
+        (column) => column._id !== action.payload._id
+      );
     });
     builder.addCase(deleteColumn.rejected, (state, action) => {
       state.errorMessage = (action.payload as Error).message || '';
@@ -81,7 +88,9 @@ export const columnsSlice = createSlice({
     builder.addCase(getColumns.fulfilled, (state, action) => {
       state.errorColumns = false;
       state.loadingColumns = false;
-      state.columns = action.payload;
+      state.columns = [...action.payload].map((el, i) => {
+        return { ...el, order: i + 1 };
+      });
       state.shouldLoadColumns = false;
     });
     builder.addCase(getColumns.rejected, (state) => {
@@ -93,4 +102,9 @@ export const columnsSlice = createSlice({
 });
 
 export const columnsReducer = columnsSlice.reducer;
-export const { resetColumns, setCurrentColumn, toogleAddColumnModal, toogleDeleteColumnModal } = columnsSlice.actions;
+export const {
+  resetColumns,
+  setCurrentColumn,
+  toogleAddColumnModal,
+  toogleDeleteColumnModal,
+} = columnsSlice.actions;
