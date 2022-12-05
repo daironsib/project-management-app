@@ -4,7 +4,6 @@ import {
   AddTaskBtn,
   RemoveBtn,
   ColumnBlock,
-  ColumnTitle,
   DragArea,
 } from './styles';
 import AddButton from '../../assets/images/add-board.svg';
@@ -87,7 +86,6 @@ export const Column = ({ children, data }: Props) => {
       <ColumnBlock ref={drop}>
         <DragArea {...listeners} />
         <EditableTitle title={data.title} dispatch={updateColumnHandler}/>
-        {/* <ColumnTitle {...listeners}>{data.title}</ColumnTitle> */}
         {children}
         <AddTaskBtn onClick={() => taskModalOpen()}>
           <AddBoardImg src={AddButton} />
