@@ -116,17 +116,12 @@ export const columnsSlice = createSlice({
       state.isLoading = false;
       state.shouldLoadColumns = false;
     });
-    builder.addCase(updateColumn.pending, (state) => {
-      state.isLoading = true;
-    });
     builder.addCase(updateColumn.fulfilled, (state) => {
       state.errorColumns = false;
-      state.isLoading = false;
       state.shouldLoadColumns = true;
     });
     builder.addCase(updateColumn.rejected, (state, action) => {
       state.errorColumns = true;
-      state.isLoading = false;
       state.errorMessage = (action.payload as Error).message || '';
     });
   },

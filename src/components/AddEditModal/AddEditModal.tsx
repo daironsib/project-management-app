@@ -50,7 +50,6 @@ export const AddEditModal: React.FC<IAddBoard> = ({
   return (
     <BoardOverlay
       open={isOpened}
-      isOpened={isOpened}
       onClose={createModalClose}
       disableAutoFocus={true}
     >

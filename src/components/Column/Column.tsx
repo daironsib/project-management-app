@@ -27,7 +27,7 @@ type Props = {
 };
 
 export const Column = ({ children, data }: Props) => {
-  const { isColDeleteModalOpen, currentColumn} = useAppSelector(
+  const { isColDeleteModalOpen, currentColumn } = useAppSelector(
     (state) => state.columns
   );
   const dispatch = useAppDispatch();
@@ -67,7 +67,6 @@ export const Column = ({ children, data }: Props) => {
     if (boardId) {
       dispatch(deleteColumn({ boardId, columnId: currentColumn }));
     }
-
     closeModal();
   };
 

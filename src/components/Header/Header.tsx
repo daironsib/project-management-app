@@ -23,7 +23,6 @@ import {
 } from './style';
 import i18next from '../../translations/translations';
 import { langs } from '../../constants/constants';
-import { CreateBoard } from '../AddBoard/style';
 
 const Header = () => {
   const [lang, setLang] = useState(langs.ru);
@@ -78,7 +77,7 @@ const Header = () => {
             <NavLink to={ROUTES.editProfile}>
               <EditProfile src={EditProfileImage}></EditProfile>
             </NavLink>
-            <NavLink to={ROUTES.createBoard}>
+            <NavLink to={ROUTES.boards}>
               <CreateBoardImg src={CreateBoardImage}></CreateBoardImg>
             </NavLink>
             <div onClick={handlerSignOut}>
