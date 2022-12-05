@@ -42,6 +42,7 @@ export const AddEditModal: React.FC<IAddBoard> = ({
 
   const createModalClose = () => {
     closeModal();
+    reset()
   };
 
   const clickHandler: SubmitHandler<IAddEditModal> = (data: IAddEditModal) => {
@@ -61,12 +62,12 @@ export const AddEditModal: React.FC<IAddBoard> = ({
           <InputName
             {...register('title', { required: true })}
             type='text'
-            placeholder='NAME'
+            placeholder={t('name')}
           />
           {description && (
             <InputDescription
               {...register('description', { required: true })}
-              placeholder='DESCRIPTION'
+              placeholder={t('description')}
             />
           )}
           <ButtonBlock>

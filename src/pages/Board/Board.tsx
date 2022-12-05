@@ -33,8 +33,10 @@ import {
 } from '@dnd-kit/sortable';
 import { Loading } from '../../components/Loading/Loading';
 import { ROUTES } from '../../constants/constants';
+import { useTranslation } from 'react-i18next';
 
 export const BoardPage = () => {
+  const { t } = useTranslation('translation', { keyPrefix: 'addEditModal' });
   const { id } = useParams();
   const { columns, isColAddModalOpen, currentColumn, isLoading } =
     useAppSelector((state) => state.columns);
@@ -181,7 +183,7 @@ export const BoardPage = () => {
 
             <AddColumnBlock>
               <AddColumnBtn onClick={createModalOpen}>
-                + Add column
+                + {t('addColumn')}
               </AddColumnBtn>
             </AddColumnBlock>
             <AddEditModal
