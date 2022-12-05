@@ -18,7 +18,11 @@ import { addTask, getTasks } from '../../store/tasksSlice/tasksActions';
 import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
 import { IColumn, ITask } from '../../types/interfaces';
 import { addColumn } from '../../store/columnsSlice/columnsActions';
-import { setTaskDetails, toogleAddTaskModal, toogleTaskDetailsModal } from '../../store/tasksSlice/tasksSlice';
+import {
+  setTaskDetails,
+  toogleAddTaskModal,
+  toogleTaskDetailsModal,
+} from '../../store/tasksSlice/tasksSlice';
 import TaskDetails from '../../components/TaskDetails/TaskDetails';
 import { parseJWT, swapArray } from '../../utils/utils';
 import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
@@ -30,8 +34,11 @@ import { Loading } from '../../components/Loading/Loading';
 
 export const BoardPage = () => {
   const { id } = useParams();
-  const { columns, isColAddModalOpen, currentColumn, isLoading } = useAppSelector((state) => state.columns);
-  const { tasks, isTaskAddModalOpen, isTaskDetailsOpen } = useAppSelector((state) => state.tasks);
+  const { columns, isColAddModalOpen, currentColumn, isLoading } =
+    useAppSelector((state) => state.columns);
+  const { tasks, isTaskAddModalOpen, isTaskDetailsOpen } = useAppSelector(
+    (state) => state.tasks
+  );
   const dispatch = useAppDispatch();
   const createModalOpen = useCallback(() => {
     dispatch(toogleAddColumnModal(true));
@@ -96,19 +103,22 @@ export const BoardPage = () => {
     }
   }, [dispatch]);
 
-  const renderItemsForColumn = useCallback((columnId: string) => {
-    return tasks
-      .filter(task => task.columnId === columnId)
-      .sort((a, b) => a.order - b.order)
-      .map((item, i) => (
-        <Task
-          data={item}
-          key={`task-${item._id}`}
-          index={i}
-          onClick={openTaskDetails}
-        />
-      ))
-  }, [openTaskDetails, tasks]);
+  const renderItemsForColumn = useCallback(
+    (columnId: string) => {
+      return tasks
+        .filter((task) => task.columnId === columnId)
+        .sort((a, b) => a.order - b.order)
+        .map((item, i) => (
+          <Task
+            data={item}
+            key={`task-${item._id}`}
+            index={i}
+            onClick={openTaskDetails}
+          />
+        ));
+    },
+    [openTaskDetails, tasks]
+  );
 
   useEffect(() => {
     if (id) {
@@ -159,29 +169,29 @@ export const BoardPage = () => {
               </Column>
             ))}
           </SortableContext>
+          
           <AddColumnBlock>
             <AddColumnBtn onClick={createModalOpen}>+ Add column</AddColumnBtn>
           </AddColumnBlock>
-        <AddEditModal
-          title={'titleColumnAdd'}
-          isOpened={isColAddModalOpen}
-          closeModal={closeModal}
-          dispatch={addColumnHandler}
-        />
-        <AddEditModal
-          title={'titleTaskAdd'}
-          description={true}
-          isOpened={isTaskAddModalOpen}
-          closeModal={closeModal}
-          dispatch={addTaskHandler}
-        />
-        {
-          isTaskDetailsOpen && 
-          <TaskDetails
-            isOpened={isTaskDetailsOpen}
-            closeModal={closeTaskDetails}
+          <AddEditModal
+            title={'titleColumnAdd'}
+            isOpened={isColAddModalOpen}
+            closeModal={closeModal}
+            dispatch={addColumnHandler}
           />
-        }
+          <AddEditModal
+            title={'titleTaskAdd'}
+            description={true}
+            isOpened={isTaskAddModalOpen}
+            closeModal={closeModal}
+            dispatch={addTaskHandler}
+          />
+          {isTaskDetailsOpen && (
+            <TaskDetails
+              isOpened={isTaskDetailsOpen}
+              closeModal={closeTaskDetails}
+            />
+          )}
           {isLoading && <Loading />}
         </DndContext>
       </DndProvider>
