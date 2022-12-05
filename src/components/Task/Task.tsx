@@ -11,9 +11,10 @@ import { RemoveBtn, TaskBlock } from './styles';
 interface Props {
   data: ITask;
   index: number;
+  onClick: Function;
 }
 
-export const Task = ({ data, index }: Props) => {
+export const Task = ({ data, index, onClick }: Props) => {
   const { _id, title, columnId, description, userId, users } = data;
   const { isTaskDeleteModalOpen, currentTask } = useAppSelector((state) => state.tasks);
   const boardId = useParams().id;
@@ -111,7 +112,7 @@ export const Task = ({ data, index }: Props) => {
   };
 
   return (
-    <TaskBlock ref={ref} style={{ opacity }}>
+    <TaskBlock ref={ref} style={{ opacity }} onClick={() => onClick(data)}>
       {title}
       <RemoveBtn onClick={() => deleteTaskModalOpen()}>x</RemoveBtn>
       {
