@@ -59,6 +59,7 @@ const translationEN = {
     titleEdit: 'EDIT BOARD',
     continue: 'CONTINUE',
     cancel: 'CANCEL',
+    addColumn:'Add column'
   },
 };
 
@@ -118,6 +119,7 @@ const translationRU = {
     titleEdit: 'РЕДАКТИРОВАТЬ ДОСКУ',
     continue: 'ПРОДОЛЖИТЬ',
     cancel: 'ОТМЕНИТЬ',
+    addColumn:'Добавить колонку'
   },
 };
 i18next.use(initReactI18next).init({

@@ -42,6 +42,7 @@ export const AddEditModal: React.FC<IAddBoard> = ({
 
   const createModalClose = () => {
     closeModal();
+    reset()
   };
 
   const clickHandler: SubmitHandler<IAddEditModal> = (data: IAddEditModal) => {
