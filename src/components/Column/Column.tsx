@@ -20,6 +20,7 @@ import { deleteColumn } from '../../store/columnsSlice/columnsActions';
 import { useParams } from 'react-router-dom';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { Loading } from '../Loading/Loading';
 
 type Props = {
   data: IColumn;
@@ -27,7 +28,7 @@ type Props = {
 };
 
 export const Column = ({ children, data }: Props) => {
-  const { isColDeleteModalOpen, currentColumn } = useAppSelector(
+  const { isColDeleteModalOpen, currentColumn, isLoading } = useAppSelector(
     (state) => state.columns
   );
   const dispatch = useAppDispatch();
@@ -88,6 +89,7 @@ export const Column = ({ children, data }: Props) => {
           />
         )}
       </ColumnBlock>
+      {isLoading && <Loading />}
     </div>
   );
 };

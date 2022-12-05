@@ -6,8 +6,7 @@ interface IColumnsState {
   columns: IColumn[];
   errorMessage: string;
   error: boolean;
-  loading: boolean;
-  loadingColumns: boolean;
+  isLoading: boolean;
   errorColumns: boolean;
   shouldLoadColumns: boolean;
   isColAddModalOpen: boolean;
@@ -18,8 +17,7 @@ export const initialState: IColumnsState = {
   columns: [],
   errorMessage: '',
   error: false,
-  loading: false,
-  loadingColumns: false,
+  isLoading: false,
   errorColumns: false,
   shouldLoadColumns: true,
   isColAddModalOpen: false,
@@ -46,11 +44,11 @@ export const columnsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(addColumn.pending, (state) => {
-      state.loading = true;
+      state.isLoading = true;
     });
     builder.addCase(addColumn.fulfilled, (state, action) => {
       state.error = false;
-      state.loading = false;
+      state.isLoading = false;
       state.isColAddModalOpen = false;
       state.shouldLoadColumns = true;
       state.columns.push({
@@ -63,14 +61,14 @@ export const columnsSlice = createSlice({
     builder.addCase(addColumn.rejected, (state, action) => {
       state.errorMessage = (action.payload as Error).message || '';
       state.error = true;
-      state.loading = false;
+      state.isLoading = false;
     });
     builder.addCase(deleteColumn.pending, (state) => {
-      state.loading = true;
+      state.isLoading = true;
     });
     builder.addCase(deleteColumn.fulfilled, (state, action) => {
       state.error = false;
-      state.loading = false;
+      state.isLoading = false;
       state.isColAddModalOpen = false;
       state.shouldLoadColumns = true;
       state.columns = state.columns.filter(
@@ -80,14 +78,14 @@ export const columnsSlice = createSlice({
     builder.addCase(deleteColumn.rejected, (state, action) => {
       state.errorMessage = (action.payload as Error).message || '';
       state.error = true;
-      state.loading = false;
+      state.isLoading = false;
     });
     builder.addCase(getColumns.pending, (state) => {
-      state.loadingColumns = true;
+      state.isLoading = true;
     });
     builder.addCase(getColumns.fulfilled, (state, action) => {
       state.errorColumns = false;
-      state.loadingColumns = false;
+      state.isLoading= false;
       state.columns = [...action.payload].map((el, i) => {
         return { ...el, order: i + 1 };
       });
@@ -95,9 +93,10 @@ export const columnsSlice = createSlice({
     });
     builder.addCase(getColumns.rejected, (state) => {
       state.errorColumns = true;
-      state.loadingColumns = false;
+      state.isLoading = false;
       state.shouldLoadColumns = false;
     });
+    
   },
 });
 
