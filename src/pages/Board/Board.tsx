@@ -19,7 +19,6 @@ import { AddEditModal } from '../../components/AddEditModal/AddEditModal';
 import { IColumn, ITask } from '../../types/interfaces';
 import { addColumn } from '../../store/columnsSlice/columnsActions';
 import { setTaskDetails, toogleAddTaskModal, toogleTaskDetailsModal } from '../../store/tasksSlice/tasksSlice';
-import { parseJWT } from '../../utils/utils';
 import TaskDetails from '../../components/TaskDetails/TaskDetails';
 import { parseJWT, swapArray } from '../../utils/utils';
 import { DndContext, closestCenter, DragEndEvent } from '@dnd-kit/core';
